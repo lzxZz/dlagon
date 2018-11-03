@@ -60,22 +60,10 @@ void Server::run(int port = 80)
             str.append(buf,n);
         } while (n == 1024);
         delete[] buf;
-        std::cout << str << std::endl;
-
-        vector<string> lines;
-
-        boost::split(lines,str,boost::is_any_of("\r\n"),boost::token_compress_on);
         
+        dlagon::Http_request request = dlagon::parse_to_request(str);
 
-        cout << lines.size() << endl;
-        
-        for (auto s : lines)
-        {
-            cout << ":" << s << endl;
-        }
-        
-        
-
+        cout << request.method_str << "\t" << request.path << "\t" << request.version << endl;
         // std::cout << "返回结果" << std::endl;
 
         write(connfd, hello, strlen(hello));
