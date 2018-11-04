@@ -16,6 +16,9 @@ $(TARGET) : $(OBJS)
 	@-mkdir ./target/
 	@-mkdir ./target/debug/
 	g++ -o $(TARGET) $(OBJS) $(OPTION) -lunp
+	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
+	@echo ">>>>>>>>>>>>>>>> build success! <<<<<<<<<<<<<<<<<<"
+	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
 
 
 ./obj/main.o : main.cpp server.h defs.h
@@ -28,7 +31,7 @@ $(TARGET) : $(OBJS)
 ./obj/http.o : http.cpp defs.h
 	gcc -c ./src/http.cpp -o ./obj/http.o $(OPTION)
 
-.PHONY : run clean
+.PHONY : run clean line
 
 clean : 
 	@rm ./obj/*
@@ -37,3 +40,6 @@ clean :
 
 run :
 	@$(TARGET)
+
+line:
+	@wc -l ./src/* ./include/*

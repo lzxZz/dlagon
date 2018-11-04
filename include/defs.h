@@ -4,6 +4,10 @@
 
 #include <unordered_map>
 #include <string>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <exception>
+#include <cstring>
 
 namespace dlagon{
     enum class Http_method{
@@ -20,7 +24,39 @@ namespace dlagon{
     enum class Mime_type{
 
     };
+    class Failed_bind_excption {
+    public:
+        Failed_bind_excption(std::string m = "") : msg(m)
+        {
+        }
+        ~Failed_bind_excption() = default;                              //默认析构
+        Failed_bind_excption(Failed_bind_excption&) = default;          //默认拷贝构造
+        Failed_bind_excption(Failed_bind_excption&&) = default;         //默认移动构造
+        std::string const &message() const
+        {
+            return this->msg;
+        }
+    private:    
+        std::string                          msg;                //异常消息
 
+    };
+
+    class Failed_listen_excption {
+    public:
+        Failed_listen_excption(std::string m = "") : msg(m)
+        {
+        }
+        ~Failed_listen_excption() = default;                              //默认析构
+        Failed_listen_excption(Failed_listen_excption&) = default;          //默认拷贝构造
+        Failed_listen_excption(Failed_listen_excption&&) = default;         //默认移动构造
+        std::string const &message() const
+        {
+            return this->msg;
+        }
+    private:    
+        std::string                          msg;                //异常消息
+
+    };
     
     class Http_request{
     public:
@@ -41,6 +77,65 @@ namespace dlagon{
     Http_request parse_to_request(const std::string&);
 
     ///http方法枚举类型
+    
+    class Server_socket{
+    public:
+        Server_socket(int port = 8080) : server_fd(-1)
+        {
+            //获取不为-1的服务端套接字的描述符.
+            while (server_fd == -1)
+            {
+                server_fd = socket(AF_INET, SOCK_STREAM, 0);
+            }
+
+            //sockaddr_in server_address;
+            bzero(&server_address, sizeof(server_address)); //初始化服务地址
+
+            server_address.sin_family = AF_INET;
+            server_address.sin_addr.s_addr = htonl(INADDR_ANY);
+            server_address.sin_port = htons(port);
+
+        }
+
+        Server_socket &bind()
+        {   
+            //用::调用全局作用域,防止无限递归
+            if (::bind(server_fd, (sockaddr *) &server_address, sizeof(server_address)) == -1)
+            {
+                throw Failed_bind_excption("failed in call server_socket::bind");
+            }
+            return *this;   
+        }
+        Server_socket &bind(sockaddr_in servaddr)
+        {
+            if (::bind(server_fd, (sockaddr *) &servaddr, sizeof(servaddr)) == -1)
+            {
+                throw Failed_bind_excption("failed in call server_socket::bind");
+            }
+            return *this;
+        }
+        
+        //默认监听队列大小为1024
+        Server_socket &listen(size_t queue_length = 1024)
+        {
+            if (::listen(server_fd, queue_length) == -1) 
+            {
+                throw Failed_listen_excption("failed in call server_socket::listen");
+            }
+            return *this;
+        }
+
+        uint32_t fd()
+        {
+            return this->server_fd;
+        }
+
+    private:
+        int                             server_fd;          //socket对应的套接字
+        // int                             port;               //绑定的端口
+        sockaddr_in                     server_address;     //服务地址,包含端口号
+
+    };
     
     
 }

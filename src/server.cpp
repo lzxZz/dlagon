@@ -12,6 +12,7 @@
 #include <boost/algorithm/string.hpp>
 
 using std::ifstream;
+using std::istringstream;
 using std::string;
 using std::vector;
 using std::cout;
@@ -27,40 +28,34 @@ using std::endl;
 
 const string root_dir = "/media/disk/StudyFile/Project/dlagon/static";
 
-void Server::run(int port = 80)
+void Server::run(int port = 8080)
 {
-    sockaddr_in servaddr;
-    
-    server_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (server_fd == -1)
+    dlagon::Server_socket server{8080}; //使用8080端口初始化服务套接字地址
+
+    try
     {
-        cout << "创建服务器套接字失败!" << endl;
-        return ;
+        server
+            .bind()         
+            .listen();
     }
-    bzero(&servaddr, sizeof(servaddr));
-
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    servaddr.sin_port = htons(port);
-
-    if (bind(server_fd, (sockaddr *)&servaddr, sizeof(servaddr)) == -1)
+    catch(dlagon::Failed_bind_excption e)
     {
-        cout << "绑定服务器套接字失败!" << endl;
-        return ;
+        cout << e.message() << endl;
+    }
+    catch(dlagon::Failed_bind_excption e)
+    {
+        cout << e.message() << endl;
     }
 
-    if (listen(server_fd, 1024) == -1) 
-    {
-           cout << "监听服务器套接字失败!" << endl;
-           return;
-    }
-
+    cout << "run server on localhost:8080" << endl;
     //::run(servaddr,server_fd);
     for (;;)
     {
-        int connfd = accept(server_fd, (sockaddr *)NULL, NULL);
+        int connfd = accept(server.fd(), (sockaddr *)NULL, NULL);
         // Content-Length : 21\r\n
         char hello[] = "HTTP/1.1 200 OK\r\nContent-Type : text/html\r\n\r\n<h1>Hello Wrold!</h1>";
+
+        cout << "link fd : " << connfd << endl;
 
         int n = 0;
         char *buf = new char[1024];
@@ -149,6 +144,8 @@ void Server::run(int port = 80)
         }
 
 
+
+        
 
         // write(connfd, hello, strlen(hello));
 
