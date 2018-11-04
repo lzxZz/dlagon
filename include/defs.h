@@ -17,6 +17,9 @@ namespace dlagon{
         OTHER
         
     };
+    enum class Mime_type{
+
+    };
 
     
     class Http_request{
@@ -29,6 +32,12 @@ namespace dlagon{
         std::string                                         version;        //请求的协议版本
     };
 
+    // class Http_response{
+    //     int                                                 state;          //状态码
+    //     std::string                                         state_info;     //状态码对应的字段
+    //     std::string                                         version;        //协议版本
+
+    // };
     Http_request parse_to_request(const std::string&);
 
     ///http方法枚举类型
