@@ -53,15 +53,11 @@ void Server::run(int port = 8080)
     for (;;)
     {
         dlagon::Socket socket = accept(server.fd(), (sockaddr *)NULL, NULL);
-    
 
         cout << "link fd : " << socket.fd() << endl;
 
         int n = 0;
         char *buf = new char[1024];
-
-        
-
         string str{};
 
         do
@@ -73,23 +69,12 @@ void Server::run(int port = 8080)
         delete[] buf;
         
         dlagon::Http_request request = dlagon::parse_to_request(str);
-
         cout << request.method_str << "\t" << request.path << "\t" << request.version << endl;
-        
-        
-
-        // socket << "HTTP/1.1 404 Not Found\r\n"
-        //                  "Content-Type : text/html\r\n"
-        //                  "\r\n"
-        //                  "<h1>hello socket</h1>";
-
-        // continue;
 
         //空对象请求,
         if (request.path == "")
         {
             cout << "请求了一个空对象" << endl;
-            // close(connfd);
             continue;
         }
 
@@ -105,48 +90,41 @@ void Server::run(int port = 8080)
         if (access( (root_dir+request.path).c_str(), F_OK) == -1)
         {
             //对象不存在,返回错误
-            
-            
-
             cout << "请求对象" << request.path << "不存在" << endl;
-
-
-            string err = "HTTP/1.1 404 Not Found\r\n"
-                         "Content-Type : text/html\r\n"
-                         "\r\n";
+            
+            dlagon::Http_response response("HTTP/1.1", 404, "Not Found");
+            response.header.emplace(std::make_pair("Content-Type","text/html"));
 
             ifstream input;
             input.open("./static/404.html");
             string buf;
             while (getline(input, buf))
             {
-                err.append(buf);
-                err.append("\n");
+                response.body.append(buf);
+                response.body.append("\n");
             }
-            
-
-            socket << err ;
+        
+            socket << response ;
             input.close();
         }
         else
         {
                 cout << "请求对象" << request.path << "存在" << endl;
-                string info = "HTTP/1.1 200 OK\r\n"
-                              "Content-Type : text/html\r\n"
-                              "\r\n";
-                
+
+                dlagon::Http_response response("HTTP/1.1", 200, "OK");
+                response.header.emplace(std::make_pair("Content-Type","text/html"));
+
                 ifstream input;
                 input.open(root_dir + request.path);
                 string buf;
                 while (getline(input, buf))
                 {
-                    info.append(buf);
-                    info.append("\n");
+                    response.body .append(buf);
+                    response.body .append("\n");
                 }
-                
-                socket << info ;
-                input.close();
 
+                socket << response;
+                input.close();
         }
     }
 }

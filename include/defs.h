@@ -73,12 +73,19 @@ namespace dlagon{
         std::string                                         version;        //请求的协议版本
     };
 
-    // class Http_response{
-    //     int                                                 state;          //状态码
-    //     std::string                                         state_info;     //状态码对应的字段
-    //     std::string                                         version;        //协议版本
+    class Http_response{
+    public:
+        Http_response(std::string v, int code, std::string s) : version(v), state(code), state_info(s)
+        {
+            
+        }
+        std::string                                         version;        //协议版本
+        int                                                 state;          //状态码
+        std::string                                         state_info;     //状态码对应的字段
+        std::unordered_map<std::string, std::string>        header;         //响应头
+        std::string                                         body;           //响应体
 
-    // };
+    };
     Http_request parse_to_request(const std::string&);
 
     ///http方法枚举类型
@@ -170,6 +177,31 @@ namespace dlagon{
             ::write(socket_fd, info.c_str(), info.size());
             return *this;
         }
+
+        Socket &operator<<(const int info)
+        {
+            *this << std::to_string(info);
+            return *this;
+        }
+
+        Socket &operator<<(const Http_response &response)
+        {
+            *this  << response.version << " " << response.state << " " << response.state_info << "\r\n";
+
+            
+
+            for (auto p : response.header)
+            {
+                *this <<  p.first << ":" << p.second << "\r\n";
+            }
+            *this << "\r\n";
+
+            *this << response.body;
+
+
+            return *this;
+        }
+
         const int fd(){
             return socket_fd;
         }
