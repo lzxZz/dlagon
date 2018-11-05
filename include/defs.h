@@ -8,7 +8,12 @@
 #include <netinet/in.h>
 #include <exception>
 #include <cstring>
+#include <sstream>
+#include <unistd.h>
 
+
+
+#include <iostream>
 namespace dlagon{
     enum class Http_method{
         GET,
@@ -137,6 +142,40 @@ namespace dlagon{
 
     };
     
+
+    class Socket {
+    public:
+        Socket (int n) : socket_fd(n)
+        {
+
+        }
+        Socket(Socket&) = default;
+        Socket(Socket&&) = default;
+        ~Socket()
+        {
+            ::close(socket_fd);
+            std::cout << "~Socket:" << fd() << std::endl;
+        }
+
+
+        // std::ostringstream              out;            //写入对象
+        // std::istringstream              in;             //读取对象
+
+        // const std::ostringstream &operator<<(const std::ostringstream &os, const std::string info)
+        // {
+
+        // }
+        Socket &operator<<(const std::string &info)
+        {
+            ::write(socket_fd, info.c_str(), info.size());
+            return *this;
+        }
+        const int fd(){
+            return socket_fd;
+        }
+    private:
+        int                             socket_fd;             //关联的文件描述符
+    };
     
 }
 

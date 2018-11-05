@@ -48,25 +48,25 @@ void Server::run(int port = 8080)
     }
 
     cout << "run server on localhost:8080" << endl;
+
     //::run(servaddr,server_fd);
     for (;;)
     {
-        int connfd = accept(server.fd(), (sockaddr *)NULL, NULL);
-        // Content-Length : 21\r\n
-        char hello[] = "HTTP/1.1 200 OK\r\nContent-Type : text/html\r\n\r\n<h1>Hello Wrold!</h1>";
+        dlagon::Socket socket = accept(server.fd(), (sockaddr *)NULL, NULL);
+    
 
-        cout << "link fd : " << connfd << endl;
+        cout << "link fd : " << socket.fd() << endl;
 
         int n = 0;
         char *buf = new char[1024];
 
-        string input;
+        
 
         string str{};
 
         do
         {
-            n = read(connfd, buf, 1024);
+            n = read(socket.fd(), buf, 1024);
             // std::cout << n << "\t" <<buf <<  std::endl;
             str.append(buf,n);
         } while (n == 1024);
@@ -76,11 +76,20 @@ void Server::run(int port = 8080)
 
         cout << request.method_str << "\t" << request.path << "\t" << request.version << endl;
         
+        
+
+        // socket << "HTTP/1.1 404 Not Found\r\n"
+        //                  "Content-Type : text/html\r\n"
+        //                  "\r\n"
+        //                  "<h1>hello socket</h1>";
+
+        // continue;
+
         //空对象请求,
         if (request.path == "")
         {
             cout << "请求了一个空对象" << endl;
-            close(connfd);
+            // close(connfd);
             continue;
         }
 
@@ -116,10 +125,8 @@ void Server::run(int port = 8080)
             }
             
 
-            write(connfd, err.c_str(), err.size());
-            // cout << "404已返回" << "\n" << err << endl;
+            socket << err ;
             input.close();
-            close(connfd);
         }
         else
         {
@@ -137,19 +144,9 @@ void Server::run(int port = 8080)
                     info.append("\n");
                 }
                 
-                write(connfd, info.c_str(), info.size());
+                socket << info ;
                 input.close();
-                close(connfd);
 
         }
-
-
-
-        
-
-        // write(connfd, hello, strlen(hello));
-
-        // 关闭连接
-        
     }
 }
