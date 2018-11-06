@@ -106,7 +106,7 @@ namespace dlagon{
             std::ifstream input(path);
             if (input.is_open())
             {
-                string line;
+                std::string line;
                 while (getline(input, line))
                 {
                     body.append(line);
@@ -268,6 +268,25 @@ namespace dlagon{
         int                             socket_fd;             //关联的文件描述符
     };
     
+
+    class Response_buf
+    {
+    public:
+        Http_response const &get() const
+        {
+            return response;
+        }
+        Response_buf(Http_response resp) : response(resp)
+        {
+
+        }
+        void refresh(Http_response resp)
+        {
+            response = resp;
+        }
+    private:
+        Http_response response;  
+    };
 }
 
 #endif
