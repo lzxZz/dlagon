@@ -141,7 +141,8 @@ void Server::run(int port = 8080)
         int client_fd = accept(server.fd(), (sockaddr *)NULL, NULL);
 
         thread client_thread(rw_socket, client_fd);
-        if (client_thread.joinable())
-            client_thread.join();           //不加join会直接崩溃,原因未知
+        // if (client_thread.joinable())
+        //     client_thread.join();           //不加join会直接崩溃,原因未知
+        client_thread.detach();                 //将线程分离开来,独立运行
     }
 }

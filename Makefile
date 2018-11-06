@@ -43,3 +43,7 @@ run :
 
 line:
 	@wc -l ./src/* ./include/*
+
+mem:
+	make
+	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all $(TARGET)
