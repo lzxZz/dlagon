@@ -10,8 +10,8 @@
 #include <cstring>
 #include <sstream>
 #include <unistd.h>
-
-
+#include <fstream>
+#include <cassert>
 
 #include <iostream>
 namespace dlagon{
@@ -37,6 +37,23 @@ namespace dlagon{
         ~Failed_bind_excption() = default;                              //默认析构
         Failed_bind_excption(Failed_bind_excption&) = default;          //默认拷贝构造
         Failed_bind_excption(Failed_bind_excption&&) = default;         //默认移动构造
+        std::string const &message() const
+        {
+            return this->msg;
+        }
+    private:    
+        std::string                          msg;                //异常消息
+
+    };
+
+    class Failed_read_excption {
+    public:
+        Failed_read_excption(std::string m = "") : msg(m)
+        {
+        }
+        ~Failed_read_excption() = default;                              //默认析构
+        Failed_read_excption(Failed_read_excption&) = default;          //默认拷贝构造
+        Failed_read_excption(Failed_read_excption&&) = default;         //默认移动构造
         std::string const &message() const
         {
             return this->msg;
@@ -84,7 +101,28 @@ namespace dlagon{
         std::string                                         state_info;     //状态码对应的字段
         std::unordered_map<std::string, std::string>        header;         //响应头
         std::string                                         body;           //响应体
+        void set_body(std::string path)
+        {
+            std::ifstream input(path);
+            if (input.is_open())
+            {
+                string line;
+                while (getline(input, line))
+                {
+                    body.append(line);
+                    body.append("\n");
+                }
 
+            }
+            else
+            {
+
+                input.close();
+                throw Failed_read_excption("read error");
+            }
+            
+            input.close();
+        }
     };
     Http_request parse_to_request(const std::string&);
 
@@ -200,6 +238,27 @@ namespace dlagon{
 
 
             return *this;
+        }
+
+        Http_request get_req()
+        {
+            const int BUFSZIE = 1024;
+
+            int n;
+            char *buf =new char[BUFSZIE];
+            std::string info;
+            do 
+            {
+                n = read(fd(), buf, BUFSZIE);
+                if (n == -1)
+                {
+                    throw Failed_read_excption("error on read from socket!");
+                }
+                info.append(buf,n);
+            }while (n == BUFSZIE);
+
+            delete[] buf;
+            return parse_to_request(info);
         }
 
         const int fd(){

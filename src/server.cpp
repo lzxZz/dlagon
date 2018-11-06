@@ -31,26 +31,25 @@ void rw_socket(int fd)
         {
             return;
         }
-        cout << fd << endl;
+        // cout << fd << endl;
         dlagon::Socket socket(fd);
-
         cout << "link fd : " << socket.fd() << endl;
 
-        int n = 0;
-        char *buf = new char[1024];
-        string str{};
-
-        do
-        {
-            n = read(socket.fd(), buf, 1024);
-            // std::cout << n << "\t" <<buf <<  std::endl;
-            str.append(buf,n);
-        } while (n == 1024);
-        delete[] buf;
         
-        dlagon::Http_request request = dlagon::parse_to_request(str);
+        dlagon::Http_request request;
+        try
+        {
+            request = socket.get_req();
+        }
+        catch(dlagon::Failed_read_excption e)
+        {
+            std::cout << e.message() << std::endl;
+            return ;
+        }
         cout << request.method_str << "\t" << request.path << "\t" << request.version << endl;
 
+        
+        
         //空对象请求,
         if (request.path == "")
         {
@@ -74,18 +73,18 @@ void rw_socket(int fd)
             
             dlagon::Http_response response("HTTP/1.1", 404, "Not Found");
             response.header.emplace(std::make_pair("Content-Type","text/html"));
-
-            ifstream input;
-            input.open("./static/404.html");
-            string buf;
-            while (getline(input, buf))
+            
+            try
             {
-                response.body.append(buf);
-                response.body.append("\n");
+                response.set_body("./static/404.html");
             }
-        
+            catch(dlagon::Failed_read_excption e)
+            {
+                std::cout << e.message << '\n';
+            }
+            
             socket << response ;
-            input.close();
+            
         }
         else
         {
@@ -93,18 +92,18 @@ void rw_socket(int fd)
 
                 dlagon::Http_response response("HTTP/1.1", 200, "OK");
                 response.header.emplace(std::make_pair("Content-Type","text/html"));
-
-                ifstream input;
-                input.open(root_dir + request.path);
-                string buf;
-                while (getline(input, buf))
+                
+                try
                 {
-                    response.body .append(buf);
-                    response.body .append("\n");
+                    response.set_body(root_dir + request.path);
                 }
-
-                socket << response;
-                input.close();
+                catch(dlagon::Failed_read_excption e)
+                {
+                    std::cout << e.message << '\n';
+                }
+            
+                socket << response ;
+                
         }
     
 }
@@ -134,12 +133,9 @@ void Server::run(int port = 8080)
     //::run(servaddr,server_fd);
     for (;;)
     {
-        // dlagon::Socket socket = accept(server.fd(), (sockaddr *)NULL, NULL);
-
-        // thread client_thread(rw_socket, socket);
-
         int client_fd = accept(server.fd(), (sockaddr *)NULL, NULL);
 
+        //开启新线程
         thread client_thread(rw_socket, client_fd);
         // if (client_thread.joinable())
         //     client_thread.join();           //不加join会直接崩溃,原因未知
