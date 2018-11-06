@@ -11,48 +11,28 @@
 
 #include <boost/algorithm/string.hpp>
 
+
+
+#include <thread>
+using std::thread;
+
 using std::ifstream;
 using std::istringstream;
 using std::string;
 using std::vector;
 using std::cout;
 using std::endl;
-// extern "C"
-// {
-// #include "unp.h"
-//     void run(sockaddr_in servaddr, int linstenfd)
-//     {
-
-//     }
-// }
 
 const string root_dir = "/media/disk/StudyFile/Project/dlagon/static";
 
-void Server::run(int port = 8080)
-{
-    dlagon::Server_socket server{8080}; //使用8080端口初始化服务套接字地址
-
-    try
-    {
-        server
-            .bind()         
-            .listen();
-    }
-    catch(dlagon::Failed_bind_excption e)
-    {
-        cout << e.message() << endl;
-    }
-    catch(dlagon::Failed_bind_excption e)
-    {
-        cout << e.message() << endl;
-    }
-
-    cout << "run server on localhost:8080" << endl;
-
-    //::run(servaddr,server_fd);
-    for (;;)
-    {
-        dlagon::Socket socket = accept(server.fd(), (sockaddr *)NULL, NULL);
+void rw_socket(int fd)
+{   
+        if (fd == -1)
+        {
+            return;
+        }
+        cout << fd << endl;
+        dlagon::Socket socket(fd);
 
         cout << "link fd : " << socket.fd() << endl;
 
@@ -75,7 +55,7 @@ void Server::run(int port = 8080)
         if (request.path == "")
         {
             cout << "请求了一个空对象" << endl;
-            continue;
+            return ;
         }
 
         //处理请求对象,如果以/结尾,自动转换为/index.html
@@ -126,5 +106,42 @@ void Server::run(int port = 8080)
                 socket << response;
                 input.close();
         }
+    
+}
+
+
+void Server::run(int port = 8080)
+{
+    dlagon::Server_socket server{8080}; //使用8080端口初始化服务套接字地址
+
+    try
+    {
+        server
+            .bind()         
+            .listen();
+    }
+    catch(dlagon::Failed_bind_excption e)
+    {
+        cout << e.message() << endl;
+    }
+    catch(dlagon::Failed_bind_excption e)
+    {
+        cout << e.message() << endl;
+    }
+
+    cout << "run server on localhost:8080" << endl;
+
+    //::run(servaddr,server_fd);
+    for (;;)
+    {
+        // dlagon::Socket socket = accept(server.fd(), (sockaddr *)NULL, NULL);
+
+        // thread client_thread(rw_socket, socket);
+
+        int client_fd = accept(server.fd(), (sockaddr *)NULL, NULL);
+
+        thread client_thread(rw_socket, client_fd);
+        if (client_thread.joinable())
+            client_thread.join();           //不加join会直接崩溃,原因未知
     }
 }
