@@ -23,7 +23,7 @@ using std::string;
 using std::unordered_map;
 using std::vector;
 
-const string root_dir = "/media/disk/StudyFile/Project/dlagon/static";
+const string root_dir = "/media/blog/website";
 unordered_map<string, dlagon::Response_buf> response_buf;
 
 void rw_socket(int fd)
@@ -61,22 +61,24 @@ void rw_socket(int fd)
         request.path += "index.html";
     }
 
-    // access函数判断文件全新,
-    //      R_OK,W_OK,X_OK,分别为读,写,执行的权限
-    //      F_OK为文件是否存在,
-    //成功返回0,出错返回-1
-    if (access((root_dir + request.path).c_str(), F_OK) == -1)
+    auto iter = response_buf.find(request.path);
+    if (iter != response_buf.end())
     {
-        //对象不存在,返回错误
-        cout << "请求对象" << request.path << "不存在" << endl;
+        socket << iter->second.get();
+        return;
+    }
+    else
+    {
 
-        auto iter = response_buf.find(request.path);
-        if (iter != response_buf.end())
+        // access函数判断文件全新,
+        //      R_OK,W_OK,X_OK,分别为读,写,执行的权限
+        //      F_OK为文件是否存在,
+        //成功返回0,出错返回-1
+        if (access((root_dir + request.path).c_str(), F_OK) == -1)
         {
-            socket << iter->second.get();
-        }
-        else
-        {
+            //对象不存在,返回错误
+            cout << "请求对象" << request.path << "不存在" << endl;
+
             dlagon::Http_response response("HTTP/1.1", 404, "Not Found");
             response.header.emplace(std::make_pair("Content-Type", "text/html"));
 
@@ -87,26 +89,27 @@ void rw_socket(int fd)
             catch (dlagon::Failed_read_excption e)
             {
                 std::cout << e.message() << '\n';
+                return;
             }
             response_buf.emplace(std::make_pair(request.path, response));
 
             socket << response;
         }
-    }
-    else
-    {
-        cout << "请求对象" << request.path << "存在" << endl;
-
-        auto iter = response_buf.find(request.path);
-        if (iter != response_buf.end())
-        {
-            socket << iter->second.get();;
-        }
         else
         {
+            cout << "请求对象" << request.path << "存在" << endl;
 
             dlagon::Http_response response("HTTP/1.1", 200, "OK");
-            response.header.emplace(std::make_pair("Content-Type", "text/html"));
+            string suffix = dlagon::get_suffix(request.path);
+
+            if (suffix == "CSS")
+            {
+                response.header.emplace(std::make_pair("Content-Type", "text/css"));
+            }
+            else if (suffix == "HTML" || suffix == "HTM" || "LMD" == suffix || "MD" == suffix)
+            {
+                response.header.emplace(std::make_pair("Content-Type", "text/html"));
+            }
 
             try
             {
@@ -115,9 +118,9 @@ void rw_socket(int fd)
             catch (dlagon::Failed_read_excption e)
             {
                 std::cout << e.message() << '\n';
+                return;
             }
 
-            socket << response;
             socket << response;
         }
     }
@@ -133,13 +136,15 @@ void Server::run(int port = 8080)
             .bind()
             .listen();
     }
-    catch (dlagon::Failed_bind_excption e)
+    catch (dlagon::Failed_listen_excption e)
     {
         cout << e.message() << endl;
+        return;
     }
     catch (dlagon::Failed_bind_excption e)
     {
         cout << e.message() << endl;
+        return;
     }
 
     cout << "run server on localhost:8080" << endl;

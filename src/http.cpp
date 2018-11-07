@@ -30,7 +30,7 @@ Http_request  dlagon::parse_to_request(const string &str)
     {
         if (islower(c))
         {
-            toupper(c);
+            c=toupper(c);
         }
     }
 
@@ -91,3 +91,14 @@ Http_request  dlagon::parse_to_request(const string &str)
 
     return request;
 }
+
+std::string dlagon::get_suffix(std::string path)
+    {
+        std::string suffix;
+        suffix = path.substr(path.find_last_of('.')+1);
+        for (char &c: suffix)
+        {
+            c=toupper(c);
+        }
+        return suffix;
+    }

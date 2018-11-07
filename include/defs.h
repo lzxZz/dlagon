@@ -13,8 +13,12 @@
 #include <fstream>
 #include <cassert>
 
+#include "../depen/parser.h"
+
 #include <iostream>
 namespace dlagon{
+    std::string get_suffix(std::string path);
+    
     enum class Http_method{
         GET,
         POST,
@@ -119,6 +123,20 @@ namespace dlagon{
 
                 input.close();
                 throw Failed_read_excption("read error");
+            }
+            
+            std::cout << "读取完毕!-------------------" ;
+
+            std::string suffix = get_suffix(path);
+            std::cout << "后缀为:" << suffix;
+            if ("LMD" == suffix  || "MD" == suffix)
+            {   
+                std::cout << "正在转换md" << std::endl;
+                Parser parse;
+                std::string result;
+
+                result = parse.parse("/css/style.css","UTF8",body);
+                body = result;
             }
             
             input.close();
@@ -287,6 +305,8 @@ namespace dlagon{
     private:
         Http_response response;  
     };
+
+    
 }
 
 #endif

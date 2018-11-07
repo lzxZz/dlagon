@@ -15,7 +15,7 @@ vpath %.h ./include/
 $(TARGET) : $(OBJS) 
 	@-mkdir ./target/
 	@-mkdir ./target/debug/
-	g++ -o $(TARGET) $(OBJS) $(OPTION) -lunp	-lpthread
+	g++ -o $(TARGET) $(OBJS) $(OPTION)  -lunp	-lpthread  -L./depen -lparse
 	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
 	@echo ">>>>>>>>>>>>>>>> build success! <<<<<<<<<<<<<<<<<<"
 	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
@@ -31,11 +31,11 @@ $(TARGET) : $(OBJS)
 ./obj/http.o : http.cpp defs.h
 	gcc -c ./src/http.cpp -o ./obj/http.o $(OPTION)
 
-.PHONY : run clean line
+.PHONY : run clean line rerun
 
 clean : 
-	@rm ./obj/*
-	@rm $(TARGET)
+	@-rm ./obj/*
+	@-rm $(TARGET)
 	@echo "clean!"
 
 run :
@@ -43,6 +43,10 @@ run :
 
 line:
 	@wc -l ./src/* ./include/*
+rerun:
+	make clean
+	make 
+	make run
 
 mem:
 	make
