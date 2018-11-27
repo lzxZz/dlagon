@@ -1,26 +1,25 @@
-#include "../include/defs.h"
+#include "http/request.h"
 
 #include <vector>
-#include <boost/algorithm/string.hpp>
 #include <sstream>
-#include <exception>
+
+#include <boost/algorithm/string.hpp>
+
+using std::istringstream;
+using std::string;
+using std::vector;
 
 using boost::is_any_of;
 using boost::split;
 using boost::token_compress_on;
-using std::istringstream;
-using std::vector;
-using std::exception;
-using std::make_pair;
-using namespace dlagon;
-using std::string;
 
-Http_request  dlagon::parse_to_request(const string &str)
+
+dlagon::Http_Request  dlagon::parse_to_request(const string &str)
 {
     vector<string> lines;
     split(lines, str, is_any_of("\r\n"), token_compress_on);
 
-    Http_request request;
+    Http_Request request;
 
     istringstream is(lines.at(0));          //可能抛出异常.out_of_range
     string method, path, version;

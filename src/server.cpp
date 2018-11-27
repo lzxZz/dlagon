@@ -1,4 +1,5 @@
-#include "../include/server.h"
+#include "server.h"
+
 #include <sys/socket.h>
 #include <cstring>
 #include <unistd.h>
@@ -13,6 +14,10 @@
 #include <unordered_map>
 
 #include <thread>
+
+#include "excption.h"
+#include "socket/server.h"
+#include "socket/socket.h"
 using std::thread;
 
 using std::cout;
@@ -23,10 +28,14 @@ using std::string;
 using std::unordered_map;
 using std::vector;
 
-const string root_dir = "/media/disk/StudyFile/Project/dlagon/static";
-unordered_map<string, dlagon::Response_buf> response_buf;
 
-void rw_socket(int fd)
+using namespace dlagon;
+
+
+// const string root_dir = "/media/disk/StudyFile/Project/dlagon/static";
+
+
+void rw_socket(dlagon::Server server, int fd)
 {
     if (fd == -1)
     {
@@ -36,10 +45,10 @@ void rw_socket(int fd)
     dlagon::Socket socket(fd);
     cout << "link fd : " << socket.fd() << endl;
 
-    dlagon::Http_request request;
+    dlagon::Http_Request request;
     try
     {
-        request = socket.get_req();
+        request = socket.request();
     }
     catch (dlagon::Failed_read_excption e)
     {
@@ -65,67 +74,16 @@ void rw_socket(int fd)
     //      R_OK,W_OK,X_OK,分别为读,写,执行的权限
     //      F_OK为文件是否存在,
     //成功返回0,出错返回-1
-    if (access((root_dir + request.path).c_str(), F_OK) == -1)
-    {
-        //对象不存在,返回错误
-        cout << "请求对象" << request.path << "不存在" << endl;
-
-        auto iter = response_buf.find(request.path);
-        if (iter != response_buf.end())
-        {
-            socket << iter->second.get();
-        }
-        else
-        {
-            dlagon::Http_response response("HTTP/1.1", 404, "Not Found");
-            response.header.emplace(std::make_pair("Content-Type", "text/html"));
-
-            try
-            {
-                response.set_body("./static/404.html");
-            }
-            catch (dlagon::Failed_read_excption e)
-            {
-                std::cout << e.message() << '\n';
-            }
-            response_buf.emplace(std::make_pair(request.path, response));
-
-            socket << response;
-        }
-    }
-    else
-    {
-        cout << "请求对象" << request.path << "存在" << endl;
-
-        auto iter = response_buf.find(request.path);
-        if (iter != response_buf.end())
-        {
-            socket << iter->second.get();;
-        }
-        else
-        {
-
-            dlagon::Http_response response("HTTP/1.1", 200, "OK");
-            response.header.emplace(std::make_pair("Content-Type", "text/html"));
-
-            try
-            {
-                response.set_body(root_dir + request.path);
-            }
-            catch (dlagon::Failed_read_excption e)
-            {
-                std::cout << e.message() << '\n';
-            }
-
-            socket << response;
-            socket << response;
-        }
-    }
+    dlagon::HANDLER hand =  server.find_handler();
+    Http_Response res =  hand(request);
+    socket << res;
+    
 }
 
-void Server::run(int port = 8080)
+
+void dlagon::Server::run(int port = 8080)
 {
-    dlagon::Server_socket server{8080}; //使用8080端口初始化服务套接字地址
+    dlagon::Server_Socket server{8080}; //使用8080端口初始化服务套接字地址
 
     try
     {
@@ -137,22 +95,36 @@ void Server::run(int port = 8080)
     {
         cout << e.message() << endl;
     }
-    catch (dlagon::Failed_bind_excption e)
+    catch (dlagon::Failed_listen_excption e)
     {
         cout << e.message() << endl;
     }
 
     cout << "run server on localhost:8080" << endl;
 
-    //::run(servaddr,server_fd);
+    
     for (;;)
     {
         int client_fd = accept(server.fd(), (sockaddr *)NULL, NULL);
 
         //开启新线程
-        thread client_thread(rw_socket, client_fd);
+        thread client_thread(rw_socket, *this, client_fd);
         // if (client_thread.joinable())
         //     client_thread.join();           //不加join会直接崩溃,原因未知
         client_thread.detach(); //将线程分离开来,独立运行
     }
+}
+
+const dlagon::HANDLER dlagon::Server::find_handler()
+{
+    for (auto i : hand)
+    {
+        return i.hand;
+    }
+    return nullptr;
+}
+dlagon::Server &dlagon::Server::add_path(Path p, HANDLER h)
+{
+    this->hand.emplace_back(p,h);
+    return *this;
 }

@@ -1,13 +1,16 @@
 
 TARGET = ./target/debug/server
 
-OPTION = -g -Wall
+OPTION = -g -Wall -I./include
 
 OBJS = ./obj/main.o \
 	./obj/server.o \
-	./obj/http.o
+	./obj/httpreq.o \
+	./obj/httpres.o \
+	./obj/socket.o
 
 vpath %.cpp ./src/
+vpath %.cc ./src/
 vpath %.h ./include/
 
 
@@ -21,15 +24,21 @@ $(TARGET) : $(OBJS)
 	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
 
 
-./obj/main.o : main.cpp server.h defs.h
+./obj/main.o : main.cpp server.h 
 	@-mkdir ./obj/
 	gcc -c ./src/main.cpp -o ./obj/main.o  $(OPTION)
 
-./obj/server.o : server.cpp server.h defs.h
+./obj/server.o : server.cpp server.h 
 	gcc -c ./src/server.cpp -o ./obj/server.o $(OPTION) 
 
-./obj/http.o : http.cpp defs.h
-	gcc -c ./src/http.cpp -o ./obj/http.o $(OPTION)
+./obj/httpreq.o : http/request.cc
+	gcc -c ./src/http/request.cc -o ./obj/httpreq.o $(OPTION)
+
+./obj/httpres.o : http/response.cc
+	gcc -c ./src/http/response.cc -o ./obj/httpres.o $(OPTION)
+
+./obj/socket.o : socket.cc
+	gcc -c ./src/socket.cc -o ./obj/socket.o $(OPTION)
 
 .PHONY : run clean line
 
@@ -42,7 +51,7 @@ run :
 	@$(TARGET)
 
 line:
-	@wc -l ./src/* ./include/*
+	@wc -l ./src/** ./include/**
 
 mem:
 	make
