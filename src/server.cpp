@@ -74,7 +74,7 @@ void rw_socket(dlagon::Server server, int fd)
     //      R_OK,W_OK,X_OK,分别为读,写,执行的权限
     //      F_OK为文件是否存在,
     //成功返回0,出错返回-1
-    dlagon::HANDLER hand =  server.find_handler();
+    dlagon::HANDLER hand =  server.find_handler(Path{request.path});
     Http_Response res =  hand(request);
     socket << res;
     
@@ -115,13 +115,25 @@ void dlagon::Server::run(int port = 8080)
     }
 }
 
-const dlagon::HANDLER dlagon::Server::find_handler()
+const dlagon::HANDLER dlagon::Server::find_handler(Path path)
 {
+    HANDLER any = nullptr;
+    
+
     for (auto i : hand)
     {
-        return i.hand;
+        
+        if (i.path == path)
+        {
+            return i.hand;
+        }
+        else if (i.path == Path{"*"})
+        {
+            any = i.hand;
+        }
     }
-    return nullptr;
+    
+    return any;
 }
 dlagon::Server &dlagon::Server::add_path(Path p, HANDLER h)
 {

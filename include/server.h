@@ -33,7 +33,7 @@ class Server
     {
       return root_dir;
     }
-    const HANDLER find_handler();
+    const HANDLER find_handler(Path path);
     Server &add_path(dlagon::Path, dlagon::HANDLER);
 };
 } // namespace dlagon
