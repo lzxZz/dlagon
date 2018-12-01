@@ -1,5 +1,5 @@
-#ifndef __SERVER_H
-#define __SERVER_H
+#ifndef DLAGON_SERVER_H_
+#define DLAGON_SERVER_H_
 
 #include <vector>
 
@@ -38,4 +38,4 @@ class Server
 };
 } // namespace dlagon
 
-#endif
+#endif//DLAGON_SERVER_H_

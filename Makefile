@@ -1,4 +1,3 @@
-
 TARGET = ./target/debug/server
 
 OPTION = -g -Wall -I./include
