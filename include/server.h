@@ -21,7 +21,7 @@ class Server
     std::vector<dlagon::Handler> hand;
     
   public:
-    void run(int port);
+    void run(int port =8080);
     
     ~Server() = default;
     Server() = default;

@@ -1,4 +1,10 @@
 > 说明: 本文件为项目更新日志
+
+# 2018.12.3更新
+修复若干bug,修复`Server_socket`类头文件中依赖不完整的问题.
+新增加了`dlagon.h`头文件.包含了所有的头文件.
+新增了基础的例子.
+
 # 2018.12.1更新
 将server中处理每一个链接的任务移动到新添加的Handler类.在Server中实现Handler池.每一个Handler占用一个线程.
 在Server中添加`Client_Queue`,Handler从这个队列中逐个逐个处理.

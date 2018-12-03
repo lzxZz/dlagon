@@ -81,7 +81,7 @@ void rw_socket(dlagon::Server server, int fd)
 }
 
 
-void dlagon::Server::run(int port = 8080)
+void dlagon::Server::run(int port )
 {
     dlagon::Server_Socket server{8080}; //使用8080端口初始化服务套接字地址
 
@@ -94,10 +94,12 @@ void dlagon::Server::run(int port = 8080)
     catch (dlagon::Failed_bind_excption e)
     {
         cout << e.message() << endl;
+        return ;
     }
     catch (dlagon::Failed_listen_excption e)
     {
         cout << e.message() << endl;
+        return ;
     }
 
     cout << "run server on localhost:8080" << endl;

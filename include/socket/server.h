@@ -1,6 +1,11 @@
 #ifndef DLAGON_SOCKET_SERVER_H_
 #define DLAGON_SOCKET_SERVER_H_
 
+#include <unistd.h>
+#include <cstring>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+
 namespace dlagon
 {
     class Server_Socket{

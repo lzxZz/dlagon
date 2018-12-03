@@ -29,7 +29,7 @@ dlagon::Http_Request  dlagon::parse_to_request(const string &str)
     {
         if (islower(c))
         {
-            toupper(c);
+            c = toupper(c);
         }
     }
 

@@ -39,7 +39,7 @@ $(TARGET) : $(OBJS)
 ./obj/socket.o : socket.cc
 	gcc -c ./src/socket.cc -o ./obj/socket.o $(OPTION)
 
-.PHONY : run clean line
+.PHONY : run clean line basic
 
 clean : 
 	@rm ./obj/*
@@ -55,3 +55,23 @@ line:
 mem:
 	make
 	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all $(TARGET)
+
+.PHONY : basic cb rb
+
+BASIC_OBJS = ./obj/server.o \
+			./obj/httpreq.o \
+			./obj/httpres.o \
+			./obj/socket.o  \
+			./example/basic/main.o
+
+basic : $(BASIC_OBJS)
+	g++ $(BASIC_OBJS) -o example/basic/basic -lpthread
+
+example/basic/main.o : example/basic/main.cc	
+	gcc -o example/basic/main.o -c  example/basic/main.cc	  -I./include 
+
+cb : 
+	@-rm $(BASIC_OBJS)
+	@-rm example/basic/basic
+rb :
+	@example/basic/basic
