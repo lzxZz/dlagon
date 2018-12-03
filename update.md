@@ -5,6 +5,8 @@
 新增加了`dlagon.h`头文件.包含了所有的头文件.
 新增了基础的例子.
 
+Makefile中新增了Release伪目标,生成libdlagon.a静态库,并和头文件一起拷贝到release文件夹下.
+
 # 2018.12.1更新
 将server中处理每一个链接的任务移动到新添加的Handler类.在Server中实现Handler池.每一个Handler占用一个线程.
 在Server中添加`Client_Queue`,Handler从这个队列中逐个逐个处理.

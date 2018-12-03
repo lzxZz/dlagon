@@ -3,7 +3,8 @@ TARGET = ./target/debug/server
 OPTION = -g -Wall -I./include
 
 OBJS = ./obj/main.o \
-	./obj/server.o \
+
+DLAGON_OBJS = 	./obj/server.o \
 	./obj/httpreq.o \
 	./obj/httpres.o \
 	./obj/socket.o
@@ -14,10 +15,10 @@ vpath %.h ./include/
 
 
 
-$(TARGET) : $(OBJS) 
+$(TARGET) : $(OBJS) $(DLAGON_OBJS)
 	@-mkdir ./target/
 	@-mkdir ./target/debug/
-	g++ -o $(TARGET) $(OBJS) $(OPTION) -lunp	-lpthread
+	g++ -o $(TARGET) $(OBJS) $(DLAGON_OBJS) $(OPTION) -lunp	-lpthread
 	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
 	@echo ">>>>>>>>>>>>>>>> build success! <<<<<<<<<<<<<<<<<<"
 	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
@@ -50,7 +51,9 @@ run :
 	@$(TARGET)
 
 line:
-	@wc -l ./src/** ./include/**
+	@-wc -l ./src/** ./include/**
+	@-wc -l ./src/http/** ./include/http/**
+	@-wc -l ./src/socket/** ./include/socket/**
 
 mem:
 	make
@@ -58,10 +61,7 @@ mem:
 
 .PHONY : basic cb rb
 
-BASIC_OBJS = ./obj/server.o \
-			./obj/httpreq.o \
-			./obj/httpres.o \
-			./obj/socket.o  \
+BASIC_OBJS = $(DLAGON_OBJS) \
 			./example/basic/main.o
 
 basic : $(BASIC_OBJS)
@@ -75,3 +75,14 @@ cb :
 	@-rm example/basic/basic
 rb :
 	@example/basic/basic
+
+
+.PHONY : release
+release: $(DLAGON_OBJS)
+	@-mkdir release
+	@cp -r ./include release/include
+	@ar rcs -o ./release/libdlagon.a $(DLAGON_OBJS)
+	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
+	@echo ">>>>>>>>>>>>>>> release success! <<<<<<<<<<<<<<<<<"
+	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
+	

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TodoList</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+
+    <style>
+        div {
+            border: 1px solid red;
+            position: fixed;
+        }
+
+        html body {
+            height: 100%;
+            position: relative;
+            margin: 0px;
+        }
+
+        #left-tree {
+            width: 30%;
+            height: 100%;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background-color: blue;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#btn").click(function () {
+                alert("click");
+                $.get("index.html", function (result) {
+                    alert(result);
+                });
+            });
+
+        });
+    </script>
+
+</head>
+
+
+<body style="height:100%">
+    <div style="width:100%;height:100%">
+        main
+        <button id="btn">123123</button>
+    </div>
+
+</body>
+
+</html>
