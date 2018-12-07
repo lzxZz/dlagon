@@ -1,6 +1,7 @@
 #ifndef DLAGON_H_
 #define DLAGON_H_
 
+#include "http/arg.h"
 #include "http/defs.h"
 #include "http/request.h"
 #include "http/response.h"

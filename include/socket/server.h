@@ -6,6 +6,8 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
+#include "excption.h"
+
 namespace dlagon
 {
     class Server_Socket{

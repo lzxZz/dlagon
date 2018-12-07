@@ -74,16 +74,35 @@ void rw_socket(dlagon::Server server, int fd)
     //      R_OK,W_OK,X_OK,分别为读,写,执行的权限
     //      F_OK为文件是否存在,
     //成功返回0,出错返回-1
+
+    cout << request.path << endl;
+    if (! server.allow(request.path) ) 
+    {
+        
+        Http_Response res = Http_Response{"HTTP/1.1",403," Forbidden"};
+
+        res.header.emplace(std::make_pair("Content-Type","text/html"));
+        res.set_body_by_content("<meta charset=\"utf8\"><h1>不允许的访问路径</h1>");
+
+        socket << res;
+        return;
+    }
+
+
     dlagon::HANDLER hand =  server.find_handler(Path{request.path});
     Http_Response res =  hand(request);
     socket << res;
     
 }
 
+void dlagon::Server::run()
+{
+    run(this->port);
+}
 
 void dlagon::Server::run(int port )
 {
-    dlagon::Server_Socket server{8080}; //使用8080端口初始化服务套接字地址
+    dlagon::Server_Socket server{port}; //使用8080端口初始化服务套接字地址
 
     try
     {
@@ -102,7 +121,7 @@ void dlagon::Server::run(int port )
         return ;
     }
 
-    cout << "run server on localhost:8080" << endl;
+    cout << "run server on localhost:" << port << endl;
 
     
     for (;;)
@@ -140,5 +159,11 @@ const dlagon::HANDLER dlagon::Server::find_handler(Path path)
 dlagon::Server &dlagon::Server::add_path(Path p, HANDLER h)
 {
     this->hand.emplace_back(p,h);
+    return *this;
+}
+
+dlagon::Server &dlagon::Server::allow_path(string path)
+{
+    allow_list.push_back(path);
     return *this;
 }

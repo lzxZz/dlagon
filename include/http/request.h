@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "http/defs.h"
+#include "http/arg.h"
 
 namespace dlagon
 {
@@ -16,6 +17,7 @@ namespace dlagon
         std::string                                         method_str;     //请求方法的字符串表示
         std::string                                         path;           //请求的路径
         std::string                                         version;        //请求的协议版本
+        Argument                                            arg;            //get请求的参数
     };
     Http_Request parse_to_request(const std::string &str);
 }

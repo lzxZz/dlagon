@@ -13,15 +13,50 @@ using boost::is_any_of;
 using boost::split;
 using boost::token_compress_on;
 
+using std::make_pair;
 
+#include <iostream>
 dlagon::Http_Request  dlagon::parse_to_request(const string &str)
 {
-    vector<string> lines;
-    split(lines, str, is_any_of("\r\n"), token_compress_on);
+    // std::cout << str << std::endl;
+
 
     Http_Request request;
+    istringstream is(str);
+    string protocal;
+    getline(is, protocal);
+    string line;
 
-    istringstream is(lines.at(0));          //可能抛出异常.out_of_range
+    //读取请求头
+    while (getline(is, line))
+    {
+        //空行表示请求头结束,下面则是请求体
+        if (line == "\r")
+        {
+            break;
+        }
+        string k,v;
+        k = line.substr(0,line.find(":"));
+        v = line.substr(line.find(":")+1);
+
+        request.header.emplace(make_pair(k,v));
+
+        // std::cout << "head"  << line << std::endl;
+        
+    }
+     while (getline(is, line))
+    {
+        
+        request.body.append(line);
+        request.body.append("\n");
+        //  std::cout << "body"  << line << std::endl;
+    }
+    
+
+
+    
+
+    is = istringstream{protocal};          //可能抛出异常.out_of_range
     string method, path, version;
     is >> method >> path >> version;
 
@@ -68,24 +103,18 @@ dlagon::Http_Request  dlagon::parse_to_request(const string &str)
     request.method_str = method;
     request.path = path;
     request.version = version;
-
-    for (auto line : lines)
+    if (request.path.find("?") < 0)
     {
-        if (line == *lines.begin())
-        {
-            continue;       //第一行已经处理过了,此处跳过
-        }
+        path = path.substr(0, path.find("?"));
+        string argstr = path.substr(path.find("&")+1);
 
-        vector<string> values;
-        split(values, line, is_any_of(":"));
-        if (values.size() != 2)
-        {
-            continue;
-            // throw exception{};      //如果按照冒号分割出来的结果不是键值对,抛出异常
-        }
-        request.header.emplace(make_pair(values[0],values[1]));
-        
+
+        request.arg = Argument{argstr};
+        request.path = path;
     }
+
+    
+
     
 
     return request;
