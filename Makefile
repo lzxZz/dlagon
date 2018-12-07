@@ -1,12 +1,13 @@
 TARGET = ./target/debug/server
 
-OPTION = -g -Wall -I./include
+OPTION = -g -Wall -I./include -std=c++11
 
 OBJS = ./obj/main.o \
 
 DLAGON_OBJS = 	./obj/server.o \
 	./obj/httpreq.o \
 	./obj/httpres.o \
+	./obj/httparg.o \
 	./obj/socket.o
 
 vpath %.cpp ./src/
@@ -18,7 +19,7 @@ vpath %.h ./include/
 $(TARGET) : $(OBJS) $(DLAGON_OBJS)
 	@-mkdir ./target/
 	@-mkdir ./target/debug/
-	g++ -o $(TARGET) $(OBJS) $(DLAGON_OBJS) $(OPTION) -lunp	-lpthread
+	g++ -o $(TARGET) $(OBJS) $(DLAGON_OBJS) $(OPTION) -lpthread
 	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
 	@echo ">>>>>>>>>>>>>>>> build success! <<<<<<<<<<<<<<<<<<"
 	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
@@ -37,14 +38,17 @@ $(TARGET) : $(OBJS) $(DLAGON_OBJS)
 ./obj/httpres.o : http/response.cc
 	gcc -c ./src/http/response.cc -o ./obj/httpres.o $(OPTION)
 
+./obj/httparg.o : http/arg.cc
+	gcc -c ./src/http/arg.cc -o ./obj/httparg.o $(OPTION)
+
 ./obj/socket.o : socket.cc
 	gcc -c ./src/socket.cc -o ./obj/socket.o $(OPTION)
 
 .PHONY : run clean line basic
 
 clean : 
-	@rm ./obj/*
-	@rm $(TARGET)
+	@-rm ./obj/*
+	@-rm $(TARGET)
 	@echo "clean!"
 
 run :
@@ -81,7 +85,7 @@ rb :
 release: $(DLAGON_OBJS)
 	@-mkdir release
 	@cp -r ./include release/include
-	@ar rcs -o ./release/libdlagon.a $(DLAGON_OBJS)
+	ar rcs -o ./release/libdlagon.a $(DLAGON_OBJS)
 	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
 	@echo ">>>>>>>>>>>>>>> release success! <<<<<<<<<<<<<<<<<"
 	@echo ">>>>>>>>>>>>>>>> -------------- <<<<<<<<<<<<<<<<<<"
