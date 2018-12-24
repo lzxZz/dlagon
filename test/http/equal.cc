@@ -1,8 +1,15 @@
-/*
-*  用于测试相关类中的operator==()运算
-* 
-*
-*/
+// Copyright 2018, lzxZz
+// e-mail : 616281384@qq.com
+// last modified in 2018.12.24
+
+
+
+
+/**
+ * 
+ *  用于测试相关类中的operator==()运算
+ *
+**/
 
 #include <gtest/gtest.h>
 

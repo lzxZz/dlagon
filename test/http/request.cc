@@ -1,8 +1,15 @@
-/*
-*   用于测试http请求类
-* 
-*
-*/
+// Copyright 2018, lzxZz
+// e-mail : 616281384@qq.com
+// last modified in 2018.12.24
+
+
+
+
+/**
+ * 
+ *  测试HTTP请求的转换
+ *
+**/
 
 #include <gtest/gtest.h>
 
@@ -23,7 +30,7 @@ TEST(RequestTest, GetTest)
 TEST(RequestTest, PostTest)
 {
     using Head = HttpRequestHeader;
-    HttpRequest req = HttpRequest::Parse("Post / HTTP/1.1\r\nk:v\r\n\r\nbody");
+    HttpRequest req = HttpRequest::Parse("Post / HTTP/1.1\r\n\r\nbody");
     Head std_head =  Head(HttpMethod::POST, "/", "HTTP/1.1");
     HttpRequest std_req =  HttpRequest(std_head,"body\n");
     EXPECT_EQ(std_req, req);

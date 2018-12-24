@@ -81,7 +81,8 @@ namespace dlagon
             const std::string                                   version_;
             const std::unordered_map<std::string, std::string>  arg_table_;
         };
-
+        
+        //请求头的比较没有比较请求头参数列表
         bool operator==(const HttpRequestHeader &lhs, const HttpRequestHeader &rhs);
         bool operator!=(const HttpRequestHeader &lhs, const HttpRequestHeader &rhs);
 

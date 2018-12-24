@@ -23,7 +23,7 @@ namespace http {
         return "";
     }
 
-
+    
     bool operator==(const HttpRequestHeader &lhs, const HttpRequestHeader &rhs)
     {
         return (lhs.Method() == rhs.Method()

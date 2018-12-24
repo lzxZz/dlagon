@@ -1,3 +1,12 @@
+// Copyright 2018, lzxZz
+// e-mail : 616281384@qq.com
+// last modified in 2018.12.24
+
+/*
+   UNP一书中TCP时间获取客户端的Socket封装版.
+*/
+
+
 #include "dlagon.h"
 #include <string>
 #include <iostream>
