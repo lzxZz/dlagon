@@ -2,3 +2,5 @@ obj/
 target/
 .vscode/
 release/
+old/
+build/
