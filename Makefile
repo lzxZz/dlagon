@@ -1,4 +1,4 @@
-.PHONY : build clean test
+.PHONY : build clean test line
 
 build:
 	
@@ -10,3 +10,6 @@ clean:
 test:
 	@make
 	@./build/target/test
+
+line:
+	wc -l  `find ./dlagon/ -name "*"`

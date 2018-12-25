@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2018.12.25
 
 /*
    本文件声明EndPoint,对普通的struct sockaddr_in进行了封装,
@@ -55,7 +55,7 @@ namespace dlagon{
       }
 
       //显示EndPoint数据成员为可读格式.
-      const std::string &&Debug();
+      const std::string Debug();
       
    private:
       //将协议从AF_XX转换为可读的文本

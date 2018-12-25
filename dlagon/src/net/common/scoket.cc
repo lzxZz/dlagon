@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2018.12.25
 
 /*
    对`net/common/socket.h`的实现
@@ -10,12 +10,17 @@
 #include "net/common/socket.h"
 
 #include <arpa/inet.h>
+#include <errno.h>
+
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-#include <string.h>
+
 #include <sstream>
 using std::string;
+
+
+
 
 namespace dlagon{
 namespace net{
@@ -68,7 +73,7 @@ namespace {
 } //namesapce
 
 
-   const string &&Socket::Receive(){  
+   const string Socket::Receive() noexcept{   
       string content;
 
       char *buf = new char[BUFSIZ];
@@ -80,30 +85,45 @@ namespace {
          puts(str);
       }while(n == BUFSIZ);
       delete[] buf;
-      return std::move(content);
+      return content;
    }
 
-   void Socket::Send(const string &str){
+   void Socket::Send(const string &str) noexcept{
       writern(this->fd_, str.c_str(), sizeof(str.c_str()));
    }
 
    void Socket::Bind(int port){
       using SA = struct sockaddr;
-      struct sockaddr_in addr;
-      bzero(&addr, sizeof(SA));
-      addr.sin_family = AF_INET;
-      addr.sin_addr.s_addr = htonl(INADDR_ANY);
-      addr.sin_port = htons(port);
+      // struct sockaddr_in addr;
+      // bzero(&addr, sizeof(SA));
+      // addr.sin_family = AF_INET;
+      // addr.sin_addr.s_addr = htonl(INADDR_ANY);
+      // addr.sin_port = htons(port);
+      EndPoint endpoint{port};
 
-      if (bind(this->fd_, (sockaddr *)&addr, sizeof(SA))  == -1){
-         // TODO  需要抛出异常,
+      
+      if (bind(this->fd_, endpoint.ScoketAddress(), sizeof(SA))  == -1){
+         string info;
+         info.append("绑定端口号失败\n");
+         info.append(strerror(errno));
+         info.append("\n");
+         info.append(endpoint.Debug());
+
+         throw dlagon::exception::Exception{info};
       }
    }
 
    void Socket::Listen(int queue_length){
       if (listen(this->fd_, queue_length) == -1){
-         // TODO 需要抛出异常
-         puts("监听失败");
+         string info;
+         info.append("监听失败\n");
+         info.append("监听的文件描述符是 : ");
+         info.append(std::to_string(this->fd_));
+         info.append("\n");
+         info.append(strerror(errno));
+         info.append("\n");
+         
+         throw dlagon::exception::Exception{info};
       }
    }
 
@@ -111,16 +131,39 @@ namespace {
       using SA = struct sockaddr;
 
       if( connect(this->fd_, endpoint.ScoketAddress(), sizeof(SA)) == -1){
-         // TODO 需要返回异常
-         puts("连接失败");
+         string info;
+         info.append("连接远程套接字失败\n");
+         info.append(strerror(errno));
+         info.append("\n");
+         info.append("远程套接字信息如下\n\n");
+         
+         info.append(endpoint.Debug());
+
+         throw dlagon::exception::Exception{info};
+         
+         
+         
       }
    }
 
+   // 阻塞版本
    Socket Socket::Accept(){
-      
-      Socket soc{10};
+      using SA = struct sockaddr;
+      struct sockaddr_in addr;
+      int fd;
+      socklen_t len = sizeof(addr);
+      fd = accept(this->fd_, (SA *)&addr, &len);
 
-      return std::move(soc);
+      if (fd == -1)
+      {
+         string info;
+         info.append("获取客户端套接字失败\n");
+         info.append(strerror(errno));
+         info.append("\n");
+         throw exception::Exception{info};
+      }
+      return Socket{fd};
+      
    }
 
    

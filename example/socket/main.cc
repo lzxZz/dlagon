@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2018.12.25
 
 /*
    UNP一书中TCP时间获取客户端的Socket封装版.
@@ -21,9 +21,15 @@ int main(){
    endpoint.IP("127.0.0.1");
    endpoint.Port(13);
 
-   cout << endpoint.Debug();
+   try
+   {
+      sock.Connect(endpoint);
+   }
+   catch(dlagon::exception::Exception &e)
+   {
+      cout << e.What() << endl;
+   }
    
-   sock.Connect(endpoint);
    
    string content;
    while( (content =  sock.Receive()) != "")

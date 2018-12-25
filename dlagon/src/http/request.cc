@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2018.12.25
 
 /*
     对`http/request.h`的实现
@@ -72,7 +72,10 @@ namespace http {
             body.append(line);
             body.append("\n");
         }
-        HttpRequestHeader req_head = HttpRequestHeader{StringToMethod(m), Path{p}, v, std::move(args)};
+        using Head = HttpRequestHeader;
+        Head req_head = Head{StringToMethod(m), 
+            Path{p}, v, 
+            args};
         return HttpRequest{req_head, body};
 
 
