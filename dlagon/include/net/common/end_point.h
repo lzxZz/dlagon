@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.25
+// last modified in 2018.12.26
 
 /*
    本文件声明EndPoint,对普通的struct sockaddr_in进行了封装,
@@ -52,6 +52,12 @@ namespace dlagon{
          sock_addr_.sin_family = AF_INET;
          sock_addr_.sin_addr.s_addr = htonl(INADDR_ANY);
          sock_addr_.sin_port = htons(port);
+      }
+      EndPoint(sockaddr_in addr){
+         bzero(&sock_addr_, sizeof(struct sockaddr_in));
+         sock_addr_.sin_family = addr.sin_family;
+         sock_addr_.sin_addr.s_addr = addr.sin_addr.s_addr;
+         sock_addr_.sin_port = addr.sin_port;
       }
 
       //显示EndPoint数据成员为可读格式.

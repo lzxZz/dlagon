@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.25
+// last modified in 2018.12.26
 
 /*
    对`net/common/socket.h`的实现
@@ -15,11 +15,12 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-
+#include <memory>
 #include <sstream>
 using std::string;
+using std::shared_ptr;
 
-
+#include <iostream>
 
 
 namespace dlagon{
@@ -32,7 +33,13 @@ namespace {
       ssize_t nwritten;
       const char *ptr;
       
+      
+
       ptr = static_cast<const char*>(vptr);
+
+      string s = ptr;
+      std::cout << "writern : 数据 : " << s  << "\n";
+      std::cout << "writern : 长度 : " << n  << "\n";
       
       while (nleft > 0){
          if ( (nwritten = write(fd, ptr, nleft)) <= 0){
@@ -45,18 +52,26 @@ namespace {
          nleft -= nwritten;
          ptr += nwritten;
       }
-      return (n);
+      return n;
    }
+   // ----------
+   // ----------
+   // DEPRECATED
+   // ----------
+   // ----------
    // UNP中的readn函数
    ssize_t readn(int fd, void *vptr, size_t n)
    {
       size_t nleft;
       ssize_t nread;
       char *ptr;
+
       ptr = static_cast<char*>(vptr);
       nleft = n;
       while (nleft > 0){
-         if ( (nread = read(fd, ptr, nleft)) < 0 )  {
+         //使用http例子时第二次调用readn函数崩溃
+         // 目前弃用
+         if ( (nread = read(fd, ptr, nleft)) < 0 )  {  
             if (errno == EINTR){
                nread = 0;
             }else{
@@ -79,27 +94,25 @@ namespace {
       char *buf = new char[BUFSIZ];
       size_t n = 0;
       do{
-         n = readn(this->fd_, buf, BUFSIZ);
-         char str[1024];
-         sprintf(str, "%s", buf);
-         puts(str);
+         n = read(this->fd_, buf, BUFSIZ);      // 2018.12.26修改为read函数
+         
+         content.append(buf, n);
       }while(n == BUFSIZ);
       delete[] buf;
       return content;
    }
 
    void Socket::Send(const string &str) noexcept{
-      writern(this->fd_, str.c_str(), sizeof(str.c_str()));
+   
+      writern(this->fd_, str.c_str(), str.size());
+  
    }
 
    void Socket::Bind(int port){
       using SA = struct sockaddr;
-      // struct sockaddr_in addr;
-      // bzero(&addr, sizeof(SA));
-      // addr.sin_family = AF_INET;
-      // addr.sin_addr.s_addr = htonl(INADDR_ANY);
-      // addr.sin_port = htons(port);
+      
       EndPoint endpoint{port};
+      std::cout << "绑定的对象为:\n" << endpoint.Debug() ;
 
       
       if (bind(this->fd_, endpoint.ScoketAddress(), sizeof(SA))  == -1){
@@ -147,13 +160,13 @@ namespace {
    }
 
    // 阻塞版本
-   Socket Socket::Accept(){
+   std::tuple<shared_ptr<Socket>, EndPoint> Socket::Accept(){
       using SA = struct sockaddr;
       struct sockaddr_in addr;
       int fd;
       socklen_t len = sizeof(addr);
       fd = accept(this->fd_, (SA *)&addr, &len);
-
+      shared_ptr<Socket> sock = std::make_shared<Socket>(fd);
       if (fd == -1)
       {
          string info;
@@ -162,7 +175,7 @@ namespace {
          info.append("\n");
          throw exception::Exception{info};
       }
-      return Socket{fd};
+      return  std::make_tuple(sock ,EndPoint{addr});
       
    }
 

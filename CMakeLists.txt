@@ -34,13 +34,23 @@ link_directories(
     build
 )
 
-aux_source_directory(example/socket EXAMPLE_SOCKET)
+
 
 add_executable(test ${TEST_SRCS})
 target_link_libraries(test dlagon pthread gtest gmock)
 
-add_executable(exmp_sock ${EXAMPLE_SOCKET})
-target_link_libraries(exmp_sock dlagon)
+
+aux_source_directory(example/socket/client EXMP_CLIENT)
+aux_source_directory(example/socket/server EXMP_SERVER)
+aux_source_directory(example/socket/http EXMP_HTTP)
+
+add_executable(daytime_client ${EXMP_CLIENT})
+add_executable(daytime_server ${EXMP_SERVER})
+add_executable(http ${EXMP_HTTP})
+
+target_link_libraries(daytime_client dlagon)
+target_link_libraries(daytime_server dlagon)
+target_link_libraries(http dlagon)
 
 
 set (CMAKE_BUILD_TYPE Debug)
