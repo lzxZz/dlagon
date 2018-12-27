@@ -13,6 +13,8 @@
 using std::string;
 using std::cout;
 using std::endl;
+
+
 int main(){
    int fd = socket(AF_INET, SOCK_STREAM, 0);
    dlagon::net::Socket sock{fd};
@@ -36,4 +38,6 @@ int main(){
    {
       cout << content << endl;
    }
+
+   return 0;
 }

@@ -12,4 +12,4 @@ test:
 	@./build/target/test
 
 line:
-	wc -l  `find ./dlagon/ -name "*"`
+	@-wc -l  `find ./dlagon/ -name "*"`

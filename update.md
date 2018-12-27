@@ -1,4 +1,14 @@
 > 说明: 本文件为项目更新日志
+# 1028.12.27 更新
+1. 修改Socket,使用shared_ptr持有文件描述符
+1. 新增ClientSocket和ServerSocket类,对Socket进行封装,隐藏了部分接口.
+1. ClientSocket分离式编译失败,所有实现移动到头文件中
+1. 新增ClientSocket实现的daytime客户端程序
+1. 新增ServerSocket实现的daytime服务端程序
+
+## bug
+1. 在将Socket转为ClientSocket时,出现问题,多次调用析构函数
+
 
 # 2018.12.26 更新
 1. 更改Socket::Accept()函数签名,使用智能指针+元组同时返回套接字和地址信息.

@@ -31,33 +31,35 @@ namespace dlagon
      */
     class Socket{
     public:
-        ~Socket()
-        {
-            using std::endl;
-            using std::cout;
-            std::cout << "~" << fd_ << endl;
-            close(fd_);
-        }
+        // 关闭对应的套接字
+        static void release_socket(const int* const fd);
+        
+        ~Socket() {}
         // 从指定的文件描述符创建封装.
-        Socket(int fd) : fd_(fd) {}
+        Socket(const int fd) 
+            : fd_(new int(fd), release_socket) {}
         
         static Socket New(){
-            int fd = socket(AF_INET, SOCK_STREAM, 0);
+            const int fd = socket(AF_INET, SOCK_STREAM, 0);
             if (fd == -1)
             {
                 throw dlagon::exception::Exception("获取套接字描述符失败");
             }
-            return Socket(fd);
+            return Socket{fd};
         }
 
         const int FD() const{
-            return fd_;
+            return *fd_;
         }
         auto Send(const std::string &str) noexcept  //
+            -> void;
+        auto Send(const char *str, size_t len) noexcept  //
             -> void;
         auto Receive() noexcept
             -> const std::string;            
         auto Bind(int port)
+            -> void;        
+        auto Bind(EndPoint endpoint)
             -> void;        
         auto Listen(int queue_length)
             -> void;        
@@ -76,7 +78,7 @@ namespace dlagon
             -> std::tuple<std::shared_ptr<Socket>, EndPoint>;
         
     private:
-        const int fd_;
+        std::shared_ptr<const int> fd_;
     };
 
     } //namespace net

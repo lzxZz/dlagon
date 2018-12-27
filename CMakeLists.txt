@@ -41,15 +41,26 @@ target_link_libraries(test dlagon pthread gtest gmock)
 
 
 aux_source_directory(example/socket/client EXMP_CLIENT)
+aux_source_directory(example/client_socket/ EXMP_CLIENT_SOCK_CLIENT)
+aux_source_directory(example/server_socket/ EXMP_SERVER_SOCK_SERVER)
+
 aux_source_directory(example/socket/server EXMP_SERVER)
 aux_source_directory(example/socket/http EXMP_HTTP)
 
+# add_subdirectory(example/socket/client)
+
+
+
 add_executable(daytime_client ${EXMP_CLIENT})
+add_executable(daytime_client1 ${EXMP_CLIENT_SOCK_CLIENT})
+add_executable(daytime_server1 ${EXMP_SERVER_SOCK_SERVER})
 add_executable(daytime_server ${EXMP_SERVER})
 add_executable(http ${EXMP_HTTP})
 
+target_link_libraries(daytime_client1 dlagon)
 target_link_libraries(daytime_client dlagon)
 target_link_libraries(daytime_server dlagon)
+target_link_libraries(daytime_server1 dlagon)
 target_link_libraries(http dlagon)
 
 
