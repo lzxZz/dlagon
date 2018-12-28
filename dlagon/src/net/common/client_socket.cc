@@ -10,7 +10,20 @@ namespace dlagon{
 
 namespace net{
    
+   void  ClientSocket::Send(const std::string &str){
+      this->socket_.Send(str);
+   }
+   void ClientSocket::Send(const char *str, size_t len){
+      this->socket_.Send(str, len);
+   }
 
+   std::string ClientSocket::Receive(){   
+      return this->socket_.Receive();
+   }
+
+   void ClientSocket::Connect(EndPoint endpoint){
+      this->socket_.Connect(endpoint);
+   }           
    
 
 } //namespace net

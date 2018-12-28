@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2018.12.28
 
 /*
     本文件声明HTTP方法枚举,和相关的处理函数
@@ -29,8 +29,10 @@ namespace dlagon
             UNKNOWN
         };
 
-        HttpMethod StringToMethod(std::string method);
-        const std::string  MethodToString(HttpMethod method);
+        auto StringToMethod(std::string method)
+            -> HttpMethod ;
+        auto MethodToString(HttpMethod method)
+            -> const std::string ;
 
     } //namespace http
 } //namespace dlagon

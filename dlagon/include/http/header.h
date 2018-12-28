@@ -32,21 +32,30 @@ namespace dlagon
         */
         class HttpRequestHeader{
         public:
-            const HttpMethod Method() const{
+            auto Method() const
+                -> const HttpMethod 
+            {
                 return method_;
             }
-            const dlagon::Path &Path() const{
+            auto Path() const
+                -> const dlagon::Path&
+            {
                 return path_;
             }
             //因为这个字符串不会很长,因此返回副本,而不是引用
-            const std::string Version() const{
+            auto Version() const
+                -> const std::string 
+            {
                 return version_;
             }
-            const std::unordered_map<std::string, std::string> &ArgTable(){
+            auto ArgTable()
+                -> const std::unordered_map<std::string, std::string> &
+            {
                 return arg_table_;
             }
 
-            const std::string Debug();
+            auto Debug()
+                -> const std::string;
 
             HttpRequestHeader(dlagon::http::HttpMethod  method, 
                                 std::string path, 

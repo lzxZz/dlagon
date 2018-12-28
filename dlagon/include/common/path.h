@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2018.12.28
 
 /*
     本文件声明的Path类,用于表示一个路径,
@@ -23,7 +23,10 @@ namespace dlagon
         explicit Path(const std::string path)
             : path_(path) {}
 
-        const std::string ToString() const {
+        // 返回路径表示的字符串
+        auto ToString() const 
+            -> const std::string 
+        {
             return path_;
         }
     private:

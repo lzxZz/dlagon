@@ -35,18 +35,24 @@ namespace http
         //             std::string                                body)
         //     : header_(header) ,body_(body) {}
         
-        const std::string Debug();
+        auto Debug() 
+            -> const std::string;
 
         //获取请求体
-        std::string             Body()      const{
+        auto Body() const
+            -> std::string 
+        {
             return body_;
         }          
         //获取请求头
-        HttpRequestHeader       Header()    const{
+        auto Header() const
+            -> HttpRequestHeader
+        {
             return header_;
         }          
         //静态函数,用于将字符串转换为HTTP请求
-        static HttpRequest      Parse(const std::string &str);
+        static auto Parse(const std::string &str)
+            -> HttpRequest;
     private:
         const HttpRequestHeader header_;
         const std::string       body_;       //请求体

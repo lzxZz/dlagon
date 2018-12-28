@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.25
+// last modified in 2018.12.28
 
 /*
     本文件声明异常基类,
@@ -28,7 +28,9 @@ namespace dlagon{
          Exception(const char *info) 
             : information_(info) {}
          virtual ~Exception() {} 
-         virtual const std::string What() const{
+         virtual auto What() const
+            ->  const std::string 
+         {
             return information_;
          }
       private:

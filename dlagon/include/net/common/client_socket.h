@@ -41,23 +41,14 @@ namespace dlagon{
          ClientSocket(Socket &sock)
             : socket_(sock.PointerFD()) {}
 
-         void Send(const std::string &str){
-            this->socket_.Send(str);
-         }
+         void Send(const std::string &str);
 
-         void Send(const char *str, size_t len){
-            this->socket_.Send(str, len);
-         }
+         void Send(const char *str, size_t len);
 
          auto Receive() 
-            -> std::string
-         {   
-            return this->socket_.Receive();
-         }
+            -> std::string;
 
-         void Connect(EndPoint endpoint){
-            this->socket_.Connect(endpoint);
-         }     
+         void Connect(EndPoint endpoint);
 
       private:
          Socket socket_;
