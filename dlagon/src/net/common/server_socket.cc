@@ -24,13 +24,14 @@ namespace net{
    }
 
    auto ServerSocket::Accept() 
-      -> std::tuple<std::shared_ptr<ClientSocket>, EndPoint>
+      -> std::tuple<ClientSocket, EndPoint>
    {
-      using Result = std::tuple<std::shared_ptr<Socket>, EndPoint>;
+      using Result = std::tuple<Socket, EndPoint>;
       Result result = this->socket_.Accept();
       using std::shared_ptr;
-      shared_ptr<Socket> sock = std::get<0>(result);
-      shared_ptr<ClientSocket> client = std::make_shared<ClientSocket>(sock->FD());
+      Socket sock = std::get<0>(result);
+      ClientSocket client{sock};
+      
       EndPoint endpoint = std::get<1>(result);
 
       return std::make_tuple(client, endpoint);

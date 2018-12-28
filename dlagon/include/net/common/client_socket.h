@@ -38,7 +38,8 @@ namespace dlagon{
          ClientSocket() 
             : socket_(Socket::New()) {}
 
-         
+         ClientSocket(Socket &sock)
+            : socket_(sock.PointerFD()) {}
 
          void Send(const std::string &str){
             this->socket_.Send(str);
@@ -59,7 +60,7 @@ namespace dlagon{
          }     
 
       private:
-         dlagon::net::Socket socket_;
+         Socket socket_;
       };
    
    } //namespace net

@@ -34,24 +34,24 @@ int main(){
       for (;;){
          cout << "waiting ..." << endl;
          using std::shared_ptr;
-         using Result = tuple<shared_ptr<Socket>, EndPoint>;
+         using Result = tuple<Socket, EndPoint>;
          
          Result result = sock.Accept();
          
          cout << std::get<1>(result).Debug() << endl;
 
-         shared_ptr<Socket> client = std::get<0>(result);
+         Socket client = std::get<0>(result);
 
          
 
-         cout << "客户端对应套接字为:"<< client->FD() << endl;
+         cout << "客户端对应套接字为:"<< client.FD() << endl;
 
          time_t ticks = time(NULL);
          char buf[4096];
          snprintf(buf, sizeof(buf), "%.24s\r\n", ctime(&ticks));
          string info;
          info.append(buf, strlen(buf));
-         client->Send(info);
+         client.Send(info);
       
       }
    }

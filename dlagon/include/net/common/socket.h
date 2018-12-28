@@ -16,7 +16,7 @@
 
 #include "exception/exception.h"
 #include "net/common/end_point.h"
-
+// #include "net/common/client_socket.h"
 #include <iostream>
 
 namespace dlagon
@@ -38,7 +38,9 @@ namespace dlagon
         // 从指定的文件描述符创建封装.
         Socket(const int fd) 
             : fd_(new int(fd), release_socket) {}
-        
+        Socket(std::shared_ptr<const int> pointer_fd) 
+            : fd_(pointer_fd) {}
+
         static Socket New(){
             const int fd = socket(AF_INET, SOCK_STREAM, 0);
             if (fd == -1)
@@ -47,7 +49,9 @@ namespace dlagon
             }
             return Socket{fd};
         }
-
+        const std::shared_ptr<const int> PointerFD() const{
+            return fd_;
+        }
         const int FD() const{
             return *fd_;
         }
@@ -75,7 +79,7 @@ namespace dlagon
         //    必须使用指针进行返回
 
         auto Accept()
-            -> std::tuple<std::shared_ptr<Socket>, EndPoint>;
+            -> std::tuple<Socket, EndPoint>;
         
     private:
         std::shared_ptr<const int> fd_;

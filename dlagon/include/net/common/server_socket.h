@@ -29,7 +29,7 @@ namespace net{
       void Listen();
       void Listen(int queue_length);
       auto Accept()           
-         -> std::tuple<std::shared_ptr<ClientSocket>, EndPoint>;
+         -> std::tuple<ClientSocket, EndPoint>;
 
    private:
       Socket socket_;

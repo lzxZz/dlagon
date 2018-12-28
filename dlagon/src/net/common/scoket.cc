@@ -176,13 +176,13 @@ namespace {
    }
 
    // 阻塞版本
-   std::tuple<shared_ptr<Socket>, EndPoint> Socket::Accept(){
+   std::tuple<Socket, EndPoint> Socket::Accept(){
       using SA = struct sockaddr;
       struct sockaddr_in addr;
       int fd;
       socklen_t len = sizeof(addr);
       fd = accept(*this->fd_, (SA *)&addr, &len);
-      shared_ptr<Socket> sock = std::make_shared<Socket>(fd);
+      
       if (fd == -1)
       {
          string info;
@@ -191,7 +191,7 @@ namespace {
          info.append("\n");
          throw exception::Exception{info};
       }
-      return  std::make_tuple(sock ,EndPoint{addr});
+      return  std::make_tuple(Socket{fd} ,EndPoint{addr});
       
    }
 

@@ -18,13 +18,13 @@ using namespace dlagon::net;
 #include <thread>
 using namespace std;
 
-void rw_socket(shared_ptr<Socket> sock){
-   cout << sock->Receive() << endl;
+void rw_socket(Socket sock){
+   cout << sock.Receive() << endl;
    
    string info = "HTTP/1.1 200 OK\r\nContent-Type : text/html\r\n\r\n<h1>Hello Wrold!</h1>";
    
          
-   sock->Send(info);
+   sock.Send(info);
          
    cout << "发送完成" << endl;
 }
@@ -39,17 +39,17 @@ int main(){
       for (;;){
          cout << "waiting ..." << endl;
          
-         using Result =  std::tuple<shared_ptr<Socket>, EndPoint>;
+         using Result =  std::tuple<Socket, EndPoint>;
          Result result = sock.Accept();
          
          cout << get<1>(result).Debug() << endl;
 
-         shared_ptr<Socket> client = get<0>(result);
+         Socket client = get<0>(result);
 
          
          
 
-         cout << "客户端对应FD为:"<< client->FD() << endl;
+         cout << "客户端对应FD为:"<< client.FD() << endl;
 
          using std::thread;
          thread cth(rw_socket, client);

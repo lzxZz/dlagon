@@ -11,6 +11,7 @@
 #ifndef DLAGON_HTTP_RESPONSE_PROTOCOL_H_
 #define DLAGON_HTTP_RESPONSE_PROTOCOL_H_
 
+#include <string>
 namespace dlagon
 {
     namespace http

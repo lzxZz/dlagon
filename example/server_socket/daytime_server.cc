@@ -34,13 +34,13 @@ int main(){
       for (;;){
          cout << "waiting ..." << endl;
          using std::shared_ptr;
-         using Result = tuple<shared_ptr<ClientSocket>, EndPoint>;
+         using Result = tuple<ClientSocket, EndPoint>;
          
          Result result = sock.Accept();
          
          cout << std::get<1>(result).Debug() << endl;
 
-         shared_ptr<ClientSocket> client = std::get<0>(result);
+         ClientSocket client = std::get<0>(result);
 
          
 
@@ -51,7 +51,7 @@ int main(){
          snprintf(buf, sizeof(buf), "%.24s\r\n", ctime(&ticks));
          string info;
          info.append(buf, strlen(buf));
-         client->Send(info);
+         client.Send(info);
       
       }
    }
