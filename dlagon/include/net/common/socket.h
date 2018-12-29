@@ -24,6 +24,34 @@ namespace dlagon
     namespace net{
 
     constexpr int LISTENQ  = 1024;
+
+    // 套接字协议族
+    enum class SocketFamily {
+        IPv4 = AF_INET,            
+        IPv6 = AF_INET6,           
+        UNIX = AF_LOCAL,   //UNIX域协议       
+        ROUTE = AF_ROUTE,  // 路由协议        
+        KEY  = AF_KEY    //密钥协议         
+    };
+
+    // 套接字类型,前面加SOCK_即是系统定义的常量
+    enum class SocketType{
+        STREAM = SOCK_STREAM,     //流式套接字
+        DGRAM = SOCK_DGRAM,      //数据报套接字
+        SEQPACKET = SOCK_SEQPACKET,  //有序分组套接字
+        RAW = SOCK_RAW        //原始套接字
+    };
+
+    // 套接字协议类型
+    enum class SocketProtocolType{
+        TCP = IPPROTO_TCP,     //对应于IPPROTO_TCP
+        UDP = IPPROTO_UDP,     //对应于IPPROTO_UDP
+        SCTP = IPPROTO_SCTP,    //对应于IPPROTO_SCTP
+        IP = IPPROTO_IP
+    };
+
+
+
     /**
      * 
      * 基本的Socket类 
@@ -40,9 +68,17 @@ namespace dlagon
             : fd_(new int(fd), release_socket) {}
         Socket(std::shared_ptr<const int> pointer_fd) 
             : fd_(pointer_fd) {}
+        Socket(const Socket &sock)
+            : fd_(sock.PointerFD()) {}
+        Socket(const Socket &&sock)
+            : fd_(sock.PointerFD()) {}
 
-        static Socket New(){
-            const int fd = socket(AF_INET, SOCK_STREAM, 0);
+        static Socket New(SocketFamily family = SocketFamily::IPv4, 
+                        SocketType type = SocketType::STREAM, 
+                        SocketProtocolType protocol = SocketProtocolType::IP){
+            const int fd = socket(static_cast<int>(family),
+                                static_cast<int>(type), 
+                                static_cast<int>(protocol));
             if (fd == -1)
             {
                 throw dlagon::exception::Exception("获取套接字描述符失败");

@@ -21,6 +21,8 @@
 #include "net/common/server_socket.h"
 #include "net/common/end_point.h"
 #include "net/common/socket.h"
+#include "net/common/udp_socket.h"
+#include "net/common/tcp_socket.h"
 
 
 #endif //DLAGON_H_
