@@ -13,26 +13,30 @@
 using std::string;
 using std::cout;
 using std::endl;
+
+
+
 int main(){
    
 
    try
    {
       using namespace dlagon::net;
+      using namespace dlagon::net::tcp;
 
-      ClientSocket sock;
+      TcpClientSocket sock;
       
       sock.Connect(EndPoint{13});     // 时间服务器需要连接13端口号
       string content;
-   while( (content =  sock.Receive()) != "")
-   {
-      cout << content << endl;
-   }
-   }
-   catch(dlagon::exception::Exception &e)
-   {
-      cout << e.What() << endl;
-   }
+      while( (content =  sock.Receive()) != "")
+      {
+         cout << content << endl;
+      }
+      }
+      catch(dlagon::exception::Exception &e)
+      {
+         cout << e.What() << endl;
+      }
    
    return 0;
    

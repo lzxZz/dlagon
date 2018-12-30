@@ -22,25 +22,26 @@ using std::endl;
 
 using namespace dlagon;
 using namespace dlagon::net;
+using namespace dlagon::net::tcp;
 
 int main(){
 
     
    try
    {
-      Socket sock = Socket::New();
+      TcpSocket sock = Socket::New();
       sock.Bind(13);
       sock.Listen();
       for (;;){
          cout << "waiting ..." << endl;
          using std::shared_ptr;
-         using Result = tuple<Socket, EndPoint>;
+         using Result = tuple<TcpSocket, EndPoint>;
          
          Result result = sock.Accept();
          
          cout << std::get<1>(result).Debug() << endl;
 
-         Socket client = std::get<0>(result);
+         TcpSocket client = std::get<0>(result);
 
          
 

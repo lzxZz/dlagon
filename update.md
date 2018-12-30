@@ -1,5 +1,15 @@
 > 说明: 本文件为项目更新日志
-# 1028.12.27 更新
+# 2018.12.30 更新
+1. 将Socket重构为基类,只持有套接字描述符,不再持有具体行为
+1. 新增TcpSocket和UdpSocket,从Socket派生,添加具体行为
+1. 新增TCPServerSocket和TcpClientSocket,隐藏不需要的行为.
+1. 修复示例,满足新版本的运行
+1. 在dlagon:net命名空间下新增tcp和udp两个命名空间.用于放置tcp和udp相关的类.
+1. 暂时停止对UDP的支持.先集中精力完成HTTP框架的编写.
+
+1. 目前新增的代码没有注释
+
+# 2018.12.27 更新
 1. 修改Socket,使用shared_ptr持有文件描述符
 1. 新增ClientSocket和ServerSocket类,对Socket进行封装,隐藏了部分接口.
 1. ClientSocket分离式编译失败,所有实现移动到头文件中

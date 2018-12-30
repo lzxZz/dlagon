@@ -14,11 +14,13 @@ using std::string;
 using std::cout;
 using std::endl;
 
+using namespace dlagon::net::tcp;
+using namespace dlagon::net;
 
 int main(){
    int fd = socket(AF_INET, SOCK_STREAM, 0);
-   dlagon::net::Socket sock{fd};
-   dlagon::net::EndPoint endpoint{13};
+   TcpSocket sock{fd};
+   EndPoint endpoint{13};
 
    endpoint.IP("127.0.0.1");
    endpoint.Port(13);

@@ -15,6 +15,8 @@ aux_source_directory(dlagon/src/http LIBSRCS)
 aux_source_directory(dlagon/src/common LIBSRCS)
 aux_source_directory(dlagon/src/net LIBSRCS)
 aux_source_directory(dlagon/src/net/common LIBSRCS)
+aux_source_directory(dlagon/src/net/tcp LIBSRCS)
+aux_source_directory(dlagon/src/net/udp LIBSRCS)
 
 # 添加header库,但是从不使用,仅仅作为检查头文件的一个手段
 add_library(header dlagon/src/dlagon.cc)

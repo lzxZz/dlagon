@@ -11,6 +11,7 @@
 
 using namespace dlagon;
 using namespace dlagon::net;
+using namespace dlagon::net::tcp;
 
 #include <iostream>
 #include <tuple>
@@ -18,7 +19,7 @@ using namespace dlagon::net;
 #include <thread>
 using namespace std;
 
-void rw_socket(Socket sock){
+void rw_socket(TcpClientSocket sock){
    cout << sock.Receive() << endl;
    
    string info = "HTTP/1.1 200 OK\r\nContent-Type : text/html\r\n\r\n<h1>Hello Wrold!</h1>";
@@ -33,19 +34,20 @@ int main(){
 
    try
    {
-      Socket sock = Socket::New();
+      TcpServerSocket sock = TcpServerSocket();
       sock.Bind(8080);
       sock.Listen();
       for (;;){
          cout << "waiting ..." << endl;
          
-         using Result =  std::tuple<Socket, EndPoint>;
+         using Result =  std::tuple<TcpClientSocket, EndPoint>;
          Result result = sock.Accept();
          
          cout << get<1>(result).Debug() << endl;
 
-         Socket client = get<0>(result);
+         TcpClientSocket client = get<0>(result);
 
+         
          
          
 

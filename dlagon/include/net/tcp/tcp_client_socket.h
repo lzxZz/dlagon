@@ -7,18 +7,21 @@
    使用组合实现,而非继承
 */
 
-#ifndef DLAGON_NET_CLIENT_SOCKET_H_
-#define DLAGON_NET_CLIENT_SOCKET_H_
+#ifndef DLAGON_NET_TCP_CLIENT_SOCKET_H_
+#define DLAGON_NET_TCP_CLIENT_SOCKET_H_
 
 
 #include <string>
 
-#include "net/common/socket.h"
+#include "net/tcp/tcp_socket.h"
 
 #include "net/common/end_point.h"
 
 namespace dlagon{
-   namespace net{
+
+namespace net{
+
+namespace tcp{
 
 
       
@@ -30,15 +33,15 @@ namespace dlagon{
        * 
       **/
 
-      class ClientSocket{
+      class TcpClientSocket{
       public:  
-         ClientSocket(int fd) 
+         TcpClientSocket(int fd) 
             : socket_(fd) {}
             
-         ClientSocket() 
-            : socket_(Socket::New()) {}
+         TcpClientSocket() 
+            : socket_(TcpSocket{}) {}
 
-         ClientSocket(Socket &sock)
+         TcpClientSocket(Socket &sock)
             : socket_(sock.PointerFD()) {}
 
          void Send(const std::string &str);
@@ -49,12 +52,15 @@ namespace dlagon{
             -> std::string;
 
          void Connect(EndPoint endpoint);
+         const int FD() const;
 
       private:
-         Socket socket_;
+         TcpSocket socket_;
       };
-   
-   } //namespace net
+} //namespace tcp
+
+} //namespace net
+
 } //namespace dlagon
 
-#endif //DLAGON_NET_CLIENT_SOCKET_H_
+#endif //DLAGON_NET_TCP_CLIENT_SOCKET_H_

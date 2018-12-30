@@ -7,30 +7,33 @@
    使用组合实现,而非继承
 */
 
-#include "net/common/server_socket.h"
+#include "net/tcp/tcp_server_socket.h"
 
 namespace dlagon{
 
 namespace net{
-   void ServerSocket::Bind(EndPoint endpoint){
+
+namespace tcp{
+
+   void TcpServerSocket::Bind(EndPoint endpoint){
       this->socket_.Bind(endpoint);
    }
 
-   void ServerSocket::Listen(){
+   void TcpServerSocket::Listen(){
       this->Listen(LISTENQ);
    }
-   void ServerSocket::Listen(int queue_length){
+   void TcpServerSocket::Listen(int queue_length){
       this->socket_.Listen(queue_length);
    }
 
-   auto ServerSocket::Accept() 
-      -> std::tuple<ClientSocket, EndPoint>
+   auto TcpServerSocket::Accept() 
+      -> std::tuple<TcpClientSocket, EndPoint>
    {
       using Result = std::tuple<Socket, EndPoint>;
       Result result = this->socket_.Accept();
       using std::shared_ptr;
       Socket sock = std::get<0>(result);
-      ClientSocket client{sock};
+      TcpClientSocket client{sock};
       
       EndPoint endpoint = std::get<1>(result);
 
@@ -38,6 +41,7 @@ namespace net{
       
    }
 
+} //namespace tcp
 
 } //namespace net
 

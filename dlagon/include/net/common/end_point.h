@@ -38,7 +38,9 @@ namespace dlagon{
       const int Port() const{
          return sock_addr_.sin_port;
       }
-
+      const int Size() const{
+         return sizeof(sock_addr_);
+      }
       void Port(int port){
          //注意使用htons进行转换,端口号的数据结构为short,16bit.
          sock_addr_.sin_port = htons(port); 
