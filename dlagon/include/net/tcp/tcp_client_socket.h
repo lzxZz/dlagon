@@ -1,9 +1,9 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.27
+// last modified in 2018.12.30
 
 /*
-   本文件声明客户端套接字,对普通套接字进行了封装,隐藏了Bind,Listen等方法
+   本文件声明Tcp客户端套接字,对Tcp套接字进行了封装,隐藏了Bind,Listen等方法
    使用组合实现,而非继承
 */
 
@@ -27,7 +27,7 @@ namespace tcp{
       
       /**
        * 
-       *    客户端套接字, 使用组合实现
+       *    TCP客户端套接字, 使用组合实现
        * 
        *    只有Send,Recevive Connect三个函数使用.
        * 

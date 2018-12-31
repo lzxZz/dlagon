@@ -1,10 +1,9 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.27
+// last modified in 2018.12.30
 
 /*
-   本文件声明服务端套接字,对普通套接字进行了封装,隐藏了Connect,Send,Receive方法
-   使用组合实现,而非继承
+   对net/tcp/tcp_server_socket.h的实现
 */
 
 #include "net/tcp/tcp_server_socket.h"

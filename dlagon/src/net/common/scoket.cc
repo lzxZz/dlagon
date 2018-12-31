@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.27
+// last modified in 2018.12.30
 
 /*
    对`net/common/socket.h`的实现
@@ -87,12 +87,11 @@ namespace net{
 //    } 
 // } //namesapce
 
+   
    void Socket::release_socket(const int* const fd){
-      std::cout << "---------xigou----------\n"  ;    //TODO  析构函数调用两次bug  出现在daytime_server1
+      std::cout << "---------xigou----------\n";    
       if (close(*fd) == -1){
          string info = "Close 套接字描述符失败\n要关闭的描述符为 : ";
-
-         
          info.append(std::to_string(*fd));
          info.append("\n错误消息为 : ");
          info.append(strerror(errno));

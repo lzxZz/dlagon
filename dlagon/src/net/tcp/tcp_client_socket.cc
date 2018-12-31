@@ -1,6 +1,8 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.27
+// last modified in 2018.12.30
+
+// 对net/tcp/tcp_client_socket.h的实现
 
 #include "net/tcp/tcp_client_socket.h"
 

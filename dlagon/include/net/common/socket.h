@@ -1,9 +1,10 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.26
+// last modified in 2018.12.30
 
 /*
-    本文件声明基本套接字,对普通的套接字函数进行了封装,   
+    本文件声明套接字基类, 使用共享智能指针持有套接字描述符.
+    不持有具体行为
 */
 
 #ifndef DLAGON_COMMON_SOCKET_H_
