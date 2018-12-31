@@ -11,9 +11,14 @@
 
 #include "common/path.h"
 
+#include "exception/exception.h"
+
 #include "http/header.h"
+#include "http/http_client.h"
+#include "http/http_request.h"
+#include "http/http_response.h"
+#include "http/http_server.h"
 #include "http/method.h"
-#include "http/request.h"
 #include "http/response_protocol.h"
 
 

@@ -13,7 +13,10 @@ namespace dlagon{
 namespace net{
 
 namespace tcp{
-
+   void TcpServerSocket::Bind(int port){
+      
+      Bind(EndPoint{port});
+   }
    void TcpServerSocket::Bind(EndPoint endpoint){
       this->socket_.Bind(endpoint);
    }

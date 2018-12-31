@@ -7,8 +7,8 @@
     并且声明了静态函数,用于构造对象.
 */
 
-#ifndef DLAGON_HTTPP_REQUEST_H_
-#define DLAGON_HTTPP_REQUEST_H_
+#ifndef DLAGON_HTTP_REQUEST_H_
+#define DLAGON_HTTP_REQUEST_H_
 
 #include <string>
 
@@ -65,4 +65,4 @@ namespace http
 
 } //namespace dlagon
 
-#endif //DLAGON_HTTPP_REQUEST_H_
+#endif //DLAGON_HTTP_REQUEST_H_

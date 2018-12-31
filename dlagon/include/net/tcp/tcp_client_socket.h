@@ -40,8 +40,16 @@ namespace tcp{
             
          TcpClientSocket() 
             : socket_(TcpSocket{}) {}
+         TcpClientSocket(const std::shared_ptr<const int> fdp)
+            : socket_(fdp) {}
 
-         TcpClientSocket(Socket &sock)
+         TcpClientSocket(const Socket &sock)
+            : socket_(sock.PointerFD()) {}
+         TcpClientSocket(const Socket &&sock)
+            : socket_(sock.PointerFD()) {}
+         TcpClientSocket(const TcpClientSocket &sock)
+            : socket_(sock.PointerFD()) {}
+         TcpClientSocket(TcpClientSocket &&sock)
             : socket_(sock.PointerFD()) {}
 
          void Send(const std::string &str);
@@ -52,6 +60,9 @@ namespace tcp{
             -> std::string;
 
          void Connect(EndPoint endpoint);
+         const std::shared_ptr<const int> PointerFD() const{
+            return socket_.PointerFD();
+         }
          const int FD() const;
 
       private:
