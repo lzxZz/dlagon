@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2019.1.1
 
 /*
     本文件声明HTTP响应头的协议部分,即HTTP响应的第一行
@@ -29,6 +29,7 @@ namespace dlagon
 
             HttpResponseProtocol()
                 : HttpResponseProtocol("HTTP/1.1", 200, "OK") {}
+            const std::string ToString() const;
         private:
             const std::string                                   version_;
             const int                                           state_code_;
@@ -38,7 +39,7 @@ namespace dlagon
         /**
          *  RFC2612文档中列举出来的所有的情况都定义为静态常量成员.
         **/
-        static const HttpResponseProtocol HTTP_RESPONSE_PROTOCOL_200;
+        static const HttpResponseProtocol HTTP_RESPONSE_PROTOCOL_200{"HTTP/1.1", 200, "OK"};
         static const HttpResponseProtocol HTTP_RESPONSE_PROTOCOL_201;
         static const HttpResponseProtocol HTTP_RESPONSE_PROTOCOL_202;
         static const HttpResponseProtocol HTTP_RESPONSE_PROTOCOL_203;

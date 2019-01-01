@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2019.1.1
 
 /*
     本文件声明的HttpRequestHeader类,用于表示HTTP请求头
@@ -104,12 +104,16 @@ namespace dlagon
         public:
             HttpResponseHeader(const HttpResponseProtocol protocol)
                 : protocol_(protocol) {}
+            const std::string ToString() const;
+            // 不能返回常量对象,返回常量对象将会导致无法调用emplace方法.
+            auto ArgTable()
+                -> std::unordered_map<std::string, std::string> ;
         private:
             /*
             *   所有成员都是常量
             */
             const HttpResponseProtocol                          protocol_;
-            const std::string                                   arg_table_;
+            const std::unordered_map<std::string, std::string>  arg_table_;
         };
         bool operator==(const HttpResponseHeader &lhs, const HttpResponseHeader &rhs);
         bool operator!=(const HttpResponseHeader &lhs, const HttpResponseHeader &rhs);

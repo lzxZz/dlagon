@@ -55,7 +55,9 @@ aux_source_directory(example/socket/client EXMP_CLIENT)
 aux_source_directory(example/client_socket/ EXMP_CLIENT_SOCK_CLIENT)
 aux_source_directory(example/server_socket/ EXMP_SERVER_SOCK_SERVER)
 aux_source_directory(example/socket/server EXMP_SERVER)
-aux_source_directory(example/socket/http EXMP_HTTP)
+aux_source_directory(example/socket/http EXMP_HTTP_HELLO)
+
+aux_source_directory(example/http EXMP_HTTP_BASIC)
 
 
 
@@ -64,7 +66,8 @@ add_executable(daytime_client ${EXMP_CLIENT})
 add_executable(daytime_client1 ${EXMP_CLIENT_SOCK_CLIENT})
 add_executable(daytime_server1 ${EXMP_SERVER_SOCK_SERVER})
 add_executable(daytime_server ${EXMP_SERVER})
-add_executable(http ${EXMP_HTTP})
+add_executable(http ${EXMP_HTTP_HELLO})
+add_executable(http_basic ${EXMP_HTTP_BASIC})
 
 # 设置示例代码依赖库
 target_link_libraries(daytime_client1 dlagon )
@@ -72,6 +75,7 @@ target_link_libraries(daytime_client dlagon )
 target_link_libraries(daytime_server dlagon )
 target_link_libraries(daytime_server1 dlagon )
 target_link_libraries(http dlagon )
+target_link_libraries(http_basic dlagon)
 
 # 设置cmake的构建类型为debug
 set (CMAKE_BUILD_TYPE Debug)
