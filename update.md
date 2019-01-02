@@ -1,4 +1,21 @@
 > 说明: 本文件为项目更新日志
+
+# 2019.1.1 更新
+1. HttpResponseHeader添加arg_table_成员,用于存放参数表.
+1. HttpResponse声明中添加常量和非常量版本的Header()方法,新增SetBody(),用于重新设置函数体.
+1. 将HttpResponse中的成员修改为非常量对象.
+1. 临时实现了200的HTTP响应协议头
+1. 实现了HttpResponse的ToString方法.将其转换为能够直接通过Socket发送的字符串.
+1. 实现了response_protocol的ToString方法.
+1. 新增使用HttpServer和HttpClient构成的基本HTTP服务器示例
+
+# 2018.12.31 更新
+1. 添加HttpClient和HttpServer
+1. 更新dlagon.h
+1. 添加HttpResponse声明
+1. TCPClientSocket添加若干构造函数, 添加返回智能指针的方法,用于构造.
+1. 将http/request文件更名为http/http_request.
+
 # 2018.12.30 更新
 1. 将Socket重构为基类,只持有套接字描述符,不再持有具体行为
 1. 新增TcpSocket和UdpSocket,从Socket派生,添加具体行为
