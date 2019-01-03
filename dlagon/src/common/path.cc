@@ -9,15 +9,20 @@
 #include "common/path.h"
 
 namespace dlagon{
+
+    Path &Path::operator=(const Path &path){
+        this->path_ = path.path_;
+        return *this;
+    }
     
-        bool operator==(const Path &lhs, const Path &rhs)
-        {
-            return (lhs.ToString() == rhs.ToString());
-        }
-        bool operator!=(const Path &lhs, const Path &rhs)
-        {
-            
-            return !(lhs == rhs);
-        }
-   
+    bool operator==(const Path &lhs, const Path &rhs)
+    {
+        return (lhs.ToString() == rhs.ToString());
+    }
+    bool operator!=(const Path &lhs, const Path &rhs)
+    {
+        
+        return !(lhs == rhs);
+    }
+
 } //namespace dlagon

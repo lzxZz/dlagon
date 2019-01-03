@@ -17,6 +17,7 @@ aux_source_directory(dlagon/src/net LIBSRCS)
 aux_source_directory(dlagon/src/net/common LIBSRCS)
 aux_source_directory(dlagon/src/net/tcp LIBSRCS)
 aux_source_directory(dlagon/src/net/udp LIBSRCS)
+aux_source_directory(dlagon/src/server LIBSRCS)
 
 # 添加header库,但是从不使用,仅仅作为检查头文件的一个手段
 add_library(header dlagon/src/dlagon.cc)
@@ -58,6 +59,7 @@ aux_source_directory(example/socket/server EXMP_SERVER)
 aux_source_directory(example/socket/http EXMP_HTTP_HELLO)
 
 aux_source_directory(example/http EXMP_HTTP_BASIC)
+aux_source_directory(example/server EXMP_DLAGON_SERVER)
 
 
 
@@ -69,6 +71,8 @@ add_executable(daytime_server ${EXMP_SERVER})
 add_executable(http ${EXMP_HTTP_HELLO})
 add_executable(http_basic ${EXMP_HTTP_BASIC})
 
+add_executable(server ${EXMP_DLAGON_SERVER})
+
 # 设置示例代码依赖库
 target_link_libraries(daytime_client1 dlagon )
 target_link_libraries(daytime_client dlagon )
@@ -76,6 +80,7 @@ target_link_libraries(daytime_server dlagon )
 target_link_libraries(daytime_server1 dlagon )
 target_link_libraries(http dlagon )
 target_link_libraries(http_basic dlagon)
+target_link_libraries(server dlagon)
 
 # 设置cmake的构建类型为debug
 set (CMAKE_BUILD_TYPE Debug)

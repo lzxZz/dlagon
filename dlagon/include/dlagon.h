@@ -31,4 +31,8 @@
 
 #include "net/udp/udp_socket.h"
 
+#include "server/handler.h"
+#include "server/route.h"
+#include "server/server.h"
+
 #endif //DLAGON_H_

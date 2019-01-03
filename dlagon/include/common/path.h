@@ -22,7 +22,7 @@ namespace dlagon
     public:
         explicit Path(const std::string path)
             : path_(path) {}
-
+        Path &operator=(const dlagon::Path &path);
         // 返回路径表示的字符串
         auto ToString() const 
             -> const std::string 
@@ -30,7 +30,7 @@ namespace dlagon
             return path_;
         }
     private:
-        const std::string           path_;
+        std::string           path_;    // 取消const属性,用于完成赋值运算符
     };
     bool operator==(const Path &lhs, const Path &rhs);
     bool operator!=(const Path &lhs, const Path &rhs);

@@ -1,5 +1,19 @@
 > 说明: 本文件为项目更新日志
 
+# 2019.1.3 更新
+1. Path类中新增拷贝赋值运算符,用于vector中的拷贝操作
+
+1. 新增Server类,用于完成框架的主体任务
+1. 新增Handler类,用于处理具体的HTTP请求
+1. 新增Route类,用于将HTTP请求传递给对应的Handler进行处理
+1. 新增Server示例,**但是目前无法运行**
+## bug
+1. Path类雀巢拷贝赋值运算符
+
+# 2019.1.2 更新
+1. 追加更新日志
+构思Server的构成
+
 # 2019.1.1 更新
 1. HttpResponseHeader添加arg_table_成员,用于存放参数表.
 1. HttpResponse声明中添加常量和非常量版本的Header()方法,新增SetBody(),用于重新设置函数体.
