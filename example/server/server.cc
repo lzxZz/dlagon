@@ -13,7 +13,8 @@ int main(){
    {
       cout << "启动" << endl;
 
-      string root_dir;
+      //运行示例时,请手动填充下面的变量
+      string root_dir = "";
       Server server;
       Route route{};
       

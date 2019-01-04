@@ -1,10 +1,11 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.28
+// last modified in 2019.1.4
 
 /*
     本文件声明的Path类,用于表示一个路径,
     目前作为HTTP请求头的组成部分.
+    // TODO 准备加入路径匹配功能,来方便的在路由函数中进行操作
 */
 
 #ifndef DLAGON_COMMON_PATH_H_

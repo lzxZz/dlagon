@@ -1,3 +1,11 @@
+// Copyright 2018, lzxZz
+// e-mail : 616281384@qq.com
+// last modified in 2019.1.4
+
+/**
+ * server/handler.h的实现
+**/
+
 #include "server/handler.h"
 
 #include <assert.h>
@@ -17,9 +25,12 @@ using dlagon::http::HttpResponseProtocol;
 
 namespace dlagon
 {
+   // Hanlder的静态成员初始化
    string Handler::root_dir = "";
 
    HttpResponse Handler::GetFile(HttpRequest req){
+
+      //若果没有初始化网站根目录则抛出异常.
       if (root_dir == ""){
          string info;
          info.append("没有设置网站的根目录");
@@ -47,18 +58,15 @@ namespace dlagon
       }
       HttpResponse res{HttpResponseHeader{http::HTTP_RESPONSE_PROTOCOL_404},""};
       res.Header().ArgTable().emplace(std::make_pair("Content-Type","text/html"));
-      res.SetBody("<h1>请求资源不存在</h1>");
+      res.SetBody("<meta charset=\"utf8\"><h1>请求资源不存在</h1>");
    
       return res;
-
-      
-
 
    }
 
    // 通过函数指针调用具体函数
-   void Handler::Excute(HttpRequest request){
-      worker_(request);
+   HttpResponse Handler::Excute(HttpRequest request){
+      return worker_(request);
    }
 
 

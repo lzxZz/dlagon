@@ -1,3 +1,11 @@
+// Copyright 2018, lzxZz
+// e-mail : 616281384@qq.com
+// last modified in 2019.1.4
+
+/**
+ * server/server.h的实现
+**/
+
 #include "server/server.h"
 
 #include <thread>
@@ -19,22 +27,28 @@ namespace dlagon
       HttpRequest req =  client.GetRequest();
 
       Handler handler =  server.Route().Distribute(req.Header().Path());
-      handler.Excute(req);
+      string str = handler.Excute(req).ToString();
+      client.Send(str);
    }
 
    void Server::Run(string root_dir, int port){
+      // 必须设置正确的网站根目录
       Handler::root_dir = root_dir;
       
       server_.Bind(port);
       server_.Listen();
       using Result = tuple<HttpClient, EndPoint>;
-      Result result = server_.Accept();
-      HttpClient client = std::get<0>(result);
 
+      for (;;){
 
-      thread th(Worker, *this, client);
-      th.detach();
       
+         Result result = server_.Accept();
+         HttpClient client = std::get<0>(result);
+   
+   
+         thread th(Worker, *this, client);
+         th.detach();
+      }
 
    }
 
