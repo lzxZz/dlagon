@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2019.1.4
+// last modified in 2019.1.5
 
 /**
  * server/handler.h的实现
@@ -15,7 +15,10 @@
 #include <fstream>
 #include <string>
 
+
 #include "exception/exception.h"
+#include "http/mime_type.h"
+
 using std::ifstream;
 using std::string;
 using dlagon::http::HttpRequest;
@@ -37,12 +40,12 @@ namespace dlagon
          throw dlagon::exception::Exception{info};
       }
       string path = root_dir + req.Header().Path().ToString();
-
+      string suffix = path.substr(path.find_last_of(".")+1);
       //判断文件存在
       if (access(path.c_str(),F_OK) == 0){
          HttpResponse res{HttpResponseHeader{http::HTTP_RESPONSE_PROTOCOL_200},""};
-         res.Header().ArgTable().emplace(std::make_pair("Content-Type","text/html"));
-
+         res.Header().ArgTable().emplace(std::make_pair("Content-Type", http::MimeType::SuffixToMimeType(suffix)));
+      
          string content;
          ifstream is;
          is.open(path);

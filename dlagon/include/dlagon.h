@@ -19,6 +19,7 @@
 #include "http/http_response.h"
 #include "http/http_server.h"
 #include "http/method.h"
+#include "http/mime_type.h"
 #include "http/response_protocol.h"
 
 
