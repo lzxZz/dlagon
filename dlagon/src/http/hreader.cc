@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2019.1.1
+// last modified in 2019.1.9
 
 /*
    对`http/header.h`的实现
@@ -40,9 +40,13 @@ namespace http {
     const string HttpResponseHeader::ToString() const{
         string info;
         info.append(this->protocol_.ToString());
-        info.append("\r\n");                    
+        // info.append("\r\n");                    
         for (auto iter : this->arg_table_){
             info.append(iter.first + ":" + iter.second + "\r\n");
+        }
+        for (auto cookie : cookies_){
+            info.append(cookie.ToString());
+            info.append("\r\n");
         }
         info.append("\r\n"); // 参数表和响应体之间使用\r\n分割
         return info;

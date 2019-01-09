@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2019.1.1
+// last modified in 2019.1.9
 
 /*
    对`http/http_response.h`的实现
@@ -13,7 +13,10 @@ namespace dlagon{
 
 namespace http{
    string HttpResponse::ToString() const{
-      return Header().ToString() + Body();
+      string info;
+      info.append(Header().ToString());
+      info.append(Body());
+      return info;
    }
 
    

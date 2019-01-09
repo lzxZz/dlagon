@@ -1,12 +1,14 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2019.1.1
+// last modified in 2019.1.9
 
 /*
     本文件声明的HttpRequestHeader类,用于表示HTTP请求头
     本文件声明的HttpResponseHeader类,用于表示HTTP响应头
     HTTP请求头作为HTTP请求(http/request.h)的组成部分.
     HTTP响应头作为HTTP响应(http/response.h)的组成部分.
+
+    在HttpResponseHeader中新增了Cookie集合.
 */
 
 #ifndef DLAGON_HTTP_HEADER_H_
@@ -14,8 +16,10 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "common/path.h"
+#include "http/cookie.h"
 #include "http/method.h"
 #include "http/response_protocol.h"
 
@@ -79,7 +83,7 @@ namespace dlagon
                                 std::string version,
                                 std::unordered_map<std::string, std::string>     args)
                 : method_(method), path_(path), version_(version), arg_table_(args) {}
-
+            
         private:
             /*
             *   所有成员都是常量
@@ -89,6 +93,7 @@ namespace dlagon
             const dlagon::Path                                  path_;
             const std::string                                   version_;
             const std::unordered_map<std::string, std::string>  arg_table_;
+            std::vector<Cookie>                                 cookies_;       //暂未实现
         };
         
         //请求头的比较没有比较请求头参数列表
@@ -108,12 +113,19 @@ namespace dlagon
             // 不能返回常量对象,返回常量对象将会导致无法调用emplace方法.
             auto ArgTable()
                 -> std::unordered_map<std::string, std::string> ;
+            void AddCookie(Cookie cookie){
+                cookies_.push_back(cookie);            
+            }
+            void ClearCookie(){
+                cookies_.clear();
+            }
         private:
             /*
             *   所有成员都是常量
             */
             const HttpResponseProtocol                          protocol_;
             const std::unordered_map<std::string, std::string>  arg_table_;
+            std::vector<Cookie>                                 cookies_;
         };
         bool operator==(const HttpResponseHeader &lhs, const HttpResponseHeader &rhs);
         bool operator!=(const HttpResponseHeader &lhs, const HttpResponseHeader &rhs);

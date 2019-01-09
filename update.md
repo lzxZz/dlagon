@@ -1,4 +1,16 @@
 > 说明: 本文件为项目更新日志
+# 2019.1.9更新
+1. 新增Cookie类,用于完成http响应中的cookie发送
+1. 在HttpResponseHeader中添加vecrtor<Cookie>成员,用于存储cookie
+1. 在HttpResponse中添加AddCookie和ClearCookie的成员方法,间接控制HttpResponseHeader中的vector<Cookie>
+1. 修改HttpResponseHeader的ToString方法,追加Cookie
+1. 添加Cookie的部分单元测试
+1. 添加Cookie的简单示例
+
+## 待完成任务
+1. 完善Cookie的Path和Domain属性
+1. 完善HttpRequest中的Cookie部分.
+
 # 2019.1.5更新
 1. 新增MimeType类,将文件名后缀自动转化为Content-Type的值
 

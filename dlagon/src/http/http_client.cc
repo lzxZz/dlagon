@@ -1,3 +1,11 @@
+// Copyright 2018, lzxZz
+// e-mail : 616281384@qq.com
+// last modified in 2019.1.9
+
+/*
+   对http/http_client.h的实现
+*/
+
 #include "http/http_client.h"
 
 using std::string;
@@ -14,7 +22,9 @@ namespace http{
    }
 
    string HttpClient::Recevie(){
-      return this->socket_.Receive();
+      string str = this->socket_.Receive();
+      // std::cout << str << std::endl;
+      return str;
    }
 
    HttpRequest HttpClient::GetRequest(){

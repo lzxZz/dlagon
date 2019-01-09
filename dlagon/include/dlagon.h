@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2019.1.9
 
 /*
    引入了所有的头文件,使用该库时变得方便
@@ -13,6 +13,7 @@
 
 #include "exception/exception.h"
 
+#include "http/cookie.h"
 #include "http/header.h"
 #include "http/http_client.h"
 #include "http/http_request.h"

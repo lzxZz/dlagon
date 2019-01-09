@@ -32,7 +32,7 @@ namespace dlagon
    string Handler::root_dir = "";
 
    HttpResponse Handler::GetFile(HttpRequest req){
-
+      
       //若果没有初始化网站根目录则抛出异常.
       if (root_dir == ""){
          string info;

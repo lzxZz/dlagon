@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2019.1.1
+// last modified in 2019.1.9
 
 /*
    本文件声明HTTP响应,有响应头和响应体组成,
@@ -8,7 +8,11 @@
 #ifndef DLAGON_HTTP_RESPONSE_H_
 #define DLAGON_HTTP_RESPONSE_H_
 
+#include <vector>
+
 #include "http/header.h"
+#include "http/cookie.h"
+
 
 namespace dlagon{
 
@@ -29,8 +33,16 @@ namespace http{
       void SetBody(std::string content){
          body_ = content;
       }
+
+      void AddCookie(Cookie cookie){
+         header_.AddCookie(cookie);
+      }
+      void CookieClear(){
+         header_.ClearCookie();
+      }
    private:
       HttpResponseHeader   header_;
+      std::vector<Cookie>  cookies_;
       std::string          body_;
    };
 }
