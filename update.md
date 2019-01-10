@@ -1,4 +1,7 @@
 > 说明: 本文件为项目更新日志
+# 2019.1.10更新
+1. 新增使用cookie保持登录的示例,但是项目中抛出了异常,正在修复中
+
 # 2019.1.9更新
 1. 新增Cookie类,用于完成http响应中的cookie发送
 1. 在HttpResponseHeader中添加vecrtor<Cookie>成员,用于存储cookie
