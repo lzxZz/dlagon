@@ -35,20 +35,25 @@ namespace http{
       std::string Path();
       std::string Secure();
       std::string HttpOnly();
-
+      const std::string Name(){
+         return name_;
+      }
+      const std::string Value(){
+         return value_;
+      }
       static const char *Days(int, int, int);
    private:
-      std::string name_;
-      std::string value_;
+      std::string name_ = "";
+      std::string value_ ="";
 
-      std::string expires_;   //wkday "," SP date1 SP time SP "GMT" 
+      std::string expires_="";   //wkday "," SP date1 SP time SP "GMT" 
                               // wkday = Mon, Tue, Wed, Thu, Fri, Sat, Sun
                               // date1 = 2Digit SP month 4Digit   02 Jun 1982
                               // month = Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
                               
-      int max_age_;
-      std::string domain_;
-      std::string path_;
+      int max_age_ = 0;
+      std::string domain_ = "";
+      std::string path_ ="";
       bool secure_ = false;
       bool http_only_ = false;
    };

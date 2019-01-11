@@ -1,11 +1,12 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2019.1.9
+// last modified in 2019.1.11
 
 /*
    对`http/header.h`的实现
 */
 
+#include <iostream>
 
 #include "http/header.h"
 
@@ -24,14 +25,24 @@ namespace http {
         return "";
     }
 
-    
-    bool operator==(const HttpRequestHeader &lhs, const HttpRequestHeader &rhs)
+     bool operator==(const HttpRequestHeader &lhs,const  HttpRequestHeader &rhs)
     {
         return (lhs.Method() == rhs.Method()
                 && lhs.Path() == rhs.Path()
                 && lhs.Version() == rhs.Version());
     }
-    bool operator!=(const HttpRequestHeader &lhs, const HttpRequestHeader &rhs)
+    bool operator!=(const HttpRequestHeader &lhs,const  HttpRequestHeader &rhs)
+    {
+        return !(lhs == rhs);
+    }
+    
+    bool operator==( HttpRequestHeader &lhs,  HttpRequestHeader &rhs)
+    {
+        return (lhs.Method() == rhs.Method()
+                && lhs.Path() == rhs.Path()
+                && lhs.Version() == rhs.Version());
+    }
+    bool operator!=( HttpRequestHeader &lhs,  HttpRequestHeader &rhs)
     {
         return !(lhs == rhs);
     }
@@ -40,7 +51,8 @@ namespace http {
     const string HttpResponseHeader::ToString() const{
         string info;
         info.append(this->protocol_.ToString());
-        // info.append("\r\n");                    
+        // info.append("\r\n");          
+        // std::cout << arg_table_.size() << "\n";          
         for (auto iter : this->arg_table_){
             info.append(iter.first + ":" + iter.second + "\r\n");
         }
@@ -52,7 +64,7 @@ namespace http {
         return info;
     }
 
-    unordered_map<string, string> HttpResponseHeader::ArgTable(){
+    unordered_map<string, string> &HttpResponseHeader::ArgTable(){
         return arg_table_;
     }
 

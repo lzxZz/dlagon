@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2018.12.24
+// last modified in 2019.1.11
 
 /*
     本文件声明HTTP请求类, 由HTTP请求头和请求体两部分组成.
@@ -43,13 +43,20 @@ namespace http
             -> std::string 
         {
             return body_;
-        }          
+        }    
+              
         //获取请求头
-        auto Header() const
+        auto Header() 
             -> HttpRequestHeader
         {
             return header_;
-        }          
+        }        
+
+        auto Header()  const
+            ->const HttpRequestHeader
+        {
+            return header_;
+        }      
         //静态函数,用于将字符串转换为HTTP请求
         static auto Parse(const std::string &str)
             -> HttpRequest;
@@ -60,6 +67,8 @@ namespace http
 
     bool operator==(const HttpRequest &lhs, const HttpRequest &rhs);
     bool operator!=(const HttpRequest &lhs, const HttpRequest &rhs);
+    bool operator==( HttpRequest &lhs,  HttpRequest &rhs);
+    bool operator!=( HttpRequest &lhs,  HttpRequest &rhs);
     
 }//namespace http
 

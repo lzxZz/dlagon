@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2019.1.9
+// last modified in 2019.1.11
 
 /*
     本文件声明的HttpRequestHeader类,用于表示HTTP请求头
@@ -53,7 +53,7 @@ namespace dlagon
                 return version_;
             }
             auto ArgTable()
-                -> const std::unordered_map<std::string, std::string> &
+                ->const std::unordered_map<std::string, std::string> &
             {
                 return arg_table_;
             }
@@ -84,6 +84,17 @@ namespace dlagon
                                 std::unordered_map<std::string, std::string>     args)
                 : method_(method), path_(path), version_(version), arg_table_(args) {}
             
+            std::vector<Cookie> Cookies(){
+                return cookies_;
+            }
+
+            void AddCookie(Cookie cookie){
+                cookies_.push_back(cookie);
+            }
+            void ClearCookie(){
+                cookies_.clear();
+            }
+            
         private:
             /*
             *   所有成员都是常量
@@ -94,11 +105,15 @@ namespace dlagon
             const std::string                                   version_;
             const std::unordered_map<std::string, std::string>  arg_table_;
             std::vector<Cookie>                                 cookies_;       //暂未实现
+            
         };
         
         //请求头的比较没有比较请求头参数列表
         bool operator==(const HttpRequestHeader &lhs, const HttpRequestHeader &rhs);
         bool operator!=(const HttpRequestHeader &lhs, const HttpRequestHeader &rhs);
+
+        bool operator==(HttpRequestHeader &lhs, HttpRequestHeader &rhs);
+        bool operator!=(HttpRequestHeader &lhs, HttpRequestHeader &rhs);
 
         /*
          * HTTP响应头
@@ -112,7 +127,7 @@ namespace dlagon
             const std::string ToString() const;
             // 不能返回常量对象,返回常量对象将会导致无法调用emplace方法.
             auto ArgTable()
-                -> std::unordered_map<std::string, std::string> ;
+                -> std::unordered_map<std::string, std::string> &;
             void AddCookie(Cookie cookie){
                 cookies_.push_back(cookie);            
             }
@@ -124,11 +139,13 @@ namespace dlagon
             *   所有成员都是常量
             */
             const HttpResponseProtocol                          protocol_;
-            const std::unordered_map<std::string, std::string>  arg_table_;
+            std::unordered_map<std::string, std::string>        arg_table_;
             std::vector<Cookie>                                 cookies_;
         };
         bool operator==(const HttpResponseHeader &lhs, const HttpResponseHeader &rhs);
         bool operator!=(const HttpResponseHeader &lhs, const HttpResponseHeader &rhs);
+        bool operator==(HttpResponseHeader &lhs, HttpResponseHeader &rhs);
+        bool operator!=(HttpResponseHeader &lhs, HttpResponseHeader &rhs);
     } //namespace http
 
 } // namespace dlagon

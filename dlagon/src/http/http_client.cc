@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2019.1.9
+// last modified in 2019.1.11
 
 /*
    对http/http_client.h的实现
@@ -28,7 +28,9 @@ namespace http{
    }
 
    HttpRequest HttpClient::GetRequest(){
-      return HttpRequest::Parse(Recevie());
+      string str = Recevie();
+      std::cout << str << std::endl;
+      return HttpRequest::Parse(str);
    }
 
 

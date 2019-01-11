@@ -1,6 +1,6 @@
 // Copyright 2018, lzxZz
 // e-mail : 616281384@qq.com
-// last modified in 2019.1.5
+// last modified in 2019.1.11
 
 /**
  * server/handler.h的实现
@@ -61,7 +61,7 @@ namespace dlagon
       }
       HttpResponse res{HttpResponseHeader{http::HTTP_RESPONSE_PROTOCOL_404},""};
       res.Header().ArgTable().emplace(std::make_pair("Content-Type","text/html"));
-      res.SetBody("<meta charset=\"utf8\"><h1>请求资源不存在</h1>");
+      res.SetBody(u8"<header><meta charset=\"utf-8\"></header><h1>请求资源不存在</h1>");
    
       return res;
 

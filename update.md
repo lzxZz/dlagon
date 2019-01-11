@@ -1,8 +1,24 @@
 > 说明: 本文件为项目更新日志
-# 2019.1.10更新
+
+# 2019.1.11 更新 
+1. Cookie类中新增Name和Value成员方法.用于访问
+1. Cookie类中对于数据成员赋予初始值
+1. HttpRequestHeader中新增Cookie列表,和对应的读写方法
+1. 两种Header的==运算符新增了非const的重载
+1. HttpRequest中Header()新增const和非const重载
+1. HttpResponse中的Header()新增了const和非const重载,并返回引用
+1. 将HttpResponse的ArgTable()修改为返回引用.
+1. HttpRequest的Parse方法新增对Cookie的特殊处理,并新增配套的trim函数
+1. Handler中返回的默认页面将meta移动到head标签中
+1. 新增example/login.cc示例,使用cookie保持登录
+
+## 存在隐患
+**目前整个项目中的const关键字使用极为混乱,可能会引起问题**
+
+# 2019.1.10 更新
 1. 新增使用cookie保持登录的示例,但是项目中抛出了异常,正在修复中
 
-# 2019.1.9更新
+# 2019.1.9 更新
 1. 新增Cookie类,用于完成http响应中的cookie发送
 1. 在HttpResponseHeader中添加vecrtor<Cookie>成员,用于存储cookie
 1. 在HttpResponse中添加AddCookie和ClearCookie的成员方法,间接控制HttpResponseHeader中的vector<Cookie>
@@ -14,7 +30,7 @@
 1. 完善Cookie的Path和Domain属性
 1. 完善HttpRequest中的Cookie部分.
 
-# 2019.1.5更新
+# 2019.1.5 更新
 1. 新增MimeType类,将文件名后缀自动转化为Content-Type的值
 
 # 2019.1.4 更新
