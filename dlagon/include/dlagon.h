@@ -14,6 +14,7 @@
 #include "exception/exception.h"
 
 #include "http/cookie.h"
+#include "http/cookie_domain.h"
 #include "http/header.h"
 #include "http/http_client.h"
 #include "http/http_request.h"

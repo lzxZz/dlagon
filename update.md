@@ -1,4 +1,8 @@
 > 说明: 本文件为项目更新日志
+# 2019.1.12 更新
+
+1. 新增CookiemoDomain类
+1. 给iCookieDoman添加了单元测试
 
 # 2019.1.11 更新 
 1. Cookie类中新增Name和Value成员方法.用于访问
@@ -11,7 +15,6 @@
 1. HttpRequest的Parse方法新增对Cookie的特殊处理,并新增配套的trim函数
 1. Handler中返回的默认页面将meta移动到head标签中
 1. 新增example/login.cc示例,使用cookie保持登录
-
 ## 存在隐患
 **目前整个项目中的const关键字使用极为混乱,可能会引起问题**
 
