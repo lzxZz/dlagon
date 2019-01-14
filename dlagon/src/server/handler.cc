@@ -68,7 +68,7 @@ namespace dlagon
    }
 
    // 通过函数指针调用具体函数
-   HttpResponse Handler::Excute(HttpRequest request){
+   HttpResponse Handler::Excute(const HttpRequest &request){
       return worker_(request);
    }
 

@@ -37,7 +37,7 @@ namespace http{
         return result;
     }
 
-    void CookieDomain::AddSubDomain(const string sub_domain){
+    void CookieDomain::AddSubDomain(const string &sub_domain){
         domain_list_.push_back(sub_domain);
     }
 

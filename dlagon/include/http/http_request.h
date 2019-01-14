@@ -28,12 +28,8 @@ namespace http
 
     class HttpRequest{
     public:
-        HttpRequest(HttpRequestHeader header, std::string body)
+        HttpRequest(const HttpRequestHeader &header, const std::string &body)
             : header_(header) ,body_(body) {}
-        // HttpRequest(HttpRequestHeader                           header, 
-        //             std::unordered_map<std::string, std::string>     args,
-        //             std::string                                body)
-        //     : header_(header) ,body_(body) {}
         
         auto Debug() 
             -> const std::string;

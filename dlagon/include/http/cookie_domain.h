@@ -21,7 +21,7 @@ namespace http{
         std::string ToString();
 
         // 给当前域名追加一个子域名,将范围缩小
-        void AddSubDomain(const std::string sub_domain);
+        void AddSubDomain(const std::string &sub_domain);
 
         //判断本域名是否包含参数所指定的域名
         bool Contain(const CookieDomain &domain);

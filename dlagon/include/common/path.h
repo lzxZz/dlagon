@@ -21,7 +21,7 @@ namespace dlagon
     class Path
     {
     public:
-        explicit Path(const std::string path)
+        explicit Path(const std::string &path)
             : path_(path) {}
         Path &operator=(const dlagon::Path &path);
         // 返回路径表示的字符串

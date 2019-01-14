@@ -15,7 +15,7 @@ namespace dlagon{
 namespace http{
 
    // 判断闰年
-   int IsLeapYear(int year){
+   int IsLeapYear(const int year){
       if (year % 400 == 0){
          return 1;
       }else if (year % 100 == 0){
@@ -27,12 +27,12 @@ namespace http{
       return 0;
    }
 
-   int days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
-   char wk_days[7][4] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
-   char mon_str[12][4] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+   constexpr int days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+   constexpr char wk_days[7][4] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+   constexpr char mon_str[12][4] = {"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
    
    //获取指定日期是星期几
-   const char *GetWkDay(int year, int month, int day){
+   const char *GetWkDay(const int year, const int month, const int day){
       int sum = day;
 
       for (int i = 0; i < month -1; i++){
@@ -54,12 +54,12 @@ namespace http{
 
 
    // 用于测试的函数
-   const char *Cookie::Days(int y, int m , int d){
+   const char *Cookie::Days(const int y, const int m, const int d){
       return GetWkDay(y,m,d);
    }
 
    // 在指定过期日期的时候,强制设置时间为00:00:00
-   Cookie &Cookie::SetExpires(int year, int month, int day){
+   Cookie &Cookie::SetExpires(const int year, const int month, const int day){
       expires_ = GetWkDay(year, month, day);
       expires_.append(", ");
       if (day < 10){
@@ -75,27 +75,27 @@ namespace http{
       return *this;
    }
 
-   Cookie &Cookie::SetMaxAge(int max_age){
+   Cookie &Cookie::SetMaxAge(const int max_age){
       max_age_ = max_age;
       return *this;
    }
 
-   Cookie &Cookie::SetDomain(string domain){
+   Cookie &Cookie::SetDomain(const string &domain){
       domain_ = domain;
       return *this;
    }
 
-   Cookie &Cookie::SetPath(string path){
+   Cookie &Cookie::SetPath(const string &path){
       path_ = path;
       return *this;
    }
 
-   Cookie &Cookie::SetSecure(bool secure){
+   Cookie &Cookie::SetSecure(const bool secure){
       secure_ = secure;
       return *this;
    }
 
-   Cookie &Cookie::SetHttpOnly(bool http_only){
+   Cookie &Cookie::SetHttpOnly(const bool http_only){
       http_only_ = http_only;
       return *this;
    }

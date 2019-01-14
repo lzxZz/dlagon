@@ -12,11 +12,11 @@ namespace http{
       HttpClient(){}
       HttpClient(const int fd)
          : socket_(fd) {}
-      HttpClient(dlagon::net::tcp::TcpClientSocket &sock)
+      HttpClient(const dlagon::net::tcp::TcpClientSocket &sock)
          : socket_(sock.PointerFD()) {}
 
       void Send(const std::string &str);
-      void Send(const HttpResponse response);
+      void Send(const HttpResponse &response);
       std::string Recevie();
       HttpRequest GetRequest();
       

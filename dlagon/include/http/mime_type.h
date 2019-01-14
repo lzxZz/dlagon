@@ -48,6 +48,7 @@ namespace http
    public:
       
       // 将后缀名转化为指定的 Content-Type值
+      // 参数由于实现原因,不能使用const,也不能使用引用
       static const std::string SuffixToMimeType(std::string suffix);    
    private:
       // 暂时无用

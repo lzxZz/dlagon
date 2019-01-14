@@ -6,14 +6,14 @@ using dlagon::net::tcp::TcpClientSocket;
 
 namespace dlagon{
 namespace http{
-   void HttpServer::Bind(int port){
+   void HttpServer::Bind(const int port){
       Bind(EndPoint(port));
    }
-   void HttpServer::Bind(EndPoint endpoint){
+   void HttpServer::Bind(const EndPoint &endpoint){
       this->socket_.Bind(endpoint);
    }
 
-   void HttpServer::Listen(int queue_length){
+   void HttpServer::Listen(const int queue_length){
       this->socket_.Listen(queue_length);
    }
 

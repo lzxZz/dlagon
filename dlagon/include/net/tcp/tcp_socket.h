@@ -23,7 +23,7 @@ namespace tcp{
  **/
 class TcpSocket : public Socket{
 public:
-    TcpSocket(int fd)
+    TcpSocket(const int fd)
         : Socket(fd) {}
     TcpSocket()
         : Socket(Socket::New()) {}
@@ -35,23 +35,23 @@ public:
     
     auto Send(const std::string &str)   
         -> void;
-    auto Send(const char *str, size_t len)   
+    auto Send(const char* const str, const size_t len)   
         -> void;
     
     auto Receive() 
         -> const std::string;
     // 绑定到具体的端口
-    auto Bind(int port)
+    auto Bind(const int port)
         -> void;        
-    auto Bind(EndPoint endpoint)        
+    auto Bind(const EndPoint &endpoint)        
         -> void;        
-    auto Listen(int queue_length)
+    auto Listen(const int queue_length)
         -> void;        
     auto Listen()
         -> void {
         Listen(LISTENQ);
     }        
-    auto Connect(EndPoint enpoint)
+    auto Connect(const EndPoint &enpoint)
         -> void;   
 
     // 同时返回远程套接字和地址 

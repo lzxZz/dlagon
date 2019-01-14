@@ -17,7 +17,7 @@ namespace http{
       this->socket_.Send(str);
    }
 
-   void HttpClient::Send(const HttpResponse response){
+   void HttpClient::Send(const HttpResponse &response){
       Send(response.ToString());
    }
 

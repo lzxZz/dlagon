@@ -31,8 +31,9 @@ namespace dlagon{
    class EndPoint{
    public:
 
-      // 返回地址时转换为通用socket地址结构,不能使用static_cast进行转换
+      // 返回地址时转换为通用socket地址结构,
       const struct sockaddr *ScoketAddress() const{
+         // 不能使用static_cast转换,因此使用C风格强制类型转换
          return (struct sockaddr*)&sock_addr_;
       }
       const int Port() const{
@@ -41,21 +42,21 @@ namespace dlagon{
       const int Size() const{
          return sizeof(sock_addr_);
       }
-      void Port(int port){
+      void Port(const int port){
          //注意使用htons进行转换,端口号的数据结构为short,16bit.
          sock_addr_.sin_port = htons(port); 
       }
-      void IP(std::string ip){
+      void IP(const std::string &ip){
          inet_pton(AF_INET, ip.c_str(), &sock_addr_.sin_addr);
       }
 
-      EndPoint(int port){
+      EndPoint(const int port){
          bzero(&sock_addr_, sizeof(struct sockaddr_in));
          sock_addr_.sin_family = AF_INET;
          sock_addr_.sin_addr.s_addr = htonl(INADDR_ANY);
          sock_addr_.sin_port = htons(port);
       }
-      EndPoint(sockaddr_in addr){
+      EndPoint(const sockaddr_in &addr){
          bzero(&sock_addr_, sizeof(struct sockaddr_in));
          sock_addr_.sin_family = addr.sin_family;
          sock_addr_.sin_addr.s_addr = addr.sin_addr.s_addr;
@@ -63,11 +64,11 @@ namespace dlagon{
       }
 
       //显示EndPoint数据成员为可读格式.
-      const std::string Debug();
+      const std::string Debug() const;
       
    private:
       //将协议从AF_XX转换为可读的文本
-      const std::string &FamilyToString(int family);
+      const std::string &FamilyToString(int family) const;
       struct sockaddr_in sock_addr_;
    };
 
