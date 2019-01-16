@@ -77,8 +77,7 @@ namespace http {
         
 
         string line;
-        unordered_map<string, string> args;
-        using std::make_pair;
+        ArgumentTable args;
         vector<Cookie> cookies;
         while (getline(is, line))
         {
@@ -106,7 +105,7 @@ namespace http {
                 }
                 
             }else{
-                args.emplace(make_pair(k, v));
+                args.Set(k, v);
             }
             
         }
@@ -121,12 +120,12 @@ namespace http {
             Path{p}, v, 
             args};
 
-        std::cout << "cookie数量为:" << cookies.size() << "\n";
+        // std::cout << "cookie数量为:" << cookies.size() << "\n";
         // req_head.Cookies().insert(req_head.Cookies().begin(), cookies.begin(), cookies.end());
         for (auto cookie : cookies){
             req_head.AddCookie(cookie);
         }
-        std::cout << "++++++++++++++++\n";
+        // std::cout << "++++++++++++++++\n";
         return HttpRequest{req_head, body};
 
 

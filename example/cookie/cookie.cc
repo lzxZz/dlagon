@@ -22,10 +22,11 @@ void worker(HttpClient client){
    HttpResponse res{HttpResponseHeader{HTTP_RESPONSE_PROTOCOL_200},
                   "<h1>Test Page</h1>"};
    
-   res.Header().ArgTable().emplace(std::make_pair("Content-Type","text/html"));
+   res.Header().ArgTable().Set("Content-Type","text/html");
 
    //增加了Cookie
-   res.AddCookie(Cookie{"STR","HELLO-COOKIE"}.SetMaxAge(10));  //设置了10秒的最大寿命没有作用,照样会从浏览器返回到服务端
+   res.AddCookie(Cookie{"STR","HELLO-COOKIE"}.SetMaxAge(10));  
+   //设置了10秒的最大寿命没有作用,照样会从浏览器返回到服务端
    
    string str = res.ToString();
 

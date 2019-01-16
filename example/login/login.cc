@@ -18,7 +18,7 @@ using namespace dlagon;
 
 HttpResponse login(HttpRequest req){
    HttpResponse res{HttpResponseHeader{HTTP_RESPONSE_PROTOCOL_200},""};
-   res.Header().ArgTable().emplace(make_pair("Content-Type","text/html"));
+   res.Header().ArgTable().Set("Content-Type","text/html");
    
    for (auto cookie : req.Header().Cookies()){
       // 登录中用户返回特定的页面

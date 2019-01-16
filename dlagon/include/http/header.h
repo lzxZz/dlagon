@@ -15,9 +15,9 @@
 #define DLAGON_HTTP_HEADER_H_
 
 #include <string>
-#include <unordered_map>
 #include <vector>
 
+#include "common/argument_table.h"
 #include "common/path.h"
 #include "http/cookie.h"
 #include "http/method.h"
@@ -53,9 +53,19 @@ namespace dlagon
                 return version_;
             }
             auto ArgTable()
-                ->const std::unordered_map<std::string, std::string> &
+                ->const ArgumentTable&
             {
                 return arg_table_;
+            }
+
+            void AddArg(const std::string &key, const std::string &value){
+                arg_table_.Set(key, value);
+            }
+            void RemoveArg(const std::string &key){
+                arg_table_.Remove(key);
+            }
+            const std::string GetArg(const std::string &key){
+                return arg_table_.Get(key);
             }
 
             auto Debug()
@@ -72,16 +82,16 @@ namespace dlagon
                 : method_(method), path_(path), version_(version) {}
             
             //下面两组构造函数是带有参数列表的
-            HttpRequestHeader(const dlagon::http::HttpMethod  &method, 
-                                const std::string &path, 
-                                const std::string &version,
-                                const std::unordered_map<std::string, std::string>     &args)
+            HttpRequestHeader(const dlagon::http::HttpMethod    &method, 
+                                const std::string               &path, 
+                                const std::string               &version,
+                                const ArgumentTable             &args)
                 : method_(method), path_(path), version_(version), arg_table_(args) {}
 
-            HttpRequestHeader(const dlagon::http::HttpMethod  &method, 
-                                const dlagon::Path &path, 
-                                const std::string &version,
-                                const std::unordered_map<std::string, std::string>     &args)
+            HttpRequestHeader(const dlagon::http::HttpMethod    &method, 
+                                const dlagon::Path              &path, 
+                                const std::string               &version,
+                                const ArgumentTable             &args)
                 : method_(method), path_(path), version_(version), arg_table_(args) {}
             
             std::vector<Cookie> Cookies(){
@@ -103,7 +113,7 @@ namespace dlagon
             const HttpMethod                                    method_;
             const dlagon::Path                                  path_;
             const std::string                                   version_;
-            const std::unordered_map<std::string, std::string>  arg_table_;
+            ArgumentTable                                       arg_table_;
             std::vector<Cookie>                                 cookies_;       //暂未实现
             
         };
@@ -127,7 +137,7 @@ namespace dlagon
             const std::string ToString() const;
             // 不能返回常量对象,返回常量对象将会导致无法调用emplace方法.
             auto ArgTable()
-                -> std::unordered_map<std::string, std::string> &;
+                -> ArgumentTable &;
             void AddCookie(const Cookie &cookie){
                 cookies_.push_back(cookie);            
             }
@@ -139,7 +149,7 @@ namespace dlagon
             *   所有成员都是常量
             */
             const HttpResponseProtocol                          protocol_;
-            std::unordered_map<std::string, std::string>        arg_table_;
+            ArgumentTable                                       arg_table_;
             std::vector<Cookie>                                 cookies_;
         };
         bool operator==(const HttpResponseHeader &lhs, const HttpResponseHeader &rhs);

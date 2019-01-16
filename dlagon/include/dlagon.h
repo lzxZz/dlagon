@@ -9,6 +9,7 @@
 #ifndef DLAGON_H_
 #define DLAGON_H_
 
+#include "common/argument_table.h"
 #include "common/path.h"
 
 #include "exception/exception.h"

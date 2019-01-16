@@ -21,7 +21,9 @@ namespace http{
    class HttpResponse{
    public:
       HttpResponse(const HttpResponseHeader &header, const std::string &body)
-         : header_(header), body_(body) {}
+         : header_(header), body_(body) {
+            Header().ArgTable().Set("Content-Type","text/html");
+      }
 
       // 将HTTP响应转化为字符粗,通过HTTPClient发送
       std::string ToString() const;

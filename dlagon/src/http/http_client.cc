@@ -29,7 +29,7 @@ namespace http{
 
    HttpRequest HttpClient::GetRequest(){
       string str = Recevie();
-      std::cout << str << std::endl;
+      // std::cout << str << std::endl;
       return HttpRequest::Parse(str);
    }
 

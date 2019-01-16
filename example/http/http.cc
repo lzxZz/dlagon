@@ -22,7 +22,7 @@ void worker(HttpClient client){
    HttpResponse res{HttpResponseHeader{HTTP_RESPONSE_PROTOCOL_200},
                   "<h1>Test Page</h1>"};
    
-   res.Header().ArgTable().emplace(std::make_pair("Content-Type","text/html"));
+   res.Header().ArgTable().Set("Content-Type","text/html");
    
    client.Send(res.ToString());
 }
