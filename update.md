@@ -1,4 +1,12 @@
 > 说明: 本文件为项目更新日志
+# 2019.1.17 更新
+1. 修改HttpRequest中的cookies_成员类型为ArugumentTable.
+1. 修改cookie.h中Name和Value方法为const成员
+1. 修复上面变动引起的example/login.cc中的bug
+
+> ### 说明: 今后主要精力集中在开发todo_list中,对本项目的修改更多的集中在方便使用上.
+
+
 # 2019.1.14 更新
 1. 代码重构,将所有的输入参数修改为const引用.
 

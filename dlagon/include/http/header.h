@@ -94,15 +94,21 @@ namespace dlagon
                                 const ArgumentTable             &args)
                 : method_(method), path_(path), version_(version), arg_table_(args) {}
             
-            std::vector<Cookie> Cookies(){
+            ArgumentTable Cookies(){
                 return cookies_;
             }
 
             void AddCookie(const Cookie &cookie){
-                cookies_.push_back(cookie);
+                cookies_.Set(cookie.Name(), cookie.Value());
             }
+
+            void AddCookie(const std::string &key, const std::string &value){
+                cookies_.Set(key, value);
+            }
+
+
             void ClearCookie(){
-                cookies_.clear();
+                cookies_.Clear();
             }
             
         private:
@@ -114,7 +120,7 @@ namespace dlagon
             const dlagon::Path                                  path_;
             const std::string                                   version_;
             ArgumentTable                                       arg_table_;
-            std::vector<Cookie>                                 cookies_;       //暂未实现
+            ArgumentTable                                       cookies_;    // 修改为参数表类型,因为只需要key,value,没有属性
             
         };
         

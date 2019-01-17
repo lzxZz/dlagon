@@ -35,10 +35,10 @@ namespace http{
       std::string Path();
       std::string Secure();
       std::string HttpOnly();
-      const std::string Name(){
+      const std::string Name() const{
          return name_;
       }
-      const std::string Value(){
+      const std::string Value() const{
          return value_;
       }
       static const char *Days(int, int, int);

@@ -19,14 +19,14 @@ using namespace dlagon;
 HttpResponse login(HttpRequest req){
    HttpResponse res{HttpResponseHeader{HTTP_RESPONSE_PROTOCOL_200},""};
    res.Header().ArgTable().Set("Content-Type","text/html");
-   
-   for (auto cookie : req.Header().Cookies()){
-      // 登录中用户返回特定的页面
-      if (cookie.Name() == "USER"){
-         res.SetBody("<head><meta charset=\"utf8\"></head><h1>登录中用户</h1>");      
-         return res;
-      }
+
+
+   // 登录中用户返回特定的页面
+   if (req.Header().Cookies().Get("USER") == "HELLO"){
+      res.SetBody("<head><meta charset=\"utf8\"></head><h1>登录中用户</h1>");      
+      return res;
    }
+   
 
    //非登录用户返回普通页面,并设置cookie
    res.SetBody("<head><meta charset=\"utf8\"></head><h1>login</h1>");
