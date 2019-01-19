@@ -18,6 +18,8 @@ install:
 	make build
 	@-mkdir ~/.include
 	@-mkdir ~/.lib
-	cp dlagon/include ~/.include/dlagon -r
-	cp build/libdlagon.a ~/.lib/
+	@-rm -r ~/.include/dlagon
+	@-rm ~/.lib/libdlagon.a
+	cp dlagon/include ~/.include/dlagon -r -f
+	cp build/libdlagon.a ~/.lib/ -f
 	@echo ">>>>>>>>>>>>>>>>>>      安装完成        <<<<<<<<<<<<<<<<<<<<<"

@@ -24,6 +24,7 @@
 #include "http/method.h"
 #include "http/mime_type.h"
 #include "http/response_protocol.h"
+#include "http/session.h"
 
 
 #include "net/common/end_point.h"

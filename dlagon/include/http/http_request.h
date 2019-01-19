@@ -31,6 +31,7 @@ namespace http
         HttpRequest(const HttpRequestHeader &header, const std::string &body)
             : header_(header) ,body_(body) {}
         
+        
         auto Debug() 
             -> const std::string;
 

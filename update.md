@@ -1,4 +1,9 @@
 > 说明: 本文件为项目更新日志
+# 2019.1.19 更新
+1. 添加Session类
+1. 添加SessionCollection类
+1. 暂时没有在Server中加入Session,即暂时没有支持Session功能.
+
 # 2019.1.17 更新
 1. 修改HttpRequest中的cookies_成员类型为ArugumentTable.
 1. 修改cookie.h中Name和Value方法为const成员
