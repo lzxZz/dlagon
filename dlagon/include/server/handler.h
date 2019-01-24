@@ -15,6 +15,7 @@
 
 #include "http/http_request.h"
 #include "http/http_response.h"
+#include "http/session.h"
 
 namespace dlagon
 {
@@ -27,18 +28,21 @@ namespace dlagon
    public:
       // 定义处理函数指针类型别名
       using HandlerFunction = http::HttpResponse(*)(const http::HttpRequest);
+      using HandlerFunctionWithSession = http::HttpResponse(*)(const http::HttpRequest, const http::Session);
       
       Handler(HandlerFunction function = GetFile)
          : worker_(function) {}
+      Handler(HandlerFunctionWithSession function)
+         : worker_session_(function) {}
       
       // 默认实现的处理函数
       static http::HttpResponse GetFile(const http::HttpRequest req);
       static std::string root_dir;  //返回请求文件的相对根目录
       // 调用函数指针的函数
-      http::HttpResponse Excute(const http::HttpRequest &req);
+      http::HttpResponse Excute(const http::HttpRequest &req, const http::Session &session);
    private:
       HandlerFunction worker_;   // 具体将请求转化为响应的函数,必须使用构造函数进行初始化
-      
+      HandlerFunctionWithSession worker_session_ = nullptr;
    };
    
 } // dlagon

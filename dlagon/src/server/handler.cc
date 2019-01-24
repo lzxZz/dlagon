@@ -68,7 +68,10 @@ namespace dlagon
    }
 
    // 通过函数指针调用具体函数
-   HttpResponse Handler::Excute(const HttpRequest &request){
+   HttpResponse Handler::Excute(const HttpRequest &request, const http::Session &session){
+      if (worker_session_ != nullptr){
+         return worker_session_(request, session);
+      }
       return worker_(request);
    }
 

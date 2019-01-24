@@ -1,4 +1,12 @@
 > 说明: 本文件为项目更新日志
+# 2019.1.24 更新
+1. 修改Session中的Add方法名,使之更加贴切
+1. Session中新增ID方法,获取会话ID
+1. handler.h中新增带有会话的处理函数
+1. handler中修改Excute方法签名, 带上了会话,但是只有在worker_session_设置了之后才会使用会话
+1. Server中新增私有成员SessionCollection,用于持有当前服务中的会话,并将Worker函数设置为友元函数.
+1. 修复session.cc中的New方法创建SID时的死循环bug
+
 # 2019.1.19 更新
 1. 添加Session类
 1. 添加SessionCollection类

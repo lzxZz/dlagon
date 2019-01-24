@@ -9,7 +9,7 @@ namespace http{
     const vector<HttpRequest> Session::Historical() const{
         return historical_;
     }
-    void Session::Add(const HttpRequest req){
+    void Session::AddHistorical(const HttpRequest req){
         historical_.push_back(req);
     }
 
@@ -38,21 +38,20 @@ namespace http{
         do{
             key = "";
             for (int i = 0; i < 18; i++){
-               key.append(std::to_string(alphas[rand() % 62]));
+               int index = rand() % 62;
+                    
+               key += alphas[index];
             }
-        }while(Get(key) == nullptr);
+        }while(Get(key) != nullptr);
         Session session{key};
         
-        // session.Add(req);
-
-
         collection_.emplace(std::make_pair(key, session));
         return key;
     }
     const std::string SessionCollection::New(HttpRequest req){
         string key = New();
         Session *session = Get(key);
-        session->Add(req);
+        session->AddHistorical(req);
         return key;
     }
 

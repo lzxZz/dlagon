@@ -8,6 +8,8 @@
 
 #include "server/server.h"
 
+#include <cassert>
+
 #include <thread>
 #include <tuple>
 
@@ -21,14 +23,34 @@ using dlagon::http::HttpClient;
 using dlagon::http::HttpServer;
 using dlagon::net::EndPoint;
 using dlagon::http::HttpRequest;
+using dlagon::http::HttpResponse;
 namespace dlagon
 {
-   void Worker(Server server , HttpClient client){
+   void Worker(Server *server , HttpClient client){
       HttpRequest req =  client.GetRequest();
+      
+      Handler handler =  server->Route().Distribute(req.Header().Path());
+      
+      string sid =  req.Header().Cookies().Get("SID");
+      
+      // 有时候,会带有\r, 目前还没有比较好的结局方案
+      if (sid.size() > 18){
+         sid = sid.substr(0,18);
+      }
+      http::Session *session = server->sessions_.Get(sid); 
+      if (sid == "" || session == nullptr){     // 如果当前会话ID不存在,或者不再会话列表中,那么就重新设置
+         sid = server->sessions_.New(req);
+         session = server->sessions_.Get(sid); 
+      }
+      
+      
+      
+      session->AddHistorical(req); // 追加访问记录
 
-      Handler handler =  server.Route().Distribute(req.Header().Path());
-      string str = handler.Excute(req).ToString();
-      client.Send(str);
+      HttpResponse  res =  handler.Excute(req, *session); // 使用handler处理
+      
+      res.AddCookie(http::Cookie{"SID", sid});           // 刷新cookie
+      client.Send(res.ToString());
    }
 
    void Server::Run(string root_dir, int port){
@@ -46,14 +68,14 @@ namespace dlagon
          HttpClient client = std::get<0>(result);
    
    
-         thread th(Worker, *this, client);
+         thread th(Worker, this, client);
          th.detach();
       }
 
    }
 
    Server &Server::SetRoute(dlagon::Route route){
-      route_ = route;
+      route_ = route;  
       return *this;
    }
 

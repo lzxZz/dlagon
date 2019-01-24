@@ -24,7 +24,11 @@ namespace http{
         explicit Session(std::string id)
             : id_(id) {}
         const std::vector<HttpRequest> Historical() const ;
-        void Add(const HttpRequest req);
+        void AddHistorical(const HttpRequest req);
+        
+        const std::string ID() const{
+            return id_;
+        }
         // 暂时不实现超时方法
         void TimeOut(const std::string time_out);
         const std::string TimeOut() const;

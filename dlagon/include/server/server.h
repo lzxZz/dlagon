@@ -11,13 +11,14 @@
 #include <vector>
 
 #include "http/http_server.h"
+#include "http/session.h"
 #include "server/handler.h"
 #include "server/route.h"
 
 
 namespace dlagon{
   
-
+ 
    
    /*
    *  WEB服务的核心组件,
@@ -25,6 +26,7 @@ namespace dlagon{
    class Server{
    // using Handler = http::HttpResponse(*)(http::HttpRequest);
    // using Route = Handler(*)(http::HttpRequest);
+   friend void Worker(Server *, http::HttpClient);
    public:
       Server() = default;
       Server(dlagon::Route route)
@@ -36,6 +38,7 @@ namespace dlagon{
    private:
       http::HttpServer server_;
       dlagon::Route route_;
+      http::SessionCollection sessions_ ;
    };
 }
 
