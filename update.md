@@ -28,7 +28,7 @@
 1. 新增CookiemoDomain类
 1. 给iCookieDoman添加了单元测试
 
-# 2019.1.11 更新 
+# 2019.1.11 更新
 1. Cookie类中新增Name和Value成员方法.用于访问
 1. Cookie类中对于数据成员赋予初始值
 1. HttpRequestHeader中新增Cookie列表,和对应的读写方法
