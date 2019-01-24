@@ -29,9 +29,10 @@ namespace dlagon
             UNKNOWN
         };
 
+        // 此函数不能使用const,需要将关键字转化为大小之后再进行匹配
         auto StringToMethod(std::string method)
             -> HttpMethod ;
-        auto MethodToString(HttpMethod method)
+        auto MethodToString(const HttpMethod &method)
             -> const std::string ;
 
     } //namespace http

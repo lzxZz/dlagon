@@ -1,4 +1,24 @@
 > 说明: 本文件为项目更新日志
+# 2019.1.19 更新
+1. 添加Session类
+1. 添加SessionCollection类
+1. 暂时没有在Server中加入Session,即暂时没有支持Session功能.
+
+# 2019.1.17 更新
+1. 修改HttpRequest中的cookies_成员类型为ArugumentTable.
+1. 修改cookie.h中Name和Value方法为const成员
+1. 修复上面变动引起的example/login.cc中的bug
+
+> ### 说明: 今后主要精力集中在开发todo_list中,对本项目的修改更多的集中在方便使用上.
+
+
+# 2019.1.14 更新
+1. 代码重构,将所有的输入参数修改为const引用.
+
+# 2019.1.12 更新
+
+1. 新增CookiemoDomain类
+1. 给iCookieDoman添加了单元测试
 
 # 2019.1.11 更新
 1. Cookie类中新增Name和Value成员方法.用于访问
@@ -11,7 +31,6 @@
 1. HttpRequest的Parse方法新增对Cookie的特殊处理,并新增配套的trim函数
 1. Handler中返回的默认页面将meta移动到head标签中
 1. 新增example/login.cc示例,使用cookie保持登录
-
 ## 存在隐患
 **目前整个项目中的const关键字使用极为混乱,可能会引起问题**
 

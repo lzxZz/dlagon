@@ -24,7 +24,7 @@ namespace tcp{
       write(this->FD(), str.c_str(), str.size());
    }
 
-   void TcpSocket::Send(const char *str, size_t len){
+   void TcpSocket::Send(const char* const str, const  size_t len){
       write(this->FD(), str, len);
    }
 
@@ -42,10 +42,10 @@ namespace tcp{
       return content;
    }
 
-   void TcpSocket::Bind(int port){
+   void TcpSocket::Bind(const  int port){
       Bind(EndPoint(port));
    }
-   void TcpSocket::Bind(EndPoint endpoint){
+   void TcpSocket::Bind(const EndPoint &endpoint){
       if(bind(this->FD(), endpoint.ScoketAddress(), endpoint.Size())  == -1){
          string info;
          info.append("绑定端口号失败\n");
@@ -59,7 +59,7 @@ namespace tcp{
 
    
 
-   void TcpSocket::Listen(int queue_length){
+   void TcpSocket::Listen(const int queue_length){
       if (listen(this->FD(), queue_length) == -1){
          string info;
          info.append("监听失败\n");
@@ -73,7 +73,7 @@ namespace tcp{
       }
    }
 
-   void TcpSocket::Connect(EndPoint endpoint){
+   void TcpSocket::Connect(const EndPoint &endpoint){
       if( connect(this->FD(), endpoint.ScoketAddress(), endpoint.Size()) == -1){
          string info;
          info.append("连接远程套接字失败\n");

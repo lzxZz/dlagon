@@ -13,7 +13,7 @@
 #include <string>
 
 using std::string;
-using std::unordered_map;
+// using std::unordered_map;
 
 namespace dlagon {
 
@@ -53,9 +53,7 @@ namespace http {
         info.append(this->protocol_.ToString());
         // info.append("\r\n");          
         // std::cout << arg_table_.size() << "\n";          
-        for (auto iter : this->arg_table_){
-            info.append(iter.first + ":" + iter.second + "\r\n");
-        }
+        info.append(arg_table_.ToString());
         for (auto cookie : cookies_){
             info.append(cookie.ToString());
             info.append("\r\n");
@@ -64,7 +62,7 @@ namespace http {
         return info;
     }
 
-    unordered_map<string, string> &HttpResponseHeader::ArgTable(){
+    ArgumentTable &HttpResponseHeader::ArgTable(){
         return arg_table_;
     }
 

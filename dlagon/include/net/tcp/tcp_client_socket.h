@@ -35,7 +35,7 @@ namespace tcp{
 
       class TcpClientSocket{
       public:  
-         TcpClientSocket(int fd) 
+         TcpClientSocket(const int fd) 
             : socket_(fd) {}
             
          TcpClientSocket() 
@@ -54,12 +54,12 @@ namespace tcp{
 
          void Send(const std::string &str);
 
-         void Send(const char *str, size_t len);
+         void Send(const char* const str, const size_t len);
 
          auto Receive() 
             -> std::string;
 
-         void Connect(EndPoint endpoint);
+         void Connect(const EndPoint &endpoint);
          const std::shared_ptr<const int> PointerFD() const{
             return socket_.PointerFD();
          }

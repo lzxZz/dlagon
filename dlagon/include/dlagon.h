@@ -9,11 +9,13 @@
 #ifndef DLAGON_H_
 #define DLAGON_H_
 
+#include "common/argument_table.h"
 #include "common/path.h"
 
 #include "exception/exception.h"
 
 #include "http/cookie.h"
+#include "http/cookie_domain.h"
 #include "http/header.h"
 #include "http/http_client.h"
 #include "http/http_request.h"
@@ -22,6 +24,7 @@
 #include "http/method.h"
 #include "http/mime_type.h"
 #include "http/response_protocol.h"
+#include "http/session.h"
 
 
 #include "net/common/end_point.h"

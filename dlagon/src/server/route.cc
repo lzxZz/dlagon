@@ -28,7 +28,7 @@ namespace dlagon
       return *this;
    }
 
-   Handler Route::Distribute(Path path){
+   Handler Route::Distribute(const Path &path){
       // 修改为调用函数指针
       return function_(*this, path);
    }

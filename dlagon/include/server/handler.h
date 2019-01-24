@@ -26,16 +26,16 @@ namespace dlagon
       
    public:
       // 定义处理函数指针类型别名
-      using HandlerFunction = http::HttpResponse(*)(http::HttpRequest);
+      using HandlerFunction = http::HttpResponse(*)(const http::HttpRequest);
       
       Handler(HandlerFunction function = GetFile)
          : worker_(function) {}
       
       // 默认实现的处理函数
-      static http::HttpResponse GetFile(http::HttpRequest req);
+      static http::HttpResponse GetFile(const http::HttpRequest req);
       static std::string root_dir;  //返回请求文件的相对根目录
       // 调用函数指针的函数
-      http::HttpResponse Excute(http::HttpRequest req);
+      http::HttpResponse Excute(const http::HttpRequest &req);
    private:
       HandlerFunction worker_;   // 具体将请求转化为响应的函数,必须使用构造函数进行初始化
       

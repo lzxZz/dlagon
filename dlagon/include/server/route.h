@@ -36,7 +36,7 @@ namespace dlagon
       Route() {} 
       
       // 用于执行分发的函数,调用function_成员来进行操作
-      Handler Distribute(dlagon::Path path);               
+      Handler Distribute(const dlagon::Path &path);               
       // 给Path注册对应的处理函数
       Route &Register(dlagon::Path path, Handler hander);
       

@@ -89,7 +89,7 @@ namespace net{
 
    
    void Socket::release_socket(const int* const fd){
-      std::cout << "---------xigou----------\n";    
+      // std::cout << "---------xigou----------\n";    
       if (close(*fd) == -1){
          string info = "Close 套接字描述符失败\n要关闭的描述符为 : ";
          info.append(std::to_string(*fd));

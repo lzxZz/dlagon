@@ -24,7 +24,7 @@ namespace dlagon
         class HttpResponseProtocol
         {
         public:
-            HttpResponseProtocol(std::string version, int code, std::string info)
+            HttpResponseProtocol(const std::string &version,const int code, const std::string &info)
                 : version_(version), state_code_(code), state_info_(info) {}
 
             HttpResponseProtocol()

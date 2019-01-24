@@ -14,9 +14,9 @@ public:
    HttpServer()
       : socket_() {}
    
-   void Bind(int port = 8080);
-   void Bind(dlagon::net::EndPoint endpoint);
-   void Listen(int queue_length = 1024);
+   void Bind(const int port = 8080);
+   void Bind(const dlagon::net::EndPoint &endpoint);
+   void Listen(const int queue_length = 1024);
    auto Accept()
       -> std::tuple<HttpClient, dlagon::net::EndPoint>;
 

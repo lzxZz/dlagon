@@ -16,7 +16,7 @@ namespace tcp{
    void  TcpClientSocket::Send(const std::string &str){
       this->socket_.Send(str);
    }
-   void TcpClientSocket::Send(const char *str, size_t len){
+   void TcpClientSocket::Send(const char* const str,const size_t len){
       this->socket_.Send(str, len);
    }
 
@@ -24,7 +24,7 @@ namespace tcp{
       return this->socket_.Receive();
    }
 
-   void TcpClientSocket::Connect(EndPoint endpoint){
+   void TcpClientSocket::Connect(const EndPoint &endpoint){
       this->socket_.Connect(endpoint);
    }    
 

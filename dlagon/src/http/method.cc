@@ -43,7 +43,7 @@ namespace dlagon{
          return HttpMethod::UNKNOWN;
       }
 
-      const string MethodToString(HttpMethod method){
+      const string MethodToString(const HttpMethod &method){
          switch (method){
             case HttpMethod::GET:
                return "GET";

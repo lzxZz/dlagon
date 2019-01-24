@@ -67,12 +67,12 @@ namespace dlagon
         // 从指定的文件描述符创建封装.
         Socket(const int fd) 
             : fd_(new int(fd), release_socket) {}
-        Socket(std::shared_ptr<const int> pointer_fd) 
+        Socket(const std::shared_ptr<const int> &pointer_fd) 
             : fd_(pointer_fd) {}
         Socket(const Socket &sock)
             : fd_(sock.PointerFD()) {}
-        Socket(const Socket &&sock)
-            : fd_(sock.PointerFD()) {}
+        // Socket(const Socket &&sock)
+        //     : fd_(sock.PointerFD()) {}
 
         static Socket New(SocketFamily family = SocketFamily::IPv4, 
                         SocketType type = SocketType::STREAM, 

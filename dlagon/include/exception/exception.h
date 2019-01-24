@@ -23,7 +23,7 @@ namespace dlagon{
       **/
       class Exception{
       public:
-         Exception(const std::string info) 
+         Exception(const std::string &info) 
             : information_(info) {}
          Exception(const char *info) 
             : information_(info) {}

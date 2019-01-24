@@ -44,7 +44,7 @@ namespace dlagon
       //判断文件存在
       if (access(path.c_str(),F_OK) == 0){
          HttpResponse res{HttpResponseHeader{http::HTTP_RESPONSE_PROTOCOL_200},""};
-         res.Header().ArgTable().emplace(std::make_pair("Content-Type", http::MimeType::SuffixToMimeType(suffix)));
+         res.Header().ArgTable().Set("Content-Type", http::MimeType::SuffixToMimeType(suffix));
       
          string content;
          ifstream is;
@@ -60,7 +60,7 @@ namespace dlagon
 
       }
       HttpResponse res{HttpResponseHeader{http::HTTP_RESPONSE_PROTOCOL_404},""};
-      res.Header().ArgTable().emplace(std::make_pair("Content-Type","text/html"));
+      res.Header().ArgTable().Set("Content-Type","text/html");
       res.SetBody(u8"<header><meta charset=\"utf-8\"></header><h1>请求资源不存在</h1>");
    
       return res;
@@ -68,7 +68,7 @@ namespace dlagon
    }
 
    // 通过函数指针调用具体函数
-   HttpResponse Handler::Excute(HttpRequest request){
+   HttpResponse Handler::Excute(const HttpRequest &request){
       return worker_(request);
    }
 

@@ -22,7 +22,7 @@ namespace net{
    const string AF_KEY_NAME = "密钥套接字";
    const string AF_UNKNOWN_NAME = "未知类型";
    
-   const string &EndPoint::FamilyToString(int falmily)
+   const string &EndPoint::FamilyToString(const int falmily) const
    {  
       switch (falmily)
       {
@@ -40,7 +40,7 @@ namespace net{
       return AF_UNKNOWN_NAME;
    }
 
-   const std::string EndPoint::Debug(){
+   const std::string EndPoint::Debug() const{
          using std::ostringstream;
          
          ostringstream os;

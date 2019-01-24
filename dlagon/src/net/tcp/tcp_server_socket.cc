@@ -13,18 +13,18 @@ namespace dlagon{
 namespace net{
 
 namespace tcp{
-   void TcpServerSocket::Bind(int port){
+   void TcpServerSocket::Bind(const int port){
       
       Bind(EndPoint{port});
    }
-   void TcpServerSocket::Bind(EndPoint endpoint){
+   void TcpServerSocket::Bind(const EndPoint &endpoint){
       this->socket_.Bind(endpoint);
    }
 
    void TcpServerSocket::Listen(){
       this->Listen(LISTENQ);
    }
-   void TcpServerSocket::Listen(int queue_length){
+   void TcpServerSocket::Listen(const int queue_length){
       this->socket_.Listen(queue_length);
    }
 

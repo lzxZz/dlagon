@@ -33,10 +33,10 @@ namespace tcp{
    public:
       TcpServerSocket()
          : socket_(Socket::New()) {}
-      void Bind(int port);
-      void Bind(EndPoint endpoint);
+      void Bind(const int port);
+      void Bind(const EndPoint &endpoint);
       void Listen(); //使用1024作为默认的监听队列长度
-      void Listen(int queue_length);
+      void Listen(const int queue_length);
       auto Accept()           
          -> std::tuple<TcpClientSocket, EndPoint>;
 

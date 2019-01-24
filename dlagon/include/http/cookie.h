@@ -17,17 +17,17 @@ namespace http{
 
    class Cookie{
    public:
-      Cookie(std::string name, std::string value)
+      Cookie(const std::string &name, const std::string &value)
          : name_(name), value_(value)  {}
       
       const std::string ToString();
 
-      Cookie &SetMaxAge(int max_age);
-      Cookie &SetExpires(int year, int month, int day);
-      Cookie &SetDomain(std::string domain);
-      Cookie &SetPath(std::string path);
-      Cookie &SetSecure(bool secure);
-      Cookie &SetHttpOnly(bool only);
+      Cookie &SetMaxAge(const int max_age);
+      Cookie &SetExpires(const int year, const int month, const int day);
+      Cookie &SetDomain(const std::string &domain);
+      Cookie &SetPath(const std::string &path);
+      Cookie &SetSecure(const bool secure);
+      Cookie &SetHttpOnly(const bool only);
 
       std::string MaxAge();
       std::string Expires();
@@ -35,10 +35,10 @@ namespace http{
       std::string Path();
       std::string Secure();
       std::string HttpOnly();
-      const std::string Name(){
+      const std::string Name() const{
          return name_;
       }
-      const std::string Value(){
+      const std::string Value() const{
          return value_;
       }
       static const char *Days(int, int, int);

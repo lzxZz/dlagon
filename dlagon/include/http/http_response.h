@@ -20,8 +20,10 @@ namespace http{
 
    class HttpResponse{
    public:
-      HttpResponse(HttpResponseHeader header, std::string body)
-         : header_(header), body_(body) {}
+      HttpResponse(const HttpResponseHeader &header, const std::string &body)
+         : header_(header), body_(body) {
+            Header().ArgTable().Set("Content-Type","text/html");
+      }
 
       // 将HTTP响应转化为字符粗,通过HTTPClient发送
       std::string ToString() const;
@@ -31,11 +33,11 @@ namespace http{
       // 添加非常量的响应头,用于调用hashmap的成员方法
       HttpResponseHeader &Header();
       const std::string        Body() const;
-      void SetBody(std::string content){
+      void SetBody(const std::string &content){
          body_ = content;
       }
 
-      void AddCookie(Cookie cookie){
+      void AddCookie(const Cookie &cookie){
          header_.AddCookie(cookie);
       }
       void CookieClear(){
