@@ -115,6 +115,22 @@ namespace http {
             body.append(line);
             body.append("\n");
         }
+        ArgumentTable url_args;
+        
+        // 处理url参数
+        if (p.find("?") != string::npos){
+            string args = p.substr(p.find_first_of("?")+1);
+            p = p.substr(0,p.find_first_of("?"));
+            vector<string> arg_list;
+            boost::split(arg_list, args, boost::is_any_of("&"));
+            for (auto arg : arg_list){
+                string k ,v;
+                k = arg.substr(0,args.find("="));
+                v = arg.substr(args.find("=")+1);
+                url_args.Set(k,v);
+            }
+        }
+
         using Head = HttpRequestHeader;
         Head req_head = Head{StringToMethod(m), 
             Path{p}, v, 
@@ -126,7 +142,10 @@ namespace http {
             req_head.AddCookie(cookie);
         }
         // std::cout << "++++++++++++++++\n";
-        return HttpRequest{req_head, body};
+        
+        return HttpRequest{req_head, body, url_args};    
+        
+        
 
 
     }

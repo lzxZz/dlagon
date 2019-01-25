@@ -1,4 +1,9 @@
 > 说明: 本文件为项目更新日志
+# 2019.1.25 更新
+1. 在HttpRequest中添加UrlArgument成员,用来存储请求中的url参数.
+1. 修改HttpRequest::Parse方法,增加url参数的实现
+1. 添加url参数的单元测试
+
 # 2019.1.24 更新
 1. 修改Session中的Add方法名,使之更加贴切
 1. Session中新增ID方法,获取会话ID

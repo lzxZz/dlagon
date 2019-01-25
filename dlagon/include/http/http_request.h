@@ -12,6 +12,7 @@
 
 #include <string>
 
+#include "common/argument_table.h"
 #include "http/header.h"
 
 namespace dlagon
@@ -31,7 +32,8 @@ namespace http
         HttpRequest(const HttpRequestHeader &header, const std::string &body)
             : header_(header) ,body_(body) {}
         
-        
+        HttpRequest(const HttpRequestHeader &header, const std::string &body, const ArgumentTable args)
+            : header_(header) ,body_(body), url_args_(args) {}
         auto Debug() 
             -> const std::string;
 
@@ -54,12 +56,16 @@ namespace http
         {
             return header_;
         }      
+        const ArgumentTable UrlArgument() const{
+            return url_args_;
+        }
         //静态函数,用于将字符串转换为HTTP请求
         static auto Parse(const std::string &str)
             -> HttpRequest;
     private:
         const HttpRequestHeader header_;
         const std::string       body_;       //请求体
+        ArgumentTable           url_args_;   //url参数列表
     };
 
     bool operator==(const HttpRequest &lhs, const HttpRequest &rhs);
