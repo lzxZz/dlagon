@@ -13,7 +13,7 @@ using std::string;
 namespace dlagon{
 
 namespace http{
-
+namespace {
    // 判断闰年
    int IsLeapYear(const int year){
       if (year % 400 == 0){
@@ -51,7 +51,7 @@ namespace http{
       return wk_days[days % 7];
       
    }
-
+}
 
    // 用于测试的函数
    const char *Cookie::Days(const int y, const int m, const int d){
@@ -124,6 +124,13 @@ namespace http{
 
    string Cookie::HttpOnly(){
       return std::to_string(http_only_);
+   }
+
+   const string Cookie::Name() const{
+      return name_;
+   }
+   const string Cookie::Value() const{
+      return value_;
    }
    
    const string Cookie::ToString(){

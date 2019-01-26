@@ -19,6 +19,16 @@ namespace http{
       return Header().ToString() + Body();
    }
 
+   void HttpResponse::SetBody(const string &content){
+      body_ = content;
+   }
+
+   void HttpResponse::AddCookie(const Cookie &cookie){
+      header_.AddCookie(cookie);
+   }
+   void HttpResponse::ClearCookie(){
+      header_.ClearCookie();
+   }
    
    const HttpResponseHeader &HttpResponse::Header() const{
       return header_;

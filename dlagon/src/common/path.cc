@@ -8,7 +8,13 @@
 
 #include "common/path.h"
 
+
+using std::string;
+
 namespace dlagon{
+    const string Path::ToString() const{
+        return path_;
+    }
 
     Path &Path::operator=(const Path &path){
         this->path_ = path.path_;

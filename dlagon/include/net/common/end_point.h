@@ -32,23 +32,11 @@ namespace dlagon{
    public:
 
       // 返回地址时转换为通用socket地址结构,
-      const struct sockaddr *ScoketAddress() const{
-         // 不能使用static_cast转换,因此使用C风格强制类型转换
-         return (struct sockaddr*)&sock_addr_;
-      }
-      const int Port() const{
-         return sock_addr_.sin_port;
-      }
-      const int Size() const{
-         return sizeof(sock_addr_);
-      }
-      void Port(const int port){
-         //注意使用htons进行转换,端口号的数据结构为short,16bit.
-         sock_addr_.sin_port = htons(port); 
-      }
-      void IP(const std::string &ip){
-         inet_pton(AF_INET, ip.c_str(), &sock_addr_.sin_addr);
-      }
+      const struct sockaddr *ScoketAddress() const;
+      const int Port() const;
+      const int Size() const;
+      void Port(const int port);
+      void IP(const std::string &ip);
 
       EndPoint(const int port){
          bzero(&sock_addr_, sizeof(struct sockaddr_in));

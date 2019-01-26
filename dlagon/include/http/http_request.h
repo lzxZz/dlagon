@@ -39,26 +39,16 @@ namespace http
 
         //获取请求体
         auto Body() const
-            -> std::string 
-        {
-            return body_;
-        }    
+            -> const std::string ;
               
         //获取请求头
         auto Header() 
-            -> HttpRequestHeader
-        {
-            return header_;
-        }        
+            -> HttpRequestHeader;    
 
         auto Header()  const
-            ->const HttpRequestHeader
-        {
-            return header_;
-        }      
-        const ArgumentTable UrlArgument() const{
-            return url_args_;
-        }
+            ->const HttpRequestHeader;
+
+        const ArgumentTable UrlArgument() const;
         //静态函数,用于将字符串转换为HTTP请求
         static auto Parse(const std::string &str)
             -> HttpRequest;

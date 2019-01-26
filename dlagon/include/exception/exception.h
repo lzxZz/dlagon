@@ -29,10 +29,10 @@ namespace dlagon{
             : information_(info) {}
          virtual ~Exception() {} 
          virtual auto What() const
-            ->  const std::string 
-         {
-            return information_;
-         }
+            ->  const std::string {
+
+               return information_;
+            }
       private:
          const std::string information_;
       };

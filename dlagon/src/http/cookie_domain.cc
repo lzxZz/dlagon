@@ -66,6 +66,22 @@ namespace http{
         
     }
 
+    bool CookieDomain::operator==(const CookieDomain &domain) const{
+        if (this->domain_list_.size() != domain.domain_list_.size()){
+            return false;
+        }
+        for (std::vector<std::string>::size_type i =0; i < domain.domain_list_.size(); i++){
+            if (this->domain_list_[i]  != domain.domain_list_[i]) {
+                return false;
+            }
+        }   
+        return true;
+    }
+
+    bool CookieDomain::operator!=(const CookieDomain &domain) const{
+        return !(*this == domain);
+    }
+
 
 } //namespace http
 

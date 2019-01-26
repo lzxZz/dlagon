@@ -27,19 +27,9 @@ namespace http{
         bool Contain(const CookieDomain &domain);
         // 判断本域名是否属于参数表示的域名
         bool PartOf(const CookieDomain &domian);
-        bool operator==(const CookieDomain &domain) const{
-            if (this->domain_list_.size() != domain.domain_list_.size()){
-                return false;
-            }
-
-            for (std::vector<std::string>::size_type i =0; i < domain.domain_list_.size(); i++){
-                if (this->domain_list_[i]  != domain.domain_list_[i]) {
-                    return false;
-                }
-            }
-            
-            return true;
-        }
+        bool operator==(const CookieDomain &domain) const;
+        bool operator!=(const CookieDomain &domain) const;
+           
     private:
 
         // 使用vector来存储域名的各个级别，从顶级（com）开始存储,不存储点。但是在各个方法中输出点。

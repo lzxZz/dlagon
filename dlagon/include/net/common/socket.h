@@ -71,52 +71,12 @@ namespace dlagon
             : fd_(pointer_fd) {}
         Socket(const Socket &sock)
             : fd_(sock.PointerFD()) {}
-        // Socket(const Socket &&sock)
-        //     : fd_(sock.PointerFD()) {}
 
         static Socket New(SocketFamily family = SocketFamily::IPv4, 
                         SocketType type = SocketType::STREAM, 
-                        SocketProtocolType protocol = SocketProtocolType::IP){
-            const int fd = socket(static_cast<int>(family),
-                                static_cast<int>(type), 
-                                static_cast<int>(protocol));
-            if (fd == -1)
-            {
-                throw dlagon::exception::Exception("获取套接字描述符失败");
-            }
-            return Socket{fd};
-        }
-        const std::shared_ptr<const int> PointerFD() const{
-            return fd_;
-        }
-        const int FD() const{
-            return *fd_;
-        }
-        // auto Send(const std::string &str) noexcept  //
-        //     -> void;
-        // auto Send(const char *str, size_t len) noexcept  //
-        //     -> void;
-        // auto Receive() noexcept
-        //     -> const std::string;            
-        // auto Bind(int port)
-        //     -> void;        
-        // auto Bind(EndPoint endpoint)
-        //     -> void;        
-        // auto Listen(int queue_length)
-        //     -> void;        
-        // auto Listen()
-        //     -> void {
-        //     Listen(LISTENQ);
-        // }        
-        // auto Connect(EndPoint enpoint)
-        //     -> void;   
-        // // 同时返回远程套接字和地址 
-        // // 原先使用值返回Socket的时候,
-        // //    由于文件描述符在临时变量被销毁时调用了close函数
-        // //    必须使用指针进行返回
-
-        // auto Accept()
-        //     -> std::tuple<Socket, EndPoint>;
+                        SocketProtocolType protocol = SocketProtocolType::IP);
+        const std::shared_ptr<const int> PointerFD() const;
+        const int FD() const;
         
     private:
         std::shared_ptr<const int> fd_;

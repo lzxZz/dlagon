@@ -99,6 +99,26 @@ namespace net{
       }
    }
 
+   Socket Socket::New(SocketFamily family, 
+                        SocketType type, 
+                        SocketProtocolType protocol){
+            const int fd = socket(static_cast<int>(family),
+                                static_cast<int>(type), 
+                                static_cast<int>(protocol));
+            if (fd == -1)
+            {
+                throw dlagon::exception::Exception("获取套接字描述符失败");
+            }
+            return Socket{fd};
+        }
+        const std::shared_ptr<const int> Socket::PointerFD() const{
+            return fd_;
+        }
+        const int Socket::FD() const{
+            return *fd_;
+        }
+        
+
    // const string Socket::Receive() noexcept{   
    //    string content;
 

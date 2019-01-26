@@ -33,16 +33,10 @@ namespace http{
       // 添加非常量的响应头,用于调用hashmap的成员方法
       HttpResponseHeader &Header();
       const std::string        Body() const;
-      void SetBody(const std::string &content){
-         body_ = content;
-      }
+      void SetBody(const std::string &content);
 
-      void AddCookie(const Cookie &cookie){
-         header_.AddCookie(cookie);
-      }
-      void CookieClear(){
-         header_.ClearCookie();
-      }
+      void AddCookie(const Cookie &cookie);
+      void ClearCookie();
    private:
       HttpResponseHeader   header_;
       std::vector<Cookie>  cookies_;

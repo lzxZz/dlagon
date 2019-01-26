@@ -26,6 +26,25 @@ namespace dlagon {
 
 namespace http {
 
+    const string HttpRequest::Body() const{
+        return body_;
+    }
+
+    HttpRequestHeader HttpRequest::Header(){
+        return header_;
+    }
+    const HttpRequestHeader HttpRequest::Header() const{
+        return header_;
+    }
+
+    const ArgumentTable HttpRequest::UrlArgument() const{
+        return url_args_;
+    }
+    
+
+
+
+
     bool operator==( HttpRequest &lhs,  HttpRequest &rhs)
     {
         return (lhs.Header() == rhs.Header() && lhs.Body() == rhs.Body());

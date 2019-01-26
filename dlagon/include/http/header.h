@@ -37,38 +37,20 @@ namespace dlagon
         class HttpRequestHeader{
         public:
             auto Method() const
-                -> const HttpMethod 
-            {
-                return method_;
-            }
+                -> const HttpMethod ;
             auto Path() const
-                -> const dlagon::Path&
-            {
-                return path_;
-            }
+                -> const dlagon::Path&;
             //因为这个字符串不会很长,因此返回副本,而不是引用
             auto Version() const
-                -> const std::string 
-            {
-                return version_;
-            }
+                -> const std::string ;
             auto ArgTable()
-                ->const ArgumentTable&
-            {
-                return arg_table_;
-            }
+                ->const ArgumentTable&;
 
-            void AddArg(const std::string &key, const std::string &value){
-                arg_table_.Set(key, value);
-            }
-            void RemoveArg(const std::string &key){
-                arg_table_.Remove(key);
-            }
-            const std::string GetArg(const std::string &key){
-                return arg_table_.Get(key);
-            }
+            void AddArg(const std::string &key, const std::string &value);
+            void RemoveArg(const std::string &key);
+            const std::string GetArg(const std::string &key);
 
-            auto Debug()
+            auto Debug() const
                 -> const std::string;
 
             HttpRequestHeader(const dlagon::http::HttpMethod  &method, 
@@ -94,22 +76,14 @@ namespace dlagon
                                 const ArgumentTable             &args)
                 : method_(method), path_(path), version_(version), arg_table_(args) {}
             
-            ArgumentTable Cookies(){
-                return cookies_;
-            }
+            ArgumentTable Cookies();
 
-            void AddCookie(const Cookie &cookie){
-                cookies_.Set(cookie.Name(), cookie.Value());
-            }
+            void AddCookie(const Cookie &cookie);
 
-            void AddCookie(const std::string &key, const std::string &value){
-                cookies_.Set(key, value);
-            }
+            void AddCookie(const std::string &key, const std::string &value);
 
 
-            void ClearCookie(){
-                cookies_.Clear();
-            }
+            void ClearCookie();
             
         private:
             /*
@@ -144,12 +118,8 @@ namespace dlagon
             // 不能返回常量对象,返回常量对象将会导致无法调用emplace方法.
             auto ArgTable()
                 -> ArgumentTable &;
-            void AddCookie(const Cookie &cookie){
-                cookies_.push_back(cookie);            
-            }
-            void ClearCookie(){
-                cookies_.clear();
-            }
+            void AddCookie(const Cookie &cookie);
+            void ClearCookie();
         private:
             /*
             *   所有成员都是常量

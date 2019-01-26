@@ -6,6 +6,10 @@ using std::string;
 namespace dlagon{
 
 namespace http{
+    const string Session::ID() const{
+        return id_;
+    }
+
     const vector<HttpRequest> Session::Historical() const{
         return historical_;
     }

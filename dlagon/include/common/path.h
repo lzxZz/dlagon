@@ -26,10 +26,7 @@ namespace dlagon
         Path &operator=(const dlagon::Path &path);
         // 返回路径表示的字符串
         auto ToString() const 
-            -> const std::string 
-        {
-            return path_;
-        }
+            -> const std::string ;
     private:
         std::string           path_;    // 取消const属性,用于完成赋值运算符
     };

@@ -18,8 +18,47 @@ using std::string;
 namespace dlagon {
 
 namespace http {
+    const HttpMethod HttpRequestHeader::Method() const{
+        return method_;
+    }
+    const Path &HttpRequestHeader::Path() const{
+        return path_;
+    }
+    const string HttpRequestHeader::Version() const{
+        return version_;
+    }
 
-    const string HttpRequestHeader::Debug()
+    const ArgumentTable &HttpRequestHeader::ArgTable(){
+        return arg_table_;
+    }
+
+    void HttpRequestHeader::AddArg(const string &key, const string &value){
+        arg_table_.Set(key, value);
+    }
+
+    void HttpRequestHeader::RemoveArg(const string &key){
+        arg_table_.Remove(key);
+    }
+
+    const string HttpRequestHeader::GetArg(const string &key){
+        return arg_table_.Get(key);
+    }
+
+    ArgumentTable HttpRequestHeader::Cookies(){
+        return cookies_;
+    }
+    void HttpRequestHeader::AddCookie(const Cookie &cookie){
+        cookies_.Set(cookie.Name(), cookie.Value());
+    }
+
+    void HttpRequestHeader::AddCookie(const string &key, const string &value){
+        cookies_.Set(key, value);
+    }
+    void HttpRequestHeader::ClearCookie(){
+        cookies_.Clear();
+    }
+
+    const string HttpRequestHeader::Debug() const
     {
         // TODO 等待添加具体数据内容
         return "";
@@ -47,6 +86,12 @@ namespace http {
         return !(lhs == rhs);
     }
 
+    void HttpResponseHeader::AddCookie(const Cookie &cookie){
+        cookies_.push_back(cookie);
+    }
+    void HttpResponseHeader::ClearCookie(){
+        cookies_.clear();
+    }
 
     const string HttpResponseHeader::ToString() const{
         string info;

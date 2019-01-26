@@ -26,9 +26,7 @@ namespace http{
         const std::vector<HttpRequest> Historical() const ;
         void AddHistorical(const HttpRequest req);
         
-        const std::string ID() const{
-            return id_;
-        }
+        const std::string ID() const;
         // 暂时不实现超时方法
         void TimeOut(const std::string time_out);
         const std::string TimeOut() const;

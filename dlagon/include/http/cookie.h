@@ -35,12 +35,9 @@ namespace http{
       std::string Path();
       std::string Secure();
       std::string HttpOnly();
-      const std::string Name() const{
-         return name_;
-      }
-      const std::string Value() const{
-         return value_;
-      }
+      const std::string Name() const;
+      const std::string Value() const;
+   
       static const char *Days(int, int, int);
    private:
       std::string name_ = "";

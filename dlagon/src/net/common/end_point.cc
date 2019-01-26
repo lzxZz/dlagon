@@ -59,6 +59,23 @@ namespace net{
          return os.str();
       }  
 
+      const struct sockaddr *EndPoint::ScoketAddress() const {
+         return (struct sockaddr*)&sock_addr_;
+      }
+      const int EndPoint::Port() const{
+         return sock_addr_.sin_port;
+      }
+      const int EndPoint::Size() const{
+         return sizeof(sock_addr_);
+      }
+      void EndPoint::Port(const int port){
+         // 注意使用htons进行转换
+         sock_addr_.sin_port = htons(port);
+      }
+      void EndPoint::IP(const std::string &ip){
+         inet_pton(AF_INET, ip.c_str(), &sock_addr_.sin_addr);
+      }
+
 } //namespace net
 
 } //namespace dlagon
