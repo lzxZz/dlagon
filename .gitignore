@@ -4,3 +4,4 @@ target/
 release/
 old/
 build/
+out/
