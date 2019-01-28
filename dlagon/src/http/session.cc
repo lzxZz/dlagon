@@ -1,5 +1,7 @@
 #include "http/session.h"
 
+#include "common/debug.h"
+
 using std::vector;
 using std::string;
 
@@ -7,18 +9,22 @@ namespace dlagon{
 
 namespace http{
     const string Session::ID() const{
+        DLAGON_CALL_DEBUG;
         return id_;
     }
 
     const vector<HttpRequest> Session::Historical() const{
+        DLAGON_CALL_DEBUG;
         return historical_;
     }
     void Session::AddHistorical(const HttpRequest req){
+        DLAGON_CALL_DEBUG;
         historical_.push_back(req);
     }
 
 
     Session* SessionCollection::Get(const string &key){
+        DLAGON_CALL_DEBUG;
         auto iter = collection_.find(key);
         if (iter != collection_.end()){
             return &(iter->second);
@@ -36,6 +42,7 @@ namespace http{
                     'Z','X','C','V','B','N','M'};
 
     const string SessionCollection::New(){
+        DLAGON_CALL_DEBUG;
        string key;
         srand(time(nullptr));
         
@@ -53,6 +60,7 @@ namespace http{
         return key;
     }
     const std::string SessionCollection::New(HttpRequest req){
+        DLAGON_CALL_DEBUG;
         string key = New();
         Session *session = Get(key);
         session->AddHistorical(req);
@@ -60,6 +68,7 @@ namespace http{
     }
 
     void SessionCollection::Remove(const string &key){
+        DLAGON_CALL_DEBUG;
         collection_.erase(key);
     }
 

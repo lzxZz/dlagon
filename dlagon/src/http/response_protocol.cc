@@ -6,13 +6,14 @@
    对`http/response_protocol.h`的实现
 */
 #include "http/response_protocol.h"
-
+#include "common/debug.h"
 using std::string;
 namespace dlagon{
 
 namespace http{
 
    const string HttpResponseProtocol::ToString() const{
+        DLAGON_CALL_DEBUG;
       string info;
       info.append(version_);
       info.append("\t");

@@ -10,6 +10,7 @@
 
 #include <string>
 
+#include "common/debug.h"
 using std::string;
 namespace dlagon{
 
@@ -24,6 +25,7 @@ namespace net{
    
    const string &EndPoint::FamilyToString(const int falmily) const
    {  
+        DLAGON_CALL_DEBUG;
       switch (falmily)
       {
          case (AF_INET):
@@ -41,6 +43,7 @@ namespace net{
    }
 
    const std::string EndPoint::Debug() const{
+        DLAGON_CALL_DEBUG;
          using std::ostringstream;
          
          ostringstream os;
@@ -60,19 +63,24 @@ namespace net{
       }  
 
       const struct sockaddr *EndPoint::ScoketAddress() const {
+        DLAGON_CALL_DEBUG;
          return (struct sockaddr*)&sock_addr_;
       }
       const int EndPoint::Port() const{
+        DLAGON_CALL_DEBUG;
          return sock_addr_.sin_port;
       }
       const int EndPoint::Size() const{
+        DLAGON_CALL_DEBUG;
          return sizeof(sock_addr_);
       }
       void EndPoint::Port(const int port){
+        DLAGON_CALL_DEBUG;
          // 注意使用htons进行转换
          sock_addr_.sin_port = htons(port);
       }
       void EndPoint::IP(const std::string &ip){
+        DLAGON_CALL_DEBUG;
          inet_pton(AF_INET, ip.c_str(), &sock_addr_.sin_addr);
       }
 

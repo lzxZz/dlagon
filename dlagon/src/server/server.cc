@@ -13,6 +13,7 @@
 #include <thread>
 #include <tuple>
 
+#include "common/debug.h"
 #include "net/common/end_point.h"
 using std::string;
 using std::tuple;
@@ -27,6 +28,7 @@ using dlagon::http::HttpResponse;
 namespace dlagon
 {
    void Worker(Server *server , HttpClient client){
+        DLAGON_CALL_DEBUG;
       HttpRequest req =  client.GetRequest();
       
       Handler handler =  server->Route().Distribute(req.Header().Path());
@@ -54,6 +56,7 @@ namespace dlagon
    }
 
    void Server::Run(string root_dir, int port){
+        DLAGON_CALL_DEBUG;
       // 必须设置正确的网站根目录
       Handler::root_dir = root_dir;
       
@@ -75,11 +78,13 @@ namespace dlagon
    }
 
    Server &Server::SetRoute(dlagon::Route route){
+        DLAGON_CALL_DEBUG;
       route_ = route;  
       return *this;
    }
 
    dlagon::Route Server::Route(){
+        DLAGON_CALL_DEBUG;
       return route_;
    }
    

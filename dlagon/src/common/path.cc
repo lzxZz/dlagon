@@ -7,26 +7,30 @@
 */
 
 #include "common/path.h"
-
+#include "common/debug.h"
 
 using std::string;
 
 namespace dlagon{
     const string Path::ToString() const{
+        DLAGON_CALL_DEBUG;
         return path_;
     }
 
     Path &Path::operator=(const Path &path){
+        DLAGON_CALL_DEBUG;
         this->path_ = path.path_;
         return *this;
     }
     
     bool operator==(const Path &lhs, const Path &rhs)
     {
+        DLAGON_CALL_DEBUG;
         return (lhs.ToString() == rhs.ToString());
     }
     bool operator!=(const Path &lhs, const Path &rhs)
     {
+        DLAGON_CALL_DEBUG;
         
         return !(lhs == rhs);
     }

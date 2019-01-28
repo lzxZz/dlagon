@@ -8,7 +8,7 @@
 
 
 #include "net/tcp/tcp_socket.h"
-
+#include "common/debug.h"
 
 using std::string;
 
@@ -21,14 +21,17 @@ namespace tcp{
 
 
    void TcpSocket::Send(const string &str) {
+        DLAGON_CALL_DEBUG;
       write(this->FD(), str.c_str(), str.size());
    }
 
    void TcpSocket::Send(const char* const str, const  size_t len){
+        DLAGON_CALL_DEBUG;
       write(this->FD(), str, len);
    }
 
    const string TcpSocket::Receive(){
+        DLAGON_CALL_DEBUG;
       string content;
 
       char *buf = new char[BUFSIZ];
@@ -43,10 +46,12 @@ namespace tcp{
    }
 
    void TcpSocket::Bind(const  int port){
+        DLAGON_CALL_DEBUG;
       Bind(EndPoint(port));
    }
    void TcpSocket::Bind(const EndPoint &endpoint){
       if(bind(this->FD(), endpoint.ScoketAddress(), endpoint.Size())  == -1){
+        DLAGON_CALL_DEBUG;
          string info;
          info.append("绑定端口号失败\n");
          info.append(strerror(errno));
@@ -60,6 +65,7 @@ namespace tcp{
    
 
    void TcpSocket::Listen(const int queue_length){
+        DLAGON_CALL_DEBUG;
       if (listen(this->FD(), queue_length) == -1){
          string info;
          info.append("监听失败\n");
@@ -74,6 +80,7 @@ namespace tcp{
    }
 
    void TcpSocket::Connect(const EndPoint &endpoint){
+        DLAGON_CALL_DEBUG;
       if( connect(this->FD(), endpoint.ScoketAddress(), endpoint.Size()) == -1){
          string info;
          info.append("连接远程套接字失败\n");
@@ -91,6 +98,7 @@ namespace tcp{
    }
 
    std::tuple<TcpSocket, EndPoint> TcpSocket::Accept(){
+        DLAGON_CALL_DEBUG;
       using SA = struct sockaddr;
       struct sockaddr_in addr;
       int fd;

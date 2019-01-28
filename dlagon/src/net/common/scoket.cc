@@ -15,6 +15,8 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
+#include "common/debug.h"
+
 #include <memory>
 #include <sstream>
 using std::string;
@@ -89,6 +91,7 @@ namespace net{
 
    
    void Socket::release_socket(const int* const fd){
+        DLAGON_CALL_DEBUG;
       // std::cout << "---------xigou----------\n";    
       if (close(*fd) == -1){
          string info = "Close 套接字描述符失败\n要关闭的描述符为 : ";
@@ -102,6 +105,7 @@ namespace net{
    Socket Socket::New(SocketFamily family, 
                         SocketType type, 
                         SocketProtocolType protocol){
+        DLAGON_CALL_DEBUG;
             const int fd = socket(static_cast<int>(family),
                                 static_cast<int>(type), 
                                 static_cast<int>(protocol));

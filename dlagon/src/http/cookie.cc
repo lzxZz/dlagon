@@ -7,7 +7,7 @@
 */
 
 #include "http/cookie.h"
-
+#include "common/debug.h"
 using std::string;
 
 namespace dlagon{
@@ -60,6 +60,7 @@ namespace {
 
    // 在指定过期日期的时候,强制设置时间为00:00:00
    Cookie &Cookie::SetExpires(const int year, const int month, const int day){
+        DLAGON_CALL_DEBUG;
       expires_ = GetWkDay(year, month, day);
       expires_.append(", ");
       if (day < 10){
@@ -76,64 +77,78 @@ namespace {
    }
 
    Cookie &Cookie::SetMaxAge(const int max_age){
+        DLAGON_CALL_DEBUG;
       max_age_ = max_age;
       return *this;
    }
 
    Cookie &Cookie::SetDomain(const string &domain){
+        DLAGON_CALL_DEBUG;
       domain_ = domain;
       return *this;
    }
 
    Cookie &Cookie::SetPath(const string &path){
+        DLAGON_CALL_DEBUG;
       path_ = path;
       return *this;
    }
 
    Cookie &Cookie::SetSecure(const bool secure){
+        DLAGON_CALL_DEBUG;
       secure_ = secure;
       return *this;
    }
 
    Cookie &Cookie::SetHttpOnly(const bool http_only){
+        DLAGON_CALL_DEBUG;
       http_only_ = http_only;
       return *this;
    }
 
 
    string Cookie::Expires(){
+        DLAGON_CALL_DEBUG;
       return expires_;
    }
 
    string Cookie::MaxAge(){
+        DLAGON_CALL_DEBUG;
       return std::to_string(max_age_);
    }
 
    
    string Cookie::Domain(){
+        DLAGON_CALL_DEBUG;
       return domain_;
    }
 
    string Cookie::Path(){
+        DLAGON_CALL_DEBUG;
       return path_;
    }
 
    string Cookie::Secure(){
+        DLAGON_CALL_DEBUG;
       return std::to_string(secure_);
    }
 
    string Cookie::HttpOnly(){
+        DLAGON_CALL_DEBUG;
       return std::to_string(http_only_);
    }
 
    const string Cookie::Name() const{
+      DLAGON_CALL_DEBUG;
       return name_;
    }
    const string Cookie::Value() const{
+        DLAGON_CALL_DEBUG;
       return value_;
    }
    
    const string Cookie::ToString(){
+      DLAGON_CALL_DEBUG;
       string header = "Set-Cookie: ";
       header.append(name_);
       header.append("=");

@@ -9,11 +9,13 @@
 #include "http/method.h"
 #include <string>
 
+#include "common/debug.h"
 using std::string;
 namespace dlagon{
    namespace http{
       
       HttpMethod StringToMethod(string method){
+        DLAGON_CALL_DEBUG;
          for (auto &c : method)
          {
             c = toupper(c);
@@ -44,6 +46,7 @@ namespace dlagon{
       }
 
       const string MethodToString(const HttpMethod &method){
+        DLAGON_CALL_DEBUG;
          switch (method){
             case HttpMethod::GET:
                return "GET";

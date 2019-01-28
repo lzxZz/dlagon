@@ -15,6 +15,7 @@
 
 #include <boost/algorithm/string.hpp>
 
+#include "common/debug.h"
 #include "http/header.h"
 
 #include <iostream>
@@ -27,17 +28,21 @@ namespace dlagon {
 namespace http {
 
     const string HttpRequest::Body() const{
+        DLAGON_CALL_DEBUG;
         return body_;
     }
 
     HttpRequestHeader HttpRequest::Header(){
+        DLAGON_CALL_DEBUG;
         return header_;
     }
     const HttpRequestHeader HttpRequest::Header() const{
+        DLAGON_CALL_DEBUG;
         return header_;
     }
 
     const ArgumentTable HttpRequest::UrlArgument() const{
+        DLAGON_CALL_DEBUG;
         return url_args_;
     }
     
@@ -47,25 +52,30 @@ namespace http {
 
     bool operator==( HttpRequest &lhs,  HttpRequest &rhs)
     {
+        DLAGON_CALL_DEBUG;
         return (lhs.Header() == rhs.Header() && lhs.Body() == rhs.Body());
     }
     bool operator!=( HttpRequest &lhs,  HttpRequest &rhs)
     {
+        DLAGON_CALL_DEBUG;
         return !(lhs == rhs);
     }
 
      bool operator==(const HttpRequest &lhs, const HttpRequest &rhs)
     {
+        DLAGON_CALL_DEBUG;
         return (lhs.Header() == rhs.Header() && lhs.Body() == rhs.Body());
     }
     bool operator!=(const HttpRequest &lhs, const HttpRequest &rhs)
     {
+        DLAGON_CALL_DEBUG;
         return !(lhs == rhs);
     }
   
     //去除空格
     void trim(string &s)
     {
+        DLAGON_CALL_DEBUG;
         
         if( !s.empty() )
         {
@@ -81,6 +91,7 @@ namespace http {
     **/
     HttpRequest HttpRequest::Parse(const string &str)
     {
+        DLAGON_CALL_DEBUG;
         using std::istringstream;
 
         istringstream is(str);

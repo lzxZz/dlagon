@@ -8,29 +8,35 @@
 
 #include "net/tcp/tcp_server_socket.h"
 
+#include "common/debug.h"
 namespace dlagon{
 
 namespace net{
 
 namespace tcp{
    void TcpServerSocket::Bind(const int port){
+        DLAGON_CALL_DEBUG;
       
       Bind(EndPoint{port});
    }
    void TcpServerSocket::Bind(const EndPoint &endpoint){
+        DLAGON_CALL_DEBUG;
       this->socket_.Bind(endpoint);
    }
 
    void TcpServerSocket::Listen(){
+        DLAGON_CALL_DEBUG;
       this->Listen(LISTENQ);
    }
    void TcpServerSocket::Listen(const int queue_length){
+        DLAGON_CALL_DEBUG;
       this->socket_.Listen(queue_length);
    }
 
    auto TcpServerSocket::Accept() 
       -> std::tuple<TcpClientSocket, EndPoint>
    {
+        DLAGON_CALL_DEBUG;
       using Result = std::tuple<Socket, EndPoint>;
       Result result = this->socket_.Accept();
       using std::shared_ptr;

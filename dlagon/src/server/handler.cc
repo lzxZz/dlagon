@@ -15,7 +15,7 @@
 #include <fstream>
 #include <string>
 
-
+#include "common/debug.h"
 #include "exception/exception.h"
 #include "http/mime_type.h"
 
@@ -32,6 +32,7 @@ namespace dlagon
    string Handler::root_dir = "";
 
    HttpResponse Handler::GetFile(HttpRequest req){
+        DLAGON_CALL_DEBUG;
       
       //若果没有初始化网站根目录则抛出异常.
       if (root_dir == ""){
@@ -69,6 +70,7 @@ namespace dlagon
 
    // 通过函数指针调用具体函数
    HttpResponse Handler::Excute(const HttpRequest &request, const http::Session &session){
+        DLAGON_CALL_DEBUG;
       if (worker_session_ != nullptr){
          return worker_session_(request, session);
       }
