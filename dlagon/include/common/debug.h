@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#define DEBUG // 开启调试选项, 注释该行可关闭调试选项
+// #define DEBUG // 开启调试选项, 注释该行可关闭调试选项
 
 #ifdef DEBUG
 
@@ -12,7 +12,7 @@
 #define DLAGON_CALL_DEBUG DLAGON_OUT << ">>>>>>CALL BY:<<<<<<file:" << __FILE__ << "\n\t\t\tline:" << __LINE__ << "\t\t\tfunc:" << __func__ << std::endl
 
 #else
-#define DLAGON_DEBUG
+#define DLAGON_CALL_DEBUG
 
 #endif
 

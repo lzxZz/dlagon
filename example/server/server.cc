@@ -14,7 +14,7 @@ int main(){
       cout << "启动" << endl;
 
       //运行示例时,请手动填充下面的变量
-      string root_dir = "";
+      string root_dir = "/media/blog/website";
       Server server;
       Route route{};
       
