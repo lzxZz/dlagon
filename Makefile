@@ -9,7 +9,7 @@ clean:
 
 test:
 	@make
-	@./build/target/test
+	@./build/test/test_main
 
 line:
 	@-wc -l  `find ./dlagon/ -name "*"`
