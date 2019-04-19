@@ -12,9 +12,11 @@ namespace dlagon{
         ArgumentTable &Set(const std::string &key, const std::string &value);
         ArgumentTable &Clear();
         ArgumentTable &Remove(const std::string &key);
-        const std::string ToString(const std::string split = ":") const;
+        const std::string ToString(const std::string &split = ":", const std::string &line_split = "\r\n") const;
     private:
         std::map<std::string, std::string>  arg_table_;
+    friend bool operator==(const ArgumentTable &lhs, const ArgumentTable &rhs);
+    friend bool operator!=(const ArgumentTable &lhs, const ArgumentTable &rhs);
     };
 } //namespace dlagon
 

@@ -21,5 +21,5 @@ install:
 	@-rm -r ~/.include/dlagon
 	@-rm ~/.lib/libdlagon.a
 	cp dlagon/include ~/.include/dlagon -r -f
-	cp build/libdlagon.a ~/.lib/ -f
+	cp build/target/lib/libdlagon.a ~/.lib/ -f
 	@echo ">>>>>>>>>>>>>>>>>>      安装完成        <<<<<<<<<<<<<<<<<<<<<"

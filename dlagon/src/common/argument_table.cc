@@ -34,16 +34,22 @@ namespace dlagon{
         }
         return *this;
     }
-    const string ArgumentTable::ToString(const string split) const{
+    const string ArgumentTable::ToString(const string &split, const string &line_split) const{
         DLAGON_CALL_DEBUG;
         string info;
         for (auto iter : arg_table_){
             info.append(iter.first);
             info.append(split);
             info.append(iter.second);
-            info.append("\r\n");
+            info.append(line_split);
         }
         return info;
     }
 
+    bool operator==(const ArgumentTable &lhs, const ArgumentTable &rhs){
+        return lhs.arg_table_ == rhs.arg_table_;
+    }
+    bool operator!=(const ArgumentTable &lhs, const ArgumentTable &rhs){
+        return !(lhs == rhs);
+    }
 } //namespace dlagon
