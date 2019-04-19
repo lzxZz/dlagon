@@ -1,0 +1,140 @@
+@startuml "server_uml"
+
+
+
+
+interface IServer{
+   + void Run() 
+   - {abstract} void Gateway(Request&, Response&)
+   - {abstract} IHandler Route(Request&, Response&)
+   - {abstract} Response &Handle(Request)
+
+   - void Work()
+   ---数据成员---
+   - INetServerSocketAdapter server_socket_
+   - ThreadPool thread_pool_;
+}
+interface IHandler{
+
+}
+interface INetServerSocketAdapter{
+   + {abstract} void Bind()
+   + {abstract} void Listen()
+   + {abstract} INetClientSocketAdapter Accept()
+
+}
+
+interface INetClientSocketAdapter{
+   + {abstract} void Send();
+   + {abstract} string Receive();
+   
+   + Request& GetRequest();
+   + Response& GetResponse();
+   --数据成员--
+   - Response  *res_;
+   - Request   *req_; // 持有请求和响应对象, \
+   \n                                在Client销毁的时候释放
+}
+
+
+class ResponseHeader << (C, blue)>>{
+
+}
+class RequestHeader << (C, blue)>>{
+
+}
+class ArgumentTable << (C, blue)>>{
+
+}
+class ResponseBody << (C, blue)>>{
+
+}
+class RequestBody << (C, blue)>>{
+
+}
+
+class Response << (C, blue)>>{
+
+}
+
+interface RequestFactory{
+   + {abstract} Request *FromString();
+   + {abstract} RequestFactory GetInstant();
+}
+
+class HttpRequestFactory{
+   + Request *FromString() override;
+   + RequestFactory GetInstant() override;
+}
+
+note right of Response : 不需要工厂方法构造,构造函数返回一个空对象即可 \n将构造过程分散到具体的处理步骤中
+
+class Request << (C, blue)>>{
+
+}
+class HttpResponse{
+
+}
+
+class HttpRequest{
+
+}
+
+
+note right of IServer : Work用于线程池中的部分, \
+\nRun是程序的主流程, 使用一个死循环来接收请求,并分发到具体线程 \
+\nWork在线程池中调度, 执行具体处理的流程 \
+\n使用的时候, 从IServer继承, 并重写指定的类即可
+
+
+
+
+INetServerSocketAdapter <.. IServer 
+INetClientSocketAdapter <.. IServer 
+IHandler                <.. IServer 
+Response                <.. IServer
+Request                 <.. IServer
+
+INetClientSocketAdapter ..> INetServerSocketAdapter
+Response    <.. INetClientSocketAdapter
+Request     <.. INetClientSocketAdapter
+
+
+
+
+
+StaticHandler ..> IHandler
+DynmicHandler ..> IHandler
+
+HttpRequest    ..> Request
+HttpResponse   ..> Response
+
+
+RequestFactory <.. Request
+HttpRequestFactory ..> RequestFactory 
+HttpRequestFactory <.. HttpRequest
+
+
+Response    ..> ResponseBody  
+Response    ..> ArgumentTable 
+Response    ..> ResponseHeader
+
+
+Request    ..> RequestBody  
+Request    ..> ArgumentTable 
+Request    ..> RequestHeader
+
+ResponseBody    <.. HttpResponseBody    
+ArgumentTable   <.. HttpArgumentTable   
+ResponseHeader  <.. HttpResponseHeader  
+
+
+
+RequestBody       <.. HttpRequestBody  
+RequestHeader     <.. HttpReqeustHeader
+
+note "<size : 25><b>图中没有给出详细的组合, 聚合, 继承, 等关系,</b> \n<size : 25><b>仅给出了依赖关系</b>" as N1
+
+note "<size : 25><b>对于图中的基类, 使用蓝色背景表示</b>" as N2
+
+@enduml
