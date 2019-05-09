@@ -9,6 +9,7 @@ namespace lzx::dlagon::interface{
 class IHandler{
    public:
       virtual void Handle(Request &req, Response &res) = 0;
+      virtual ~IHandler(){}
    };
 
 }

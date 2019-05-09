@@ -31,13 +31,14 @@ namespace lzx::dlagon::interface{
       IServer(IProtocolObjectFactory *factory)
          : factory_(factory)
       {}
+      
 
       void Run(int port){
          server_socket_->Bind(port);
          server_socket_->Listen(1024);
          INetClientSocketAdapter *client = server_socket_->Accept();
          // 转发到线程池中运行
-         std::thread th{Work, client};
+         std::thread th(Work, this,  client);
          th.detach();
       }
 
@@ -45,13 +46,13 @@ namespace lzx::dlagon::interface{
 
    private:
       // 实际工作流程
-      void Work(INetClientSocketAdapter *client){
+      static void Work(IServer *self, INetClientSocketAdapter *client){
          std::string str = client->Receviced();
-         Request *req =  factory_->RequestFromString(str);
-         Response *res = factory_->Response();
+         Request *req =  self->factory_->RequestFromString(str);
+         Response *res = self->factory_->GetResponse();
 
-         Gateway(*req, *res);
-         IHandler *handler = Route(*req);    // 禁止释放
+         self->Gateway(*req, *res);
+         IHandler *handler = self->Route(*req);    // 禁止释放
          handler->Handle(*req, *res);
          const std::string result = res->ToString();
          client->Send(result);

@@ -3,7 +3,8 @@
 
 namespace lzx::dlagon::interface{
 class Request{
-
+public:
+   virtual ~Request(){}
 };
 }
 

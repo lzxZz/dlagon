@@ -7,6 +7,7 @@ namespace lzx::dlagon::interface{
 class Response{
    public:
       virtual const std::string ToString() const = 0;
+      virtual ~Response(){}
    };
 }
 

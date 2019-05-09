@@ -9,7 +9,8 @@ namespace lzx::dlagon::interface{
    class IProtocolObjectFactory{
    public:
       Request *RequestFromString(const std::string &str);
-      Response *Response();
+      Response *GetResponse();
+      virtual ~IProtocolObjectFactory(){}
    };
 }
 
