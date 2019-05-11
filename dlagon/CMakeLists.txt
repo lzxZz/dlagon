@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 
 
+add_compile_options(-g -Wall)
+
+
 aux_source_directory(. SRC)
 aux_source_directory(interface SRC)
 aux_source_directory(http SRC)

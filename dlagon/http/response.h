@@ -11,8 +11,10 @@ namespace lzx::dlagon::http{
 
    public:
       const std::string ToString() const override;
-   private:
-      std::string body_;
+      void SetBody(const std::string &str){
+         body_ = str;
+      }
+   
    };
 }
 

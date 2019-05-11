@@ -8,11 +8,19 @@
 
 namespace lzx::dlagon::web{
    class WebServerBuilder{
+   public:
       WebServer *GetWebServer();
       void SetRoute(lzx::dlagon::interface::IRoute *route);
       void SetServerSocket(lzx::dlagon::interface::INetServerSocketAdapter *server);
       void SetProtocolFactory(lzx::dlagon::interface::IProtocolObjectFactory *factory);
-      WebServerBuilder *GetInstant();
+      void Init(){
+         web_server_ = new WebServer();
+      }
+      static WebServerBuilder *GetInstant();
+   private:
+      WebServerBuilder(){}
+      static WebServerBuilder *builder_;
+      WebServer *web_server_ = nullptr;
    };
 }
 

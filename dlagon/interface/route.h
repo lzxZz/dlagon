@@ -6,7 +6,8 @@
 namespace lzx::dlagon::interface{
    class IRoute{
    public:
-      virtual IHandler *operator()(const Request &req);
+      virtual IHandler *Route(const Request &req) = 0;
+      virtual ~IRoute(){}
    };
 }
 

@@ -8,8 +8,8 @@ namespace lzx::dlagon::interface{
    // 请求和响应对象的抽象工厂
    class IProtocolObjectFactory{
    public:
-      virtual Request *RequestFromString(const std::string &str);
-      virtual Response *GetResponse();
+      virtual Request *RequestFromString(const std::string &str) = 0;
+      virtual Response *GetResponse() = 0;
       // virtual IProtocolObjectFactory *GetInstant();
       virtual ~IProtocolObjectFactory(){}
    };

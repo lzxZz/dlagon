@@ -7,7 +7,12 @@ namespace lzx::dlagon::interface{
 class Response{
    public:
       virtual const std::string ToString() const = 0;
+      void SetBody(const std::string &str){
+         body_ = str;
+      }
       virtual ~Response(){}
+   protected:
+      std::string body_;
    };
 }
 

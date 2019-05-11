@@ -13,7 +13,8 @@ namespace lzx::dlagon::http{
       lzx::dlagon::interface::Response *GetResponse();
       static lzx::dlagon::interface::IProtocolObjectFactory *GetInstant();
    private:
-      HttpProtocolFactory();
+      HttpProtocolFactory(){}
+      static HttpProtocolFactory *factory_;
    };
 
 
