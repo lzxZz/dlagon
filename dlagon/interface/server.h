@@ -21,6 +21,7 @@
 #include "dlagon/interface/handler.h"
 #include "dlagon/interface/factory.h"
 #include "dlagon/interface/net_adapter.h"
+#include "dlagon/interface/route.h"
 
 namespace lzx::dlagon::interface{
 
@@ -28,8 +29,8 @@ namespace lzx::dlagon::interface{
    //作为接口类, 
    class IServer{
    public:
-      IServer(IProtocolObjectFactory *factory)
-         : factory_(factory)
+      IServer(IProtocolObjectFactory *factory, INetServerSocketAdapter *server)
+         : factory_(factory), server_socket_(server)
       {}
       
 
@@ -50,9 +51,9 @@ namespace lzx::dlagon::interface{
          std::string str = client->Receviced();
          Request *req =  self->factory_->RequestFromString(str);
          Response *res = self->factory_->GetResponse();
-
+         
          self->Gateway(*req, *res);
-         IHandler *handler = self->Route(*req);    // 禁止释放
+         IHandler *handler = (*self->route_)(*req);    // 禁止释放
          handler->Handle(*req, *res);
          const std::string result = res->ToString();
          client->Send(result);
@@ -66,7 +67,7 @@ namespace lzx::dlagon::interface{
       
       
       virtual void Gateway(Request &req, Response &res);
-      virtual IHandler *Route(Request &req);             // 可以将Route修改为对象,
+      // virtual IHandler *Route(Request &req);             //将Route修改为对象,
       
       // Handle函数移动到Ihandler类中
       //virtual void Handle(const Request &req, Response &res);
@@ -82,6 +83,7 @@ namespace lzx::dlagon::interface{
       
       INetServerSocketAdapter *server_socket_;
       IProtocolObjectFactory *factory_;
+      static IRoute *route_;
    };
 
 }

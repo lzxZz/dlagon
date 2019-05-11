@@ -10,6 +10,7 @@ namespace lzx::dlagon::interface{
    public:
       virtual Request *RequestFromString(const std::string &str);
       virtual Response *GetResponse();
+      // virtual IProtocolObjectFactory *GetInstant();
       virtual ~IProtocolObjectFactory(){}
    };
 }

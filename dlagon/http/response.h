@@ -3,12 +3,16 @@
 
 #include "dlagon/interface/response.h"
 
-
+#include <string>
 
 
 namespace lzx::dlagon::http{
    class HttpResponse : public lzx::dlagon::interface::Response{
-      
+
+   public:
+      const std::string ToString() const override;
+   private:
+      std::string body_;
    };
 }
 

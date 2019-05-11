@@ -1,6 +1,8 @@
 #ifndef LZX_DLAGON_INTERFACE_NET_ADAPTER_H_
 #define LZX_DLAGON_INTERFACE_NET_ADAPTER_H_
 
+#include <string>
+
 namespace lzx::dlagon::interface{
    class INetClientSocketAdapter;
    class INetServerSocketAdapter{
@@ -12,8 +14,9 @@ namespace lzx::dlagon::interface{
    };
    class INetClientSocketAdapter{
    public:
-      void Send(const std::string &str);
-      std::string Receviced();
+      virtual void Send(const std::string &str) = 0;
+      virtual std::string Receviced() = 0;
+      virtual bool Connect() = 0;
       virtual ~INetClientSocketAdapter(){}
    };
     
