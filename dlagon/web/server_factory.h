@@ -10,17 +10,21 @@ namespace lzx::dlagon::web{
    class WebServerBuilder{
    public:
       WebServer *GetWebServer();
-      void SetRoute(lzx::dlagon::interface::IRoute *route);
+      // void SetRoute(lzx::dlagon::interface::IRoute *route);
+      void SetMidware(lzx::dlagon::interface::Midware *midware);
       void SetServerSocket(lzx::dlagon::interface::INetServerSocketAdapter *server);
       void SetProtocolFactory(lzx::dlagon::interface::IProtocolObjectFactory *factory);
-      void Init(){
-         web_server_ = new WebServer();
-      }
+      // void Init(){
+      //    web_server_ = new WebServer();
+      // }
       static WebServerBuilder *GetInstant();
    private:
       WebServerBuilder(){}
       static WebServerBuilder *builder_;
-      WebServer *web_server_ = nullptr;
+      // WebServer *web_server_ = nullptr;
+      lzx::dlagon::interface::IProtocolObjectFactory *factory_ = nullptr;
+      lzx::dlagon::interface::INetServerSocketAdapter *server_ = nullptr;
+      lzx::dlagon::interface::Midware *midware_ = nullptr;
    };
 }
 

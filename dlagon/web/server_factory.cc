@@ -16,19 +16,26 @@ namespace lzx::dlagon::web{
       
       return builder_;
    }
-
+   // using lzx::dlagon::interface::IProtocolObjectFactory;
+   // using lzx::dlagon::interface::INetServerSocketAdapter;
    WebServer *WebServerBuilder::GetWebServer(){
-      return web_server_;
+      WebServer *web_server = nullptr;
+      web_server = new WebServer(factory_, server_, midware_);
+      factory_ = nullptr;
+      server_ = nullptr;
+      midware_ = nullptr;
+
+      return web_server;
    }
 
-   void WebServerBuilder::SetRoute(lzx::dlagon::interface::IRoute *route){
-      web_server_->route_ = route;
+   void WebServerBuilder::SetMidware(lzx::dlagon::interface::Midware *midware){
+      midware_ = midware;
    }
    void WebServerBuilder::SetServerSocket(lzx::dlagon::interface::INetServerSocketAdapter *server){
-      web_server_->server_socket_ = server;
+      server_ = server;
    }
    void WebServerBuilder::SetProtocolFactory(lzx::dlagon::interface::IProtocolObjectFactory *factory){
-      web_server_->factory_ = factory;
+      factory_ = factory;
    }
 
 }

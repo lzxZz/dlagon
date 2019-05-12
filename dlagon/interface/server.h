@@ -22,6 +22,7 @@
 #include "dlagon/interface/factory.h"
 #include "dlagon/interface/net_adapter.h"
 #include "dlagon/interface/route.h"
+#include "dlagon/interface/midware.h"
 
 #include <iostream>
 using std::cout;
@@ -33,26 +34,26 @@ namespace lzx::dlagon::interface{
    //作为接口类, 
    class IServer{
    public:
-      // IServer(IProtocolObjectFactory *factory, INetServerSocketAdapter *server)
-      //    : factory_(factory), server_socket_(server)
-      // {}
+      IServer(IProtocolObjectFactory *factory, INetServerSocketAdapter *server, Midware *midware)
+         : factory_(factory), server_socket_(server), midware_(midware)
+      {}
       
       // IServer() = delete;
 
       void Run(int port){
-         cout << "00" << endl;
+         
          server_socket_->Bind(port);
-         cout << "11" << endl;
+         
          server_socket_->Listen(1024);
-         cout << "22" << endl;
+         
          for (;;){
             INetClientSocketAdapter *client = server_socket_->Accept();
-            cout << "33" << endl;
+            
             // 转发到线程池中运行
             std::thread th(Work, this,  client);
-            cout << "44" << endl;
+            
             th.detach();
-            cout << "55" << endl;
+            
          }
          
       }
@@ -62,13 +63,16 @@ namespace lzx::dlagon::interface{
    private:
       // 实际工作流程
       static void Work(IServer *self, INetClientSocketAdapter *client){
+         
          std::string str = client->Receviced();
          Request *req =  self->factory_->RequestFromString(str);
          Response *res = self->factory_->GetResponse();
          
-         self->Gateway(*req, *res);
-         IHandler *handler = self->route_->Route(*req);    // 禁止释放
-         handler->Handle(*req, *res);
+         // self->Gateway(*req, *res);
+         // IHandler *handler = self->route_->Route(*req);    // 禁止释放
+         // handler->Handle(*req, *res);
+         self->midware_->Handler(*req, *res);
+
          const std::string result = res->ToString();
          client->Send(result);
 
@@ -80,7 +84,7 @@ namespace lzx::dlagon::interface{
       // 需要重载的部分
       
       
-      virtual void Gateway(Request &req, Response &res){}
+      // virtual void Gateway(Request &req, Response &res){}
       // virtual IHandler *Route(Request &req);             //将Route修改为对象,
       
       // Handle函数移动到Ihandler类中
@@ -95,9 +99,12 @@ namespace lzx::dlagon::interface{
 
       
    protected:
-      INetServerSocketAdapter *server_socket_ = nullptr;
-      IProtocolObjectFactory *factory_ = nullptr;
-      static IRoute *route_ ;
+      
+      IProtocolObjectFactory *factory_ ;
+      INetServerSocketAdapter *server_socket_ ;
+      Midware *midware_;
+      
+      // static IRoute *route_ ;
    };
 
 }
