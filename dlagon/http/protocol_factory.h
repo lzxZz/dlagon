@@ -1,7 +1,7 @@
 #ifndef LZX_DLAGON_HTTP_FACOTRY_H_
 #define LZX_DLAGON_HTTP_FACOTRY_H_
 
-#include "dlagon/interface/factory.h"
+#include "dlagon/interface/protocol/factory.h"
 
 
 

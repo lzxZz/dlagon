@@ -1,10 +1,11 @@
 #ifndef LZX_DLAGON_HTTP_RESPONSE_H_
 #define LZX_DLAGON_HTTP_RESPONSE_H_
 
-#include "dlagon/interface/response.h"
+#include "dlagon/interface/protocol/response.h"
 
 #include <string>
 
+#include "dlagon/http/body.h"
 
 namespace lzx::dlagon::http{
    class HttpResponse : public lzx::dlagon::interface::Response{
@@ -12,7 +13,7 @@ namespace lzx::dlagon::http{
    public:
       const std::string ToString() const override;
       void SetBody(const std::string &str){
-         body_ = str;
+         body_ = new HttpResponseBody(str);
       }
    
    };

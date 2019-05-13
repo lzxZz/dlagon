@@ -4,7 +4,7 @@
 #include "dlagon/web/server.h"
 #include "dlagon/interface/route.h"
 #include "dlagon/interface/net_adapter.h"
-#include "dlagon/interface/factory.h"
+#include "dlagon/interface/protocol/factory.h"
 
 namespace lzx::dlagon::web{
    class WebServerBuilder{

@@ -1,8 +1,8 @@
 #ifndef LZX_DLAGON_INTERFACE_FACTORY_H_
 #define LZX_DLAGON_INTERFACE_FACTORY_H_
 
-#include "dlagon/interface/request.h"
-#include "dlagon/interface/response.h"
+#include "dlagon/interface/protocol/request.h"
+#include "dlagon/interface/protocol/response.h"
 
 namespace lzx::dlagon::interface{
    // 请求和响应对象的抽象工厂

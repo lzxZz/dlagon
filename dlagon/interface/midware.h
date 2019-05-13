@@ -13,8 +13,13 @@ namespace lzx::dlagon::interface{
     */
    class Midware{
    public:
+      enum class MidwareState{
+         kStop,
+         kContinue,
+      };
+   public:
       // 中间件的操作， 返回值指示是否需要继续执行
-      virtual bool Handler(const Request &req, Response &res) = 0;
+      virtual MidwareState Handler(const Request &req, Response &res) = 0;
    private:
       // 中间件执行流程
       void WorkFlow(const Request &req, Response &res);

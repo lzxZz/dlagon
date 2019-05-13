@@ -1,8 +1,8 @@
 #ifndef LZX_DLAGON_SERVER_HANDLER_H_
 #define LZX_DLAGON_SERVER_HANDLER_H_
 
-#include "dlagon/interface/request.h"
-#include "dlagon/interface/response.h"
+#include "dlagon/interface/protocol/request.h"
+#include "dlagon/interface/protocol/response.h"
 
 namespace lzx::dlagon::interface{
 

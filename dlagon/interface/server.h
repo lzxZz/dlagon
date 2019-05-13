@@ -16,10 +16,10 @@
 #include <string>
 #include <thread>
 
-#include "dlagon/interface/request.h"
-#include "dlagon/interface/response.h"
+#include "dlagon/interface/protocol/request.h"
+#include "dlagon/interface/protocol/response.h"
 #include "dlagon/interface/handler.h"
-#include "dlagon/interface/factory.h"
+#include "dlagon/interface/protocol/factory.h"
 #include "dlagon/interface/net_adapter.h"
 #include "dlagon/interface/route.h"
 #include "dlagon/interface/midware.h"
