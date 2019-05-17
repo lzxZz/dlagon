@@ -1,3 +1,13 @@
+/**
+ * @file request.h
+ * @author lzxZz (616281384@qq.com)
+ * @brief HTTP请求头
+ * @version 0.1
+ * @date 2019-05-15
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #ifndef LZX_DLAGON_HTTP_REQUEST_H_
 #define LZX_DLAGON_HTTP_REQUEST_H_
 

@@ -1,3 +1,13 @@
+/**
+ * @file response.cc
+ * @author lzxZz (616281384@qq.com)
+ * @brief HTTP响应
+ * @version 0.1
+ * @date 2019-05-15
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #include "dlagon/http/response.h"
 
 using std::string;

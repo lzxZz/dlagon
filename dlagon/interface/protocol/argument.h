@@ -4,12 +4,15 @@
 #include <string>
 
 namespace lzx::dlagon::interface{
-
+   
    class Argument{
-      virtual Argument *FromString(const std::string &str) = 0;
+   public:
       virtual std::string ToString()  = 0;
    };
-
+   class ArgumentFactory{
+   public:
+      virtual Argument *FromString(const std::string &str) = 0;
+   };
 }
 
 

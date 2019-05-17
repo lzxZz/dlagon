@@ -1,3 +1,13 @@
+/**
+ * @file protocol_factory.h
+ * @author lzxZz (616281384@qq.com)
+ * @brief HTTP请求和响应工厂
+ * @version 0.1
+ * @date 2019-05-15
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #ifndef LZX_DLAGON_HTTP_FACOTRY_H_
 #define LZX_DLAGON_HTTP_FACOTRY_H_
 

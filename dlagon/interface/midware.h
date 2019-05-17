@@ -1,3 +1,8 @@
+/**
+ * @brief  中间件的定义, 使用职责链设计模式
+ * 
+ */
+
 #ifndef LZX_DLAGON_INTERFACE_MIDWARE_H_
 #define LZX_DLAGON_INTERFACE_MIDWARE_H_
 

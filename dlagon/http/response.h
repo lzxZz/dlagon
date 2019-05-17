@@ -1,6 +1,15 @@
 #ifndef LZX_DLAGON_HTTP_RESPONSE_H_
 #define LZX_DLAGON_HTTP_RESPONSE_H_
-
+/**
+ * @file response.h
+ * @author lzxZz (616281384@qq.com)
+ * @brief 
+ * @version 0.1
+ * @date 2019-05-15
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #include "dlagon/interface/protocol/response.h"
 
 #include <string>
