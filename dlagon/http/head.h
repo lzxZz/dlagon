@@ -34,7 +34,7 @@ namespace lzx::dlagon::http{
       HttpRequestHead(  const std::string &method,
                         const std::string &url,
                         const std::string &protocol)
-         :  method_(HttpMethodFromString(protocol)), 
+         :  method_(HttpMethodFromString(method)), 
             url_(url), 
             protocol_(HttpProtocolVerstionFromString(protocol))
          {}

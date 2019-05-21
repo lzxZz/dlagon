@@ -18,7 +18,12 @@ namespace lzx::dlagon::http{
       string method = ToUpper(str);
       if ("GET" == method ){
          return HttpMethod::kGet;
-      }else{
+      }else if ("POST" == method){
+         return HttpMethod::kPost;
+      }
+      else{
+
+      
          return HttpMethod::kUnknown;
       }
    }

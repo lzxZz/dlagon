@@ -34,6 +34,8 @@ namespace lzx::dlagon::http {
     * 
     */
    class HttpRequestBody : public lzx::dlagon::interface::ProtocolBody{
+      friend bool operator==(const HttpRequestBody &lhs, const HttpRequestBody &rhs);
+      friend bool operator!=(const HttpRequestBody &lhs, const HttpRequestBody &rhs);
    public:
       HttpRequestBody(const std::string &body) : body_(body) {}
       std::string ToString() override{
