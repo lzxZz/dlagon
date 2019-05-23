@@ -29,8 +29,12 @@ namespace lzx::dlagon::http{
          body_ = new HttpRequestBody("");
          argument_ = new HttpArgument();
       }
+      const HttpArgument GetCookies() const{
+         return *cookie_;
+      }
    private:
       HttpArgument *argument_;
+      HttpArgument *cookie_;
    } ;
 }
 

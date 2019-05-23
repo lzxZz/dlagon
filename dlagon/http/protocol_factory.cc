@@ -37,12 +37,24 @@ namespace lzx::dlagon::http{
       for (size_t i = 1; i < lines.size(); i++){
          if (lines[i] == "" || lines[i] == "\r"){
             split_index = i;
+            cout << i << endl;
          }
       }
 
+         
       set<string> arg_content;
+      string cookie_content;
       for (size_t i = 1; i < split_index; i++){
-         arg_content.emplace(lines[i]);
+         cout << lines[i] << endl;
+
+
+         
+         if (lines[i].size() > 6 && lines[i].substr(0, 6) == "Cookie"){
+            cookie_content = lines[i];
+         }{
+            arg_content.emplace(lines[i]);
+         }
+         
       }
 
       string body_content;

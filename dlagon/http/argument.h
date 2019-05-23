@@ -21,13 +21,15 @@ namespace lzx::dlagon::http{
    private:
       static HttpArgumentFactory *factory_;
    };
+
+
    class HttpArgument : public lzx::dlagon::interface::Argument{
    friend bool operator==(const HttpArgument &lhs, const HttpArgument &rhs);
    friend bool operator!=(const HttpArgument &lhs, const HttpArgument &rhs);
    friend class HttpArgumentFactory;
    public:
       void Set(const std::string &key, const std::string &value);
-      void Get(const std::string &key, std::string &value);
+      bool Get(const std::string &key, std::string &value);
       std::string ToString() override;
    private:
       std::map<std::string, std::string> args_;

@@ -1,0 +1,85 @@
+@startuml "http_struct"
+
+' package net{
+'    class Socket{
+'       std::shared_ptr<int> fd_
+'    }
+'    class EndPoint
+'    class TcpServerSocket{
+'       void Bind(int)
+'       void Listen(int)
+'       TcpClientSocket  *Accept()
+'    }
+'    class TcpClientSocket{
+'       void Send(std::string)
+'       std::string Received()
+'       void Connect()
+'    }
+
+'    interface INetServerSocketAdapter
+'    interface INetClientSocketAdapter
+
+'    INetServerSocketAdapter <|-- TcpServerSocket 
+'    INetClientSocketAdapter <|-- TcpClientSocket 
+'    Socket <-- TcpClientSocket 
+'    EndPoint <-- TcpClientSocket 
+'    Socket <-- TcpServerSocket 
+' }
+
+package http{
+   interface Response
+   interface Request
+   interface ProtocolHead
+   interface ProtocolBody
+   interface Argument
+
+   class HttpResponse
+   class HttpRequest
+
+   class HttpResponseHead
+   class HttpRequestHead
+
+   class HttpResponseBody
+   class HttpRequestBody
+
+   class HttpArgument
+
+   HttpArgument --|> Argument
+
+   HttpResponseBody --|> ProtocolBody
+   HttpRequestBody  --|> ProtocolBody
+
+   HttpResponseHead --|> ProtocolHead
+   HttpRequestHead --|> ProtocolHead
+
+   Response <|-- HttpResponse
+   Request  <|-- HttpRequest 
+
+
+   HttpRequest --> HttpRequestHead
+   HttpRequest --> HttpArgument
+   HttpRequest --> HttpRequestBody  
+
+   HttpResponse --> HttpResponseHead
+   HttpResponse --> HttpArgument
+   HttpResponse --> HttpResponseBody
+
+   interface IProtocolObjectFactory
+
+   class HttpProtocolFactory
+
+
+   HttpProtocolFactory --> HttpResponse
+   HttpProtocolFactory --> HttpRequest
+
+   IProtocolObjectFactory <|-- HttpProtocolFactory
+
+   class Cookie
+
+   HttpResponse --> Cookie
+}
+
+
+
+
+@enduml

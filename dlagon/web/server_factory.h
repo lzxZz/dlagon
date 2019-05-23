@@ -1,3 +1,13 @@
+/**
+ * @file server_factory.h
+ * @author lzxZz (616281384@qq.com)
+ * @brief web服务的构造工厂
+ * @version 0.1
+ * @date 2019-05-21
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #ifndef LZX_DLAGON_WEB_FACROEY_H_
 #define LZX_DLAGON_WEB_FACROEY_H_
 

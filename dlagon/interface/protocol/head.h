@@ -15,7 +15,7 @@
 
 namespace lzx::dlagon::interface{
    class ProtocolHead{
-      // virtual ProtocolHead *FromString(const std::string &str) = 0;
+      // 协议头的构造交给工厂
       virtual std::string ToString() = 0;
    };
 }

@@ -1,7 +1,8 @@
 /**
  * @file server.h
  * @author lzx (616281384@qq.com)
- * @brief 服务的基本结构
+ * @brief 服务的基本框架, 
+ * >>>>>> 用户禁止修改 <<<<<<
  * @version 0.1
  * @date 2019-04-19
  * 
@@ -38,8 +39,14 @@ namespace lzx::dlagon::interface{
          : factory_(factory), server_socket_(server), midware_(midware)
       {}
       
-      // IServer() = delete;
+      // IServer() = delete; // 保留默认构造函数, 用于工厂构造.
+      
 
+      /**
+       * @brief 用户使用的唯一程序, 其作用为绑定本地任意ip的端口,并开始监听,处理
+       * 
+       * @param port 
+       */
       void Run(int port){
          
          server_socket_->Bind(port);
@@ -64,15 +71,16 @@ namespace lzx::dlagon::interface{
       // 实际工作流程
       static void Work(IServer *self, INetClientSocketAdapter *client){
          
+         // 获取请求
          std::string str = client->Receviced();
          Request *req =  self->factory_->RequestFromString(str);
          Response *res = self->factory_->GetResponse();
          
-         // self->Gateway(*req, *res);
-         // IHandler *handler = self->route_->Route(*req);    // 禁止释放
-         // handler->Handle(*req, *res);
+         
+         // 调用中间件, 开始处理请求
          self->midware_->Handler(*req, *res);
 
+         //返回响应
          const std::string result = res->ToString();
          client->Send(result);
 
@@ -81,22 +89,7 @@ namespace lzx::dlagon::interface{
          delete res;
       }
    private:
-      // 需要重载的部分
       
-      
-      // virtual void Gateway(Request &req, Response &res){}
-      // virtual IHandler *Route(Request &req);             //将Route修改为对象,
-      
-      // Handle函数移动到Ihandler类中
-      //virtual void Handle(const Request &req, Response &res);
-
-
-      
-      // 下面的方法移动到Request和resposne中
-      // virtual void UnSerialize(const std::string str, Request &req, Response &res) = 0;
-      // virtual std::string Serialize(const Response &res) = 0;
-
-
       
    protected:
       
@@ -104,7 +97,6 @@ namespace lzx::dlagon::interface{
       INetServerSocketAdapter *server_socket_ ;
       Midware *midware_;
       
-      // static IRoute *route_ ;
    };
 
 }

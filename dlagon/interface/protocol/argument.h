@@ -1,3 +1,13 @@
+/**
+ * @file argument.h
+ * @author lzxZz (616281384@qq.com)
+ * @brief 参数的抽象
+ * @version 0.1
+ * @date 2019-05-21
+ * 
+ * @copyright Copyright (c) 2019
+ * 
+ */
 #ifndef LZX_DLAGON_INTERFACE_PROTOCOL_ARGUMENT_H_
 #define LZX_DLAGON_INTERFACE_PROTOCOL_ARGUMENT_H_
 
