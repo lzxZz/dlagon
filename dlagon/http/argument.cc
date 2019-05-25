@@ -71,4 +71,13 @@ namespace lzx::dlagon::http{
       return "";
    }
 
+   Result<string> HttpArgument::Get(const string &key){
+      auto iter = args_.find(key);
+      if (iter == args_.end()){
+         return Result<string>::NewErr("不存在的参数名");
+      }else{
+         return Result<string>::NewOk(iter->second);
+      }
+   }
+
 }

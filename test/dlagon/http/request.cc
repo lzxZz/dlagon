@@ -18,6 +18,9 @@
 using namespace std;
 using namespace lzx::dlagon::http;
 
+#include <iostream>
+using namespace std;
+
 string basic_http_request1 = 
 R"(GET /index.html HTTP/1.1
 Host:www.baidu.com
@@ -34,7 +37,7 @@ string cookie_req =
 R"(GET /index.html HTTP/1.1
 Host: www.baidu.com
 Connection: keep-alive
-Cookie: BAIDUID=38C52EB7B5C730C5967E038EEE6744CF:FG=1; BIDUPSID=38C52EB7B5C730C5967E038EEE6744CF; PSTM=1555997005; BD_UPN=13314752; sug=3; sugstore=0; ORIGIN=0; bdime=0; BDORZ=FFFB88E999055A3F8A630C64834BD6D0; H_PS_PSSID=1452_21118_29064_28519_29098_28724_28964_28835_28584_20718; H_PS_645EC=f10apUtxg9KuH7w%2BghtiaiOZfTOv7eNKaNYBAaE3qRGjPNClTnWl7qXfaHrHh3%2Bx%2BIUu; COOKIE_SESSION=32107_0_7_1_10_13_0_3_1_7_103_2_0_0_1_0_1558400483_0_1558432589%7C9%230_1_1557907026%7C1; delPer=0; BD_CK_SAM=1; PSINO=7; BDSVRTM=0
+Cookie: key=value; key1=value1
 Upgrade-Insecure-Requests: 1
 )";
 
@@ -60,10 +63,13 @@ TEST(HttpRequestTest, ParserCookieTest){
                         ::GetInstant()
                         ->RequestFromString(cookie_req));
    
+   HttpArgument arg;
+   arg.Set("key","value");
+   arg.Set("key1","value1");
+
+
    
-
-
-   // EXPECT_EQ(*req, *req);
+   EXPECT_EQ(req->GetCookies(), arg);
 
 }
 

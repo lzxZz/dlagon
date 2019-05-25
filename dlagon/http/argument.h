@@ -6,6 +6,7 @@
 #include <set>
 
 #include "dlagon/interface/protocol/argument.h"
+#include "dlagon/common/result.h"
 
 namespace lzx::dlagon::http{
    class HttpArgumentFactory : public lzx::dlagon::interface::ArgumentFactory{
@@ -27,9 +28,13 @@ namespace lzx::dlagon::http{
    friend bool operator==(const HttpArgument &lhs, const HttpArgument &rhs);
    friend bool operator!=(const HttpArgument &lhs, const HttpArgument &rhs);
    friend class HttpArgumentFactory;
+   friend class HttpProtocolFactory;
    public:
-      void Set(const std::string &key, const std::string &value);
-      bool Get(const std::string &key, std::string &value);
+      void Set(const std::string &key, const std::string &value){
+         args_.emplace(std::make_pair(key, value));
+      }
+      // bool Get(const std::string &key, std::string &value);
+      Result<std::string> Get(const std::string &key);
       std::string ToString() override;
    private:
       std::map<std::string, std::string> args_;

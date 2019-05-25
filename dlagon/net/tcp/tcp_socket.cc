@@ -6,6 +6,10 @@
 #include <arpa/inet.h>
 
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
 #include "dlagon/net/end_point.h"
 
 using std::string;
@@ -50,6 +54,7 @@ namespace lzx::dlagon::net::tcp{
          content.append(buf, n);
       }while(n == BUFSIZ);
       delete[] buf;
+      cout << content << endl;
       return content;
    }
 

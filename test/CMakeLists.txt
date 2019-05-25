@@ -9,6 +9,7 @@ link_libraries(
 aux_source_directory(. SRCS)
 
 aux_source_directory(dlagon SRCS)
+aux_source_directory(dlagon/common SRCS)
 aux_source_directory(dlagon/http SRCS)
 
 add_compile_options(-g)

@@ -29,12 +29,23 @@
 package http{
    interface Response
    interface Request
+   interface Argument
    interface ProtocolHead
    interface ProtocolBody
-   interface Argument
+   
+   
 
    class HttpResponse
-   class HttpRequest
+   class HttpRequest{
+      HttpArugument argument_
+      HttpArugument cookie_
+      HttpRequestHead head_
+      HttpRequestBody body_
+      
+      HttpArugument url_args_
+      HttpArugument post_args_
+      const HttpArgument GetCoookies()
+   }
 
    class HttpResponseHead
    class HttpRequestHead
@@ -66,7 +77,11 @@ package http{
 
    interface IProtocolObjectFactory
 
-   class HttpProtocolFactory
+   class HttpProtocolFactory{
+      Request *RequestFromString(std::string) override;
+      Response *GetResponse();
+      IProtocolObjectFactory *GetInstant();
+   }
 
 
    HttpProtocolFactory --> HttpResponse
@@ -74,7 +89,17 @@ package http{
 
    IProtocolObjectFactory <|-- HttpProtocolFactory
 
-   class Cookie
+   class Cookie{
+      string name
+      string value
+      ---暂未确定类型---
+      string domain
+      string path
+      string secure
+      string httponly
+      string expire
+      string time
+   }
 
    HttpResponse --> Cookie
 }

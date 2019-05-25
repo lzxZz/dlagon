@@ -22,6 +22,18 @@ using std::cout;
 using std::endl;
 
 namespace lzx::dlagon::http{
+   namespace {
+      void Trim(string &s){
+ 
+         if( !s.empty() ){
+            s.erase(0,s.find_first_not_of(" "));
+            s.erase(s.find_last_not_of(" ") + 1);
+         }
+ 
+      }
+   }
+
+
    HttpProtocolFactory *HttpProtocolFactory::factory_ = nullptr;
 
    Request *HttpProtocolFactory::RequestFromString(const std::string &str) {
@@ -37,7 +49,7 @@ namespace lzx::dlagon::http{
       for (size_t i = 1; i < lines.size(); i++){
          if (lines[i] == "" || lines[i] == "\r"){
             split_index = i;
-            cout << i << endl;
+            // cout << i << endl;
          }
       }
 
@@ -45,7 +57,7 @@ namespace lzx::dlagon::http{
       set<string> arg_content;
       string cookie_content;
       for (size_t i = 1; i < split_index; i++){
-         cout << lines[i] << endl;
+         // cout << lines[i] << endl;
 
 
          
@@ -68,9 +80,24 @@ namespace lzx::dlagon::http{
       
       HttpArgument *arg = dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString(arg_content));
       // (req->head_) = dynamic_cast<lzx::dlagon::interface::ProtocolHead*>(head);
+      HttpArgument *cookie = dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString(""));
+
+      cookie_content = cookie_content.substr(cookie_content.find(":")+1);
+      set<string> cookies;
+      split(cookies, cookie_content, is_any_of(";"));
+      for (auto cookie_str : cookies){
+         Trim(cookie_str);
+         string key , value;
+         key = cookie_str.substr(0, cookie_str.find("="));
+         value = cookie_str.substr(cookie_str.find("=") + 1);
+         cookie->args_.emplace(std::make_pair(key, value));
+
+      }
+
       req->head_ = head;
       req->body_ = new HttpRequestBody(body_content);
       req->argument_ = arg;
+      req->cookie_ = cookie;
       return req;
    }
 
