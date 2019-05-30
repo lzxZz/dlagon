@@ -34,8 +34,19 @@ namespace lzx::dlagon::http{
       return new HttpRequestHead{method, url, protocol};
    }
 
+   HttpResponseHead *HttpHeadFactory::GetHttpResponseHead(const std::string &str){
+      istringstream is(str);
+      int code;
+      string status, protocol;
+      is >> code >> status >> protocol;
+      return new HttpResponseHead{code, status, protocol};
+   }
+   string HttpResponseHead::ToString(){
+      return std::to_string(code_) + " "  + status_ + " " + HttpProtocolVerstionToString(protocol_) + "\r\n";
+   }
+
    string HttpRequestHead::ToString(){
-      return HttpMethodToString(method_) + " "  + url_ + " " + HttpProtocolVerstionToString(protocol_);
+      return HttpMethodToString(method_) + " "  + url_ + " " + HttpProtocolVerstionToString(protocol_) + "\r\n";
    }
 
    bool operator==(const HttpRequestHead &lhs, const HttpRequestHead &rhs){

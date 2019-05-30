@@ -68,7 +68,11 @@ namespace lzx::dlagon::http{
    }
 
    string HttpArgument::ToString(){
-      return "";
+      string result;
+      for (auto iter : args_){
+         result += iter.first + ":" + iter.second + "\r\n";
+      }
+      return result;
    }
 
    Result<string> HttpArgument::Get(const string &key){

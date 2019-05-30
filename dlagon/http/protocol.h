@@ -32,6 +32,13 @@ namespace lzx::dlagon::http{
       kUnknown,
    };
 
+   enum class HttpResponseStatus{
+      kOk = 200,
+      kNot_Found = 404,
+   };
+   
+   // string HttpResponseStatusToCodeString(HttpResponseStatus status);
+   std::string HttpResponseStatusToStatusString(HttpResponseStatus status);
 
    HttpMethod HttpMethodFromString(const std::string  &str);
 

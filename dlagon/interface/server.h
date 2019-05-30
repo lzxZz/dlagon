@@ -41,7 +41,6 @@ namespace lzx::dlagon::interface{
       
       // IServer() = delete; // 保留默认构造函数, 用于工厂构造.
       
-
       /**
        * @brief 用户使用的唯一程序, 其作用为绑定本地任意ip的端口,并开始监听,处理
        * 

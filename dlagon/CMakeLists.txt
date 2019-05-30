@@ -13,6 +13,9 @@ aux_source_directory(web SRC)
 
 add_library(dlagon ${SRC})
 
+link_libraries(
+    dlagon
+)
 
-
+add_executable(run test.cc)
 

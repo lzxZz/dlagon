@@ -27,15 +27,37 @@
 ' }
 
 package http{
-   interface Response
-   interface Request
+   interface Response{
+      ProtocolBody *body_ = nullptr;
+      ProtocolHead *head_ = nullptr;
+      Argument *argument_ = nullptr;
+
+      virtual const std::string ToString() const = 0;
+      void SetBody(ProtocolBody *body);
+   }
+   interface Request{
+      ProtocolHead *head_ = nullptr;
+      ProtocolBody *body_ = nullptr;
+      Argument *argument_ = nullptr;
+   }
    interface Argument
    interface ProtocolHead
    interface ProtocolBody
    
    
 
-   class HttpResponse
+   class HttpResponse{
+      HttpArgument &Argument()
+      
+      HttpResponse Clone()
+
+
+
+      ---static成员---
+      HttpResponse HTTP_200;
+      HttpResponse HTTP_404;
+      ---等等---
+   }
    class HttpRequest{
       HttpArugument argument_
       HttpArugument cookie_
@@ -44,7 +66,12 @@ package http{
       
       HttpArugument url_args_
       HttpArugument post_args_
-      const HttpArgument GetCoookies()
+
+      const HttpRequestHead Head() const;
+      const HttpArugument UrlArgs() const;
+      const HttpArugument PostArgs() const;
+      const HttpArgument GetCoookies();
+      
    }
 
    class HttpResponseHead

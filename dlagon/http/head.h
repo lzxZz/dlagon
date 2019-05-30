@@ -16,7 +16,7 @@
 #include <string>
 
 namespace lzx::dlagon::http{
-   // class HttpRequestHeadTest;
+   
    class HttpRequestHead : public lzx::dlagon::interface::ProtocolHead{
       friend class HttpRequestHeadTest;
       friend class HttpHeadFactory;
@@ -26,6 +26,9 @@ namespace lzx::dlagon::http{
       HttpRequestHead *FromString(const std::string &str) ;
    public:
       std::string ToString() override;
+      const std::string &Uri() const{
+         return url_;
+      }
    private:
       HttpMethod method_;
       std::string url_;
@@ -40,13 +43,22 @@ namespace lzx::dlagon::http{
          {}
    };
 
+
    class HttpResponseHead : public lzx::dlagon::interface::ProtocolHead{
       
       HttpResponseHead *FromString(const std::string &str) ;
    public:
       std::string ToString() override;
+      HttpResponseHead(int code, std::string status, const std::string &protocol)
+         :  code_(code),
+            status_(status), 
+            protocol_(HttpProtocolVerstionFromString(protocol))
+      {}
    private:
-      
+
+      int code_;
+      std::string status_;
+      HttpProtocolVerstion protocol_;
    };
 
    class HttpHeadFactory{

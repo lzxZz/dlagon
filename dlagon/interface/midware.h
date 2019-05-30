@@ -25,6 +25,10 @@ namespace lzx::dlagon::interface{
    public:
       // 中间件的操作， 返回值指示是否需要继续执行
       virtual MidwareState Handler(const Request &req, Response &res) = 0;
+      Midware &SetNext(Midware *next){
+         next_ = next;
+         return *this;
+      }
    private:
       // 中间件执行流程
       void WorkFlow(const Request &req, Response &res);

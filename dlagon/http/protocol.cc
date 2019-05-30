@@ -14,6 +14,16 @@ using std::string;
 
 namespace lzx::dlagon::http{
 
+   // string HttpResponseStatusToCodeString(HttpResponseStatus status);
+   string HttpResponseStatusToStatusString(HttpResponseStatus status){
+      if (status == HttpResponseStatus::kOk){
+         return "OK";
+      }else if (status == HttpResponseStatus::kNot_Found){
+         return "NOT FOUND";
+      }
+   }
+
+
    HttpMethod HttpMethodFromString(const string  &str){
       string method = ToUpper(str);
       if ("GET" == method ){

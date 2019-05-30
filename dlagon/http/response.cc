@@ -17,6 +17,15 @@ string hello_string =   "HTTP/1.1 200 OK\r\nContent-Type : text/html"
 
 namespace lzx::dlagon::http{
    const string HttpResponse::ToString() const{
-      return hello_string;
+      string result;
+      result += dynamic_cast<HttpResponseHead*>(head_)->ToString();
+      result += argument_->ToString();
+      result += "\r\n";
+      result +=   dynamic_cast<HttpResponseBody*>(body_)->ToString();
+      return result;
+      
    }
+
+   HttpResponse HttpResponse::HTTP_HTML_200 = HttpResponse(200, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "");
+   HttpResponse HttpResponse::HTTP_HTML_404 = HttpResponse(404, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "");
 }

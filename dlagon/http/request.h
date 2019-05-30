@@ -32,8 +32,11 @@ namespace lzx::dlagon::http{
       const HttpArgument GetCookies() const{
          return *cookie_;
       }
+      const HttpRequestHead &Head() const{
+         return dynamic_cast<HttpRequestHead&>(*head_);
+      }
    private:
-      HttpArgument *argument_;
+      // HttpArgument *argument_;
       HttpArgument *cookie_;
    } ;
 }

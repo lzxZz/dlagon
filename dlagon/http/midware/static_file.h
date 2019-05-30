@@ -19,9 +19,12 @@
 namespace lzx::dlagon::http::midware{
    class StaticFileMidWare : public lzx::dlagon::interface::Midware{
    public:
+      StaticFileMidWare(const std::string root_dir)
+         : root_dir_(root_dir) {}
       MidwareState Handler(const lzx::dlagon::interface::Request &req,  lzx::dlagon::interface::Response &res);
    private:
       std::map<std::string, std::string> buf_;
+      std::string root_dir_;
    };
 }
 

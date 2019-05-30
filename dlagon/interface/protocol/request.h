@@ -25,6 +25,7 @@ namespace lzx::dlagon::interface{
    protected:
       ProtocolHead *head_ = nullptr;
       ProtocolBody *body_ = nullptr;
+      Argument *argument_ = nullptr;
 
    };
 

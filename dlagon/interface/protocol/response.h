@@ -27,9 +27,10 @@ namespace lzx::dlagon::interface{
       }
       virtual ~Response(){}
    protected:
-      ProtocolBody *body_;
-      ProtocolHead *head_;
-      Argument *argument_;
+      Response(){}
+      ProtocolBody *body_ = nullptr;
+      ProtocolHead *head_ = nullptr;
+      Argument *argument_ = nullptr;
    };
 }
 
