@@ -15,11 +15,13 @@
 #include <string>
 #include <set>
 
-#include "dlagon/http/body.h"
 #include "dlagon/http/argument.h"
+#include "dlagon/http/body.h"
 #include "dlagon/http/cookie.h"
 #include "dlagon/http/head.h"
+
 namespace lzx::dlagon::http{
+   // TODO 需要补充完整MIME类型
    enum class MimeType{
       kHtml,
       kCss,
@@ -39,7 +41,7 @@ namespace lzx::dlagon::http{
 
    public:
       HttpResponse(){}
-      HttpResponse(int code, HttpArgument *argument, std::string body) {
+      HttpResponse(int code, HttpArgument *argument, std::string body) { 
          if (code == 200){
             head_ = HttpHeadFactory::GetInstant()->GetHttpResponseHead("200 OK HTTP/1.1");
          }else if (code == 404){
@@ -50,11 +52,11 @@ namespace lzx::dlagon::http{
       }
       const std::string ToString() const override;
       void SetBody(const std::string &str){
-         
          body_ = new HttpResponseBody(str);
       }
       HttpResponse Clone();
-   
+
+      // TODO , 需要补充完整静态成员
       static HttpResponse HTTP_HTML_200;
       static HttpResponse HTTP_HTML_404;
    private:

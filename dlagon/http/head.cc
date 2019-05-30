@@ -17,6 +17,7 @@ using std::string;
 
 
 namespace lzx::dlagon::http{
+
    HttpHeadFactory *HttpHeadFactory::factory_ = nullptr;
    
 
@@ -30,7 +31,7 @@ namespace lzx::dlagon::http{
    HttpRequestHead *HttpHeadFactory::GetHttpRequestHead(const std::string &str){
       istringstream is(str);
       string method, url, protocol;
-      is >> method >> url >> protocol;
+      is >> method >> url >> protocol; // TODO 这里不一定能够正确的匹配, 需要添加请求行格式不符合的异常
       return new HttpRequestHead{method, url, protocol};
    }
 
@@ -38,11 +39,11 @@ namespace lzx::dlagon::http{
       istringstream is(str);
       int code;
       string status, protocol;
-      is >> code >> status >> protocol;
-      return new HttpResponseHead{code, status, protocol};
+      is >> code >> status >> protocol;// TODO 这里不一定能够正确的匹配, 需要添加响应行格式不符合的异常
+      return new HttpResponseHead{code, status, protocol}; // TODO 构造可能会抛异常
    }
    string HttpResponseHead::ToString(){
-      return std::to_string(code_) + " "  + status_ + " " + HttpProtocolVerstionToString(protocol_) + "\r\n";
+      return std::to_string(code_) + " "  + status_ + " " + HttpProtocolVerstionToString(protocol_) + "\r\n"; // 需要手动添加行结束符
    }
 
    string HttpRequestHead::ToString(){

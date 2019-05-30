@@ -1,7 +1,7 @@
 /**
  * @file body.h
  * @author lzxZz (616281384@qq.com)
- * @brief 生命HTTP的请求体和响应体
+ * @brief 声明HTTP的请求体和响应体
  * @version 0.1
  * @date 2019-05-15
  * 
@@ -14,6 +14,8 @@
 #include "dlagon/interface/protocol/body.h"
 
 namespace lzx::dlagon::http {
+
+   // TODO 这里是字符串消息体, 未来还需要增加二进制消息体, 用于传送图片等.
 
    /**
     * @brief Http响应消息体

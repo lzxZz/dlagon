@@ -22,6 +22,7 @@ namespace lzx::dlagon{
     using Block = Byte[BuffSize];
     using Size = std::size_t;
     
+    // TODO
     class ByteBuffer{
     friend class BufferIterator;
     private:

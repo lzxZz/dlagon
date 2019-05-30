@@ -12,6 +12,7 @@
 #define LZX_DLAGON_HTTP_PROTOCOL_H_
 
 #include <string>
+
 namespace lzx::dlagon::http{
    inline
    std::string ToUpper(const std::string &str){

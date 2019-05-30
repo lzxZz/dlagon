@@ -11,10 +11,9 @@
 #ifndef LZX_DLAGON_INTERFACE_REQUEST_H_
 #define LZX_DLAGON_INTERFACE_REQUEST_H_
 
-#include "dlagon/interface/protocol/head.h"
 #include "dlagon/interface/protocol/body.h"
 #include "dlagon/interface/protocol/argument.h"
-
+#include "dlagon/interface/protocol/head.h"
 
 namespace lzx::dlagon::interface{
 

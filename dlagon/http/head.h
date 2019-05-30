@@ -11,19 +11,23 @@
 #ifndef LZX_DLAGON_HTTP_HEAD_H_
 #define LZX_DLAGON_HTTP_HEAD_H_
 
-#include "dlagon/interface/protocol/head.h"
-#include "dlagon/http/protocol.h"
 #include <string>
 
+#include "dlagon/http/protocol.h"
+#include "dlagon/interface/protocol/head.h"
+
 namespace lzx::dlagon::http{
-   
+   /**
+    * @brief HTTP请求行
+    * 
+    */
    class HttpRequestHead : public lzx::dlagon::interface::ProtocolHead{
       friend class HttpRequestHeadTest;
       friend class HttpHeadFactory;
       friend bool operator==(const HttpRequestHead &lhs, const HttpRequestHead &rhs);
       friend bool operator!=(const HttpRequestHead &lhs, const HttpRequestHead &rhs);
       // friend void HttpRequestHeadTest::SetUp();
-      HttpRequestHead *FromString(const std::string &str) ;
+      // HttpRequestHead *FromString(const std::string &str) ;
    public:
       std::string ToString() override;
       const std::string &Uri() const{
@@ -43,24 +47,31 @@ namespace lzx::dlagon::http{
          {}
    };
 
-
+   /**
+    * @brief HTTP响应行
+    * 
+    */
    class HttpResponseHead : public lzx::dlagon::interface::ProtocolHead{
       
-      HttpResponseHead *FromString(const std::string &str) ;
+      // HttpResponseHead *FromString(const std::string &str) ;
    public:
       std::string ToString() override;
+
       HttpResponseHead(int code, std::string status, const std::string &protocol)
          :  code_(code),
             status_(status), 
             protocol_(HttpProtocolVerstionFromString(protocol))
       {}
    private:
-
       int code_;
       std::string status_;
       HttpProtocolVerstion protocol_;
    };
 
+   /**
+    * @brief 请求行和响应行的工厂
+    * 
+    */
    class HttpHeadFactory{
    public:
       static HttpHeadFactory *GetInstant();

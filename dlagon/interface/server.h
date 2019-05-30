@@ -17,17 +17,13 @@
 #include <string>
 #include <thread>
 
-#include "dlagon/interface/protocol/request.h"
-#include "dlagon/interface/protocol/response.h"
+#include "dlagon/interface/midware.h"
+#include "dlagon/interface/net_adapter.h"
 #include "dlagon/interface/handler.h"
 #include "dlagon/interface/protocol/factory.h"
-#include "dlagon/interface/net_adapter.h"
+#include "dlagon/interface/protocol/request.h"
+#include "dlagon/interface/protocol/response.h"
 #include "dlagon/interface/route.h"
-#include "dlagon/interface/midware.h"
-
-#include <iostream>
-using std::cout;
-using std::endl;
 
 namespace lzx::dlagon::interface{
 
@@ -47,21 +43,14 @@ namespace lzx::dlagon::interface{
        * @param port 
        */
       void Run(int port){
-         
          server_socket_->Bind(port);
-         
-         server_socket_->Listen(1024);
-         
+         server_socket_->Listen(1024);         
          for (;;){
             INetClientSocketAdapter *client = server_socket_->Accept();
-            
-            // 转发到线程池中运行
+            // TODO 转发到线程池中运行
             std::thread th(Work, this,  client);
-            
-            th.detach();
-            
-         }
-         
+            th.detach();            
+         }         
       }
 
       virtual ~IServer(){}
@@ -69,12 +58,10 @@ namespace lzx::dlagon::interface{
    private:
       // 实际工作流程
       static void Work(IServer *self, INetClientSocketAdapter *client){
-         
          // 获取请求
          std::string str = client->Receviced();
          Request *req =  self->factory_->RequestFromString(str);
          Response *res = self->factory_->GetResponse();
-         
          
          // 调用中间件, 开始处理请求
          self->midware_->Handler(*req, *res);
@@ -87,17 +74,12 @@ namespace lzx::dlagon::interface{
          delete req;
          delete res;
       }
-   private:
       
-      
-   protected:
-      
+   protected:      
       IProtocolObjectFactory *factory_ ;
       INetServerSocketAdapter *server_socket_ ;
       Midware *midware_;
-      
    };
-
 }
 
 #endif //LZX_DLAGON_SERVER_SERVER_H_

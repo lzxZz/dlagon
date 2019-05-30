@@ -13,10 +13,12 @@
 
 #include "dlagon/interface/protocol/factory.h"
 
-
-
-
 namespace lzx::dlagon::http{
+
+   /**
+    * @brief HTTP协议构造工厂
+    * 
+    */
    class HttpProtocolFactory : public lzx::dlagon::interface::IProtocolObjectFactory{
    public:
       lzx::dlagon::interface::Request *RequestFromString(const std::string &str) override;
@@ -26,8 +28,6 @@ namespace lzx::dlagon::http{
       HttpProtocolFactory(){}
       static HttpProtocolFactory *factory_;
    };
-
-
 }
 
 #endif //LZX_DLAGON_HTTP_FACOTRY_H_

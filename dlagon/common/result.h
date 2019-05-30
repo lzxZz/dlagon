@@ -6,10 +6,17 @@ namespace lzx::dlagon{
         Ok,
         Err,
     };
+
+
+    /**
+     * @brief 仿照Rust中result枚举类型, 用于获取函数的返回状态和返回值.
+     *  典型的用于HttpArgument中的Get方法, 来避免使用指针进行返回. (因为参数对应的值存在和错误返回值一样的情况.)
+     * @tparam T 
+     */
     template<typename T>
     class Result{
     public:
-        Result() = delete;
+        Result() = delete; // 删除构造函数, 只允许使用静态函数构造对象.
         ResultType Valid(){
             return valid_;
         }

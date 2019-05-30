@@ -2,9 +2,6 @@
 
 using lzx::dlagon::web::WebServerBuilder;
 
-
-
-
 namespace lzx::dlagon::web{
    WebServerBuilder *WebServerBuilder::builder_ = nullptr;
    
@@ -16,8 +13,7 @@ namespace lzx::dlagon::web{
       
       return builder_;
    }
-   // using lzx::dlagon::interface::IProtocolObjectFactory;
-   // using lzx::dlagon::interface::INetServerSocketAdapter;
+   
    WebServer *WebServerBuilder::GetWebServer(){
       WebServer *web_server = nullptr;
       web_server = new WebServer(factory_, server_, midware_);

@@ -14,6 +14,7 @@
 #include "dlagon/interface/protocol/request.h"
 #include "dlagon/interface/protocol/response.h"
 
+// 暂时无用, 应该移动到http中的路由部分
 namespace lzx::dlagon::interface{
 
 class IHandler{

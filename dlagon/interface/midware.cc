@@ -9,9 +9,9 @@
  * 
  */
 #include "dlagon/interface/midware.h"
-
-#include "dlagon/interface/protocol/response.h"
 #include "dlagon/interface/protocol/request.h"
+#include "dlagon/interface/protocol/response.h"
+
 
 namespace lzx::dlagon::interface{
    void Midware::WorkFlow(const Request &req, Response &res){
@@ -22,10 +22,6 @@ namespace lzx::dlagon::interface{
          if (next_){
             next_->Handler(req, res);
          }
-         
       }
-      
    }
-
-
 }

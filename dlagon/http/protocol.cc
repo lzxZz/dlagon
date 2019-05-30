@@ -10,11 +10,12 @@
  */
 #include "dlagon/http/protocol.h"
 
+#include <string>
+
 using std::string;
 
 namespace lzx::dlagon::http{
 
-   // string HttpResponseStatusToCodeString(HttpResponseStatus status);
    string HttpResponseStatusToStatusString(HttpResponseStatus status){
       if (status == HttpResponseStatus::kOk){
          return "OK";

@@ -14,8 +14,14 @@
 #define  LZX_DLAGON_HTTP_COOKIE_H_
 
 #include <string>
+// TODO 待补充具体实现
 
 namespace lzx::dlagon::http{
+   /**
+    * @brief Cookie类, 
+    * 
+    * 
+    */
    class Cookie{
    
    public:
@@ -27,6 +33,8 @@ namespace lzx::dlagon::http{
 
       std::string name_;
       std::string value_;
+
+      // TODO 下面的类型都需要做替换.
       std::string expire_;
       std::string time_;
       std::string domain_;

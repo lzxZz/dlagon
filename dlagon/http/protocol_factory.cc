@@ -1,30 +1,28 @@
 #include "dlagon/http/protocol_factory.h"
 
+#include <set>
+#include <vector>
+
+#include <boost/algorithm/string.hpp>
+
 #include "dlagon/http/request.h"
 #include "dlagon/http/response.h"
 
-#include <boost/algorithm/string.hpp>
-#include <vector>
-#include <set>
+using std::set;
 using std::string;
 using std::vector;
-using std::set;
-
-using lzx::dlagon::interface::Request;
-using lzx::dlagon::interface::Response;
-using lzx::dlagon::interface::IProtocolObjectFactory;
 
 using boost::split;
 using boost::is_any_of;
 
-#include "iostream"
-using std::cout;
-using std::endl;
+using lzx::dlagon::interface::IProtocolObjectFactory;
+using lzx::dlagon::interface::Request;
+using lzx::dlagon::interface::Response;
 
 namespace lzx::dlagon::http{
    namespace {
+      // 去除两端空格
       void Trim(string &s){
- 
          if( !s.empty() ){
             s.erase(0,s.find_first_not_of(" "));
             s.erase(s.find_last_not_of(" ") + 1);
@@ -36,6 +34,7 @@ namespace lzx::dlagon::http{
 
    HttpProtocolFactory *HttpProtocolFactory::factory_ = nullptr;
 
+   // TODO  过长函数, 需要重构
    Request *HttpProtocolFactory::RequestFromString(const std::string &str) {
       std::string info = str;
       // boost::replace_all(info, '\r', "");
@@ -54,13 +53,10 @@ namespace lzx::dlagon::http{
       }
 
          
+      // 单独处理Cookie的请求参数
       set<string> arg_content;
       string cookie_content;
       for (size_t i = 1; i < split_index; i++){
-         // cout << lines[i] << endl;
-
-
-         
          if (lines[i].size() > 6 && lines[i].substr(0, 6) == "Cookie"){
             cookie_content = lines[i];
          }{
@@ -79,7 +75,6 @@ namespace lzx::dlagon::http{
       HttpRequest *req = new HttpRequest;
       
       HttpArgument *arg = dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString(arg_content));
-      // (req->head_) = dynamic_cast<lzx::dlagon::interface::ProtocolHead*>(head);
       HttpArgument *cookie = dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString(""));
 
       cookie_content = cookie_content.substr(cookie_content.find(":")+1);

@@ -14,17 +14,17 @@
 #include "dlagon/interface/protocol/request.h"
 
 #include "dlagon/http/argument.h"
-#include "dlagon/http/head.h"
 #include "dlagon/http/body.h"
+#include "dlagon/http/head.h"
+
 namespace lzx::dlagon::http{
+
    class HttpRequest : public lzx::dlagon::interface::Request{
    friend bool operator==(const HttpRequest &lhs, const HttpRequest &rhs);
    friend bool operator!=(const HttpRequest &lhs, const HttpRequest &rhs);
    friend class HttpProtocolFactory;
    public:
-      HttpRequest()
-         
-      {
+      HttpRequest(){ // 只有构造完成之后才能访问超类中的保护成员, 因此不能使用列表初始化
          head_ = HttpHeadFactory::GetInstant()->GetHttpRequestHead("GET /index.html HTTP/1.1");
          body_ = new HttpRequestBody("");
          argument_ = new HttpArgument();
