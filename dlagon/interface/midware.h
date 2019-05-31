@@ -29,6 +29,7 @@ namespace lzx::dlagon::interface{
          next_ = next;
          return *this;
       }
+      virtual ~Midware(){}
    private:
       // 中间件执行流程
       void WorkFlow(const Request &req, Response &res);

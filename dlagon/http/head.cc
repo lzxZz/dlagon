@@ -43,7 +43,7 @@ namespace lzx::dlagon::http{
       return new HttpResponseHead{code, status, protocol}; // TODO 构造可能会抛异常
    }
    string HttpResponseHead::ToString(){
-      return std::to_string(code_) + " "  + status_ + " " + HttpProtocolVerstionToString(protocol_) + "\r\n"; // 需要手动添加行结束符
+      return HttpProtocolVerstionToString(protocol_) + " " + std::to_string(code_) + " "  + status_   + "\r\n"; // 需要手动添加行结束符
    }
 
    string HttpRequestHead::ToString(){

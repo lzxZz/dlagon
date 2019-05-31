@@ -20,8 +20,14 @@ namespace lzx::dlagon::http{
       result += argument_->ToString();
       result += "\r\n";
       result += dynamic_cast<HttpResponseBody*>(body_)->ToString();
+
+      printf("++++++\n%s\n+++++++\n", result.c_str());
       return result;
       
+   }
+
+   HttpResponse HttpResponse::Clone(){
+      return HttpResponse(*this);
    }
 
    HttpResponse HttpResponse::HTTP_HTML_200 = HttpResponse(200, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "");
