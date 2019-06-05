@@ -5,6 +5,7 @@ build:
 
 clean:
 	@-rm -r build
+	@-rm -r .vscode/ipch/*
 test:
 	@make
 	@./build/test/test_main

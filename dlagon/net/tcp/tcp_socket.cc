@@ -10,19 +10,29 @@
 using std::cout;
 using std::endl;
 
+#include "dlagon/error/exception.h"
+#include "dlagon/error/panic.h"
 #include "dlagon/net/end_point.h"
 
 using std::string;
 using lzx::dlagon::interface::INetClientSocketAdapter;
-
+using lzx::dlagon::error::Panic;
 namespace lzx::dlagon::net::tcp{
    void TcpServerSocket::Bind(int port){
       EndPoint end_point{port};
-      bind(FD(), end_point.ScoketAddress(), end_point.Size());
+      int status = bind(FD(), end_point.ScoketAddress(), end_point.Size());
+      if (status != 0){
+         // throw lzx::dlagon::exception::Exception(string{strerror(status)});
+         Panic(strerror(errno));
+      }
    }
 
    void TcpServerSocket::Listen(int queue_length){
-      listen(FD(), queue_length);
+      int status = listen(FD(), queue_length);
+      if (status != 0){
+         // throw lzx::dlagon::exception::Exception(string{strerror(status)});
+         Panic(strerror(errno));
+      }
    }
 
    INetClientSocketAdapter *TcpServerSocket::Accept(){
@@ -33,10 +43,15 @@ namespace lzx::dlagon::net::tcp{
       fd = accept(this->FD(), (SA *)&addr, &len);
 
       // TODO 完善client的构造函数
+      if (fd == -1){
+         throw lzx::dlagon::exception::Exception("调用Accept失败, 返回了错误的文件描述符");
+      }else{
+         TcpClientSocket *client = new TcpClientSocket{fd, EndPoint{addr}};
+         return client;
+      }
+      
 
-      TcpClientSocket *client = new TcpClientSocket{fd, EndPoint{addr}};
-
-      return client;
+      
    }
 
    void TcpClientSocket::Send(const string &str){
