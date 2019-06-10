@@ -17,6 +17,7 @@
 #include <string>
 #include <thread>
 
+#include "dlagon/common/log.h"
 #include "dlagon/interface/midware.h"
 #include "dlagon/interface/net_adapter.h"
 #include "dlagon/interface/handler.h"
@@ -24,6 +25,8 @@
 #include "dlagon/interface/protocol/request.h"
 #include "dlagon/interface/protocol/response.h"
 #include "dlagon/interface/route.h"
+
+
 
 namespace lzx::dlagon::interface{
 
@@ -64,7 +67,7 @@ namespace lzx::dlagon::interface{
          Response *res = self->factory_->GetResponse();
          
          // 调用中间件, 开始处理请求
-         self->midware_->Handler(*req, *res);
+         self->midware_->Handle(*req, *res);
 
          //返回响应
          const std::string result = res->ToString();

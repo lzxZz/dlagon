@@ -18,3 +18,7 @@ add_executable(tcp_server ${FNC_SRC})
 aux_source_directory(static STATIC_SRC)
 
 add_executable(static ${STATIC_SRC})
+
+aux_source_directory(route ROUTE_SRC)
+
+add_executable(route ${ROUTE_SRC})

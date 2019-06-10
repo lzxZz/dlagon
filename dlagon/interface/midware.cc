@@ -15,12 +15,12 @@
 
 namespace lzx::dlagon::interface{
    void Midware::WorkFlow(const Request &req, Response &res){
-      MidwareState state =  Handler(req, res);
+      MidwareState state =  Handle(req, res);
 
       // 判断链是否继续调用
       if (state == MidwareState::kContinue){
          if (next_){
-            next_->Handler(req, res);
+            next_->Handle(req, res);
          }
       }
    }

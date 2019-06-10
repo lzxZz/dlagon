@@ -32,7 +32,7 @@ namespace lzx::dlagon::http::midware{
    public:
       StaticFileMidWare(const std::string root_dir) // TODO 将root_dir 替换为模式匹配对象
          : root_dir_(root_dir) {}
-      lzx::dlagon::interface::Midware::MidwareState Handler(const lzx::dlagon::interface::Request &req,  lzx::dlagon::interface::Response &res) override;
+      lzx::dlagon::interface::Midware::MidwareState Handle(const lzx::dlagon::interface::Request &req,  lzx::dlagon::interface::Response &res) override;
       ~StaticFileMidWare(){}
    private:
       std::map<std::string, std::string> buf_;

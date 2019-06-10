@@ -27,7 +27,7 @@ using std::endl;
 
 namespace lzx::dlagon::http::midware{
 
-    Midware::MidwareState StaticFileMidWare::Handler(const Request &req, Response &res) {
+    Midware::MidwareState StaticFileMidWare::Handle(const Request &req, Response &res) {
         const HttpRequest &request = dynamic_cast<const HttpRequest&>(req);
         
         string path = root_dir_ + request.Head().Uri(); // substr(1), 用于去除路径中的首个点, // TODO 需要判断点是否存在
