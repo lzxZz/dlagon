@@ -19,7 +19,7 @@ namespace lzx::dlagon::interface{
 
       // 判断链是否继续调用
       if (state == MidwareState::kContinue){
-         if (next_){
+         if (nullptr !=  next_){
             next_->Handle(req, res);
          }
       }

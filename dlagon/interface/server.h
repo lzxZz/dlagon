@@ -67,7 +67,7 @@ namespace lzx::dlagon::interface{
          Response *res = self->factory_->GetResponse();
          
          // 调用中间件, 开始处理请求
-         self->midware_->Handle(*req, *res);
+         self->midware_->WorkFlow(*req, *res);
 
          //返回响应
          const std::string result = res->ToString();
