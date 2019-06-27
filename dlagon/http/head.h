@@ -33,6 +33,9 @@ namespace lzx::dlagon::http{
       const std::string &Uri() const{
          return url_;
       }
+      const HttpMethod Type() const{
+         return method_;
+      }
    private:
       HttpMethod method_;
       std::string url_;

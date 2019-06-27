@@ -32,6 +32,10 @@ namespace lzx::dlagon::http{
       istringstream is(str);
       string method, url, protocol;
       is >> method >> url >> protocol; // TODO 这里不一定能够正确的匹配, 需要添加请求行格式不符合的异常
+      
+      if (url.find("?") != std::string::npos){
+         url = url.substr(0, url.find("?"));
+      }
       return new HttpRequestHead{method, url, protocol};
    }
 

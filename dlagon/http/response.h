@@ -46,6 +46,14 @@ namespace lzx::dlagon::http{
             head_ = HttpHeadFactory::GetInstant()->GetHttpResponseHead("200 OK HTTP/1.1");
          }else if (code == 404){
             head_ = HttpHeadFactory::GetInstant()->GetHttpResponseHead("404 NOT_FOUND HTTP/1.1");
+         }else if (code == 400){
+            head_ = HttpHeadFactory::GetInstant()->GetHttpResponseHead("400 BAD_REQUEST HTTP/1.1");
+         }else if (code == 405){
+            head_ = HttpHeadFactory::GetInstant()->GetHttpResponseHead("405 METHOD_NOT_ALLOW HTTP/1.1");
+         }else if (code == 501){
+            head_ = HttpHeadFactory::GetInstant()->GetHttpResponseHead("501 NOT_IMPLIMENT HTTP/1.1");
+         }else{
+            head_ = HttpHeadFactory::GetInstant()->GetHttpResponseHead("510 NOT_EXTEND HTTP/1.1");
          }
          argument_ = argument;
          body_ = new HttpResponseBody(body);
@@ -55,10 +63,18 @@ namespace lzx::dlagon::http{
          body_ = new HttpResponseBody(str);
       }
       HttpResponse Clone();
+      HttpArgument &Argument() {
+         return *dynamic_cast<HttpArgument*>(argument_);
+      }
+
 
       // TODO , 需要补充完整静态成员
       static HttpResponse HTTP_HTML_200;
       static HttpResponse HTTP_HTML_404;
+
+      static HttpResponse HTTP_HTML_400;
+      static HttpResponse HTTP_HTML_405;
+      static HttpResponse HTTP_HTML_501;
    private:
       // HttpArgument *argument_;
       std::set<Cookie> cookies_;

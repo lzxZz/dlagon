@@ -19,13 +19,14 @@ class BasicRoute  : public lzx::dlagon::interface::Midware{
 public:
     BasicRoute(const Handler *no_match)
         : not_match_hanlder_(no_match) {}
+    BasicRoute(){}
     
-    const Handler Distribute(const std::string &path) const;
+    const Handler *Distribute(const std::string &path) const;
     BasicRoute &Regiest(const std::string &path, const Handler hanlder);
     lzx::dlagon::interface::Midware::MidwareState Handle(const lzx::dlagon::interface::Request &req, lzx::dlagon::interface::Response &res) override;
 private:
     std::map<std::string, Handler> handlers_;
-    const Handler *not_match_hanlder_;
+    const Handler *not_match_hanlder_ = nullptr;
 };
 
 }

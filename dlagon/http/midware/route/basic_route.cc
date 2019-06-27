@@ -12,21 +12,32 @@ using lzx::dlagon::http::HttpRequest;
 using lzx::dlagon::interface::Midware;
 using lzx::dlagon::interface::Request;
 using lzx::dlagon::interface::Response;
+
+#include <iostream>
+using std::cout;
+using std::endl;
+
 namespace lzx::dlagon::http::midware{
 
-const Handler BasicRoute::Distribute(const string &path) const{
+const Handler *BasicRoute::Distribute(const string &path) const{
     for (auto it : handlers_){
         if (it.first == path){
-            return it.second;
+            return new Handler(it.second);
         }
     }
-    return *not_match_hanlder_;
+    return not_match_hanlder_;    
 }
 
 Midware::MidwareState BasicRoute::Handle(const Request &req, Response &res){
     const HttpRequest &request = dynamic_cast<const HttpRequest&>(req);
-    Handler hanlder = Distribute(request.Head().Uri());
-    hanlder(req, res);
+    const Handler *hanlder = Distribute(request.Head().Uri());
+    if (hanlder != nullptr){
+        Handler h = *hanlder;
+        h(request, res);
+    }else{
+        cout << "not match" << endl;
+        return Midware::MidwareState::kContinue;
+    }
     return Midware::MidwareState::kStop;
 }
 

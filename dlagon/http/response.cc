@@ -30,6 +30,9 @@ namespace lzx::dlagon::http{
       return HttpResponse(*this);
    }
 
-   HttpResponse HttpResponse::HTTP_HTML_200 = HttpResponse(200, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "");
-   HttpResponse HttpResponse::HTTP_HTML_404 = HttpResponse(404, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "");
+   HttpResponse HttpResponse::HTTP_HTML_200 = HttpResponse(200, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "OK");
+   HttpResponse HttpResponse::HTTP_HTML_404 = HttpResponse(404, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "Not Found");
+   HttpResponse HttpResponse::HTTP_HTML_400 = HttpResponse{400, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "Bad Request"};
+   HttpResponse HttpResponse::HTTP_HTML_405 = HttpResponse{405, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "Method Not Allow"};
+   HttpResponse HttpResponse::HTTP_HTML_501 = HttpResponse{501, dynamic_cast<HttpArgument*>(HttpArgumentFactory::GetInstant()->FromString("Content-Type:text/html")) , "Not Impi"};
 }

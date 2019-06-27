@@ -17,7 +17,7 @@ namespace lzx::dlagon{
     class Result{
     public:
         Result() = delete; // 删除构造函数, 只允许使用静态函数构造对象.
-        ResultType Valid(){
+        const ResultType Valid() const{
             return valid_;
         }
         static Result NewOk(T value){

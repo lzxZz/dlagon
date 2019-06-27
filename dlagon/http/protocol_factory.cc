@@ -1,13 +1,19 @@
 #include "dlagon/http/protocol_factory.h"
 
+
 #include <set>
+#include <sstream>
 #include <vector>
+
+#include <iostream>
 
 #include <boost/algorithm/string.hpp>
 
 #include "dlagon/http/request.h"
 #include "dlagon/http/response.h"
 
+
+using std::istringstream;
 using std::set;
 using std::string;
 using std::vector;
@@ -27,6 +33,12 @@ namespace lzx::dlagon::http{
             s.erase(0,s.find_first_not_of(" "));
             s.erase(s.find_last_not_of(" ") + 1);
          }
+         if ( *(s.end()-1) == '\n'){
+            s.erase(s.end()-1);
+         }
+         if ( *(s.end()-1) == '\r'){
+            s.erase(s.end()-1);
+         }
  
       }
    }
@@ -42,6 +54,7 @@ namespace lzx::dlagon::http{
       split(lines, info, is_any_of("\n"));
       
       HttpRequestHead *head = HttpHeadFactory::GetInstant()->GetHttpRequestHead(lines[0]);
+      
       
       size_t split_index;  // 请求参数和请求体空行分割线的索引
 
@@ -89,10 +102,47 @@ namespace lzx::dlagon::http{
 
       }
 
+      HttpArgument *url_argument = new HttpArgument();
+      HttpArgument *post_argument = new HttpArgument();
+      if (head->Type() == HttpMethod::kGet){
+         istringstream is(lines[0]);
+         string  url;
+         is >> url >> url;  // 第一个url为去除方法
+         if (url.find("?") != string::npos){
+            string arg_str = url.substr(url.find("?")+1);
+            set<string> pairs;
+            split(pairs, arg_str, is_any_of("&"));
+            for (auto pair : pairs){
+               string key, value;
+               key = pair.substr(0, pair.find("="));
+               value = pair.substr(pair.find("=")+1);
+               url_argument->Set(key, value);
+            }
+            
+         }
+      }
+      else if (head->Type() == HttpMethod::kPost){
+         
+         string arg_str = body_content;
+         Trim(arg_str);
+         set<string> pairs;
+         split(pairs, arg_str, is_any_of("&"));
+         for (auto pair : pairs){
+            string key, value;
+            key = pair.substr(0, pair.find("="));
+            value = pair.substr(pair.find("=")+1);
+            post_argument->Set(key, value);
+         }
+        
+      }else{
+         
+      }
+      req->url_argument_ = url_argument;
       req->head_ = head;
       req->body_ = new HttpRequestBody(body_content);
       req->argument_ = arg;
       req->cookie_ = cookie;
+      req->post_argument_ = post_argument;
       return req;
    }
 

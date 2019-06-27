@@ -22,3 +22,9 @@ add_executable(static ${STATIC_SRC})
 aux_source_directory(route ROUTE_SRC)
 
 add_executable(route ${ROUTE_SRC})
+
+aux_source_directory(todo TODO_SRC)
+
+add_executable(todo ${TODO_SRC})
+
+add_compile_options(-g)

@@ -51,8 +51,8 @@ namespace lzx::dlagon::http{
       }
       
 
-      Result<std::string> Get(const std::string &key);
-      std::string ToString() override;
+      const Result<std::string> Get(const std::string &key) const;
+      const std::string ToString() const override;
    private:
       std::map<std::string, std::string> args_;
    };

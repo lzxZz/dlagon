@@ -62,7 +62,7 @@ namespace lzx::dlagon::http{
       return arg;
    }
 
-   string HttpArgument::ToString(){
+   const string HttpArgument::ToString() const{
       string result;
 
       for (auto iter : args_){
@@ -71,7 +71,7 @@ namespace lzx::dlagon::http{
       return result;
    }
 
-   Result<string> HttpArgument::Get(const string &key){
+   const Result<string> HttpArgument::Get(const string &key) const{
       auto iter = args_.find(key);
       
       if (iter == args_.end()){

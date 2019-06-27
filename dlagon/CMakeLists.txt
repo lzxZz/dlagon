@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 
-add_compile_options(-g -Wall)
+add_compile_options(-g)
 
 
 aux_source_directory(. SRC)

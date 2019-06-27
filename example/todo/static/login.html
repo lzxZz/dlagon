@@ -7,9 +7,20 @@
     <title>Dlagon --- Todo --- Login</title>
 </head>
 <body>
-    <form name="form" action="index.html" method="get">
-        <input type="text" id="name"/>
-        <input type="submit" value="提交"/>
-        </form> 
+    <form name="form" action="Login.dlagon" method="get">
+        <input type="text" name="user" value="">
+        <input type="password" name="pass" value="">
+        <input type="submit" value="提交">
+    </form> 
+
+    <form action="Login.dlagon" method="post">
+        First name:<br>
+        <input type="text" name="ID" value="Mickey"><br>
+        Last name:<br>
+        <input type="text" name="PASS" value="Mouse"><br><br>
+        <input type="submit" value="提交">
+    </form>
+
+    <input type="button" value="Login"/>
 </body>
 </html>
