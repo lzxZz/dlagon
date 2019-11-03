@@ -16,7 +16,7 @@ class BasicMidware : public lzx::dlagon::interface::Midware{
       // res.SetBody(new lzx::dlagon::http::HttpResponseBody("HTTP/1.1 200 OK\r\nContent-Type : text/html\r\n\r\n<h1>Hello Dlagon!</h1>"));
       res = HttpResponse::HTTP_HTML_200.Clone();
 
-      res.SetBody(new  lzx::dlagon::http::HttpResponseBody("<h1>Hello Dlagon!</h1>"));
+      res.SetBody(new  lzx::dlagon::http::HttpResponseBody("<h1>Hello Dlagon!</h1>\r\n"));
 
       return MidwareState::kStop;
    }

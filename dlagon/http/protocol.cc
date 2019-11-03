@@ -24,7 +24,6 @@ namespace lzx::dlagon::http{
       }
    }
 
-
    HttpMethod HttpMethodFromString(const string  &str){
       string method = ToUpper(str);
       if ("GET" == method ){
@@ -33,8 +32,6 @@ namespace lzx::dlagon::http{
          return HttpMethod::kPost;
       }
       else{
-
-      
          return HttpMethod::kUnknown;
       }
    }

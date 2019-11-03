@@ -27,4 +27,4 @@ aux_source_directory(todo TODO_SRC)
 
 add_executable(todo ${TODO_SRC})
 
-add_compile_options(-g)
+add_compile_options(-O2)

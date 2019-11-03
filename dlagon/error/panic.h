@@ -15,7 +15,6 @@ namespace lzx::dlagon::error{
      */
     void Panic(const std::string &info){
         std::cerr << info << std::endl;
-
         exit(-1);
         
     }
